@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:columnCount="4"
+    android:orientation="horizontal"
+    android:rowCount="2">
+
+    <TextView
+        android:drawableTop="@drawable/income"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="工资"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/redpacket"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="红包"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/parttime"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="兼职"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/other"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="其他"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+
+</GridLayout>

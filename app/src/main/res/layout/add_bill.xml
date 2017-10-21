@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fontColorLight">
+    <include layout="@layout/activity_top"/>
+
+    <LinearLayout
+        android:id="@+id/select_pay_income"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="支出"
+            android:textColor="@color/fontColor"
+            android:textSize="18sp" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/hint" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="收入"
+            android:textColor="@color/fontColor"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@id/select_pay_income"
+        android:scrollbars="vertical">
+
+        <!--<include layout="@layout/pay_type"/>-->
+        <include layout="@layout/income_type"/>
+    </ScrollView>
+
+    <include layout="@layout/navigate_bar"/>
+
+</RelativeLayout>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:columnCount="4"
+    android:orientation="horizontal"
+    android:rowCount="7">
+
+    <TextView
+        android:drawableTop="@drawable/meal"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="饮食"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/transportation"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="交通"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/shopping"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="购物"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/daily"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="日用"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/clothes"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="衣物"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+
+    <TextView
+        android:drawableTop="@drawable/vegetable"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="蔬菜"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/fruit"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="水果"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/snack"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="零食"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/book"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="书籍"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/study"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="学习"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/house"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="住房"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/investment"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="投资"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/social"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="社交"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/amusement"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="娱乐"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/makeup"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="美容"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/call"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="通讯"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/sport"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="运动"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/redpacket"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="红包"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/travel"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="旅行"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/medicine"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="医疗"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/office"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="办公"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/digit"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="数码"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/gift"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="礼物"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/wine"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="烟酒"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/repair"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="维修"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+    <TextView
+        android:drawableTop="@drawable/other"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="其他"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="16sp" />
+
+</GridLayout>
+

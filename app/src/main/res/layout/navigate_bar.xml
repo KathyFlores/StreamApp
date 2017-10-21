@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--<include layout="@layout/activity_top" />-->
+    <LinearLayout
+        android:layout_width="85dp"
+        android:layout_height="58dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+    <ImageView
+        android:id="@+id/add"
+        android:layout_width="85dp"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/add" />
+
+    <LinearLayout
+        android:id="@+id/navbarLeft"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/add"
+        >
+
+        <TextView
+            android:id="@+id/text_bill"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="@color/colorPrimary"
+            android:drawablePadding="3dp"
+
+            android:drawableTop="@drawable/bill"
+            android:gravity="center"
+            android:textColor="@color/fontColorLight"
+            android:text="账单"/>
+
+        <TextView
+            android:id="@+id/text_property"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="@color/colorPrimary"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/property"
+            android:gravity="center"
+            android:textColor="@color/fontColorLight"
+            android:text="资产"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/navbarRight"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/add">
+        <TextView
+            android:id="@+id/text_chart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="@color/colorPrimary"
+            android:drawablePadding="3dp"
+
+            android:drawableTop="@drawable/chart"
+            android:gravity="center"
+            android:textColor="@color/fontColorLight"
+            android:text="图表"/>
+
+        <TextView
+            android:id="@+id/text_user"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="@color/colorPrimary"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/user"
+            android:gravity="center"
+            android:textColor="@color/fontColorLight"
+            android:text="我"/>
+
+    </LinearLayout>
+</RelativeLayout>
