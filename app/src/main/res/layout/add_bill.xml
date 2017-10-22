@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="支出"
+            android:text="@string/expense"
             android:textColor="@color/fontColor"
             android:textSize="18sp" />
 
@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="收入"
+            android:text="@string/income"
             android:textColor="@color/fontColor"
             android:textSize="18sp" />
 
@@ -46,8 +46,8 @@
         android:layout_below="@id/select_pay_income"
         android:scrollbars="vertical">
 
-        <!--<include layout="@layout/pay_type"/>-->
-        <include layout="@layout/income_type"/>
+        <include layout="@layout/pay_type"/>
+        <!--<include layout="@layout/income_type"/>-->
     </ScrollView>
 
     <include layout="@layout/navigate_bar"/>

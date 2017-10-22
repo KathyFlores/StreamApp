@@ -44,12 +44,12 @@
                 android:layout_height="30dp"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="收入"
+                android:text="@string/income"
                 android:textColor="@color/fontColor"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/expense"
+                android:id="@+id/income"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
@@ -70,12 +70,12 @@
                 android:layout_height="30dp"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="支出"
+                android:text="@string/expense"
                 android:textColor="@color/fontColor"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/income"
+                android:id="@+id/expense"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
@@ -112,13 +112,49 @@
                 android:textColor="@color/fontColor"/>
 
             <TextView
-                android:id="@+id/dateBill0"
+                android:id="@+id/dateExpense0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="收入：1000  支出：0"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:text="0"
                 android:textColor="@color/fontColor"
                 android:textSize="14sp" />
+            <TextView
+                android:id="@+id/dateExpenseText0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/dateExpense0"
+                android:layout_toStartOf="@id/dateExpense0"
+                android:text="@string/expense"
+                android:textColor="@color/fontColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/dateIncome0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/dateExpenseText0"
+                android:layout_toStartOf="@id/dateExpenseText0"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="1000"
+                android:textColor="@color/fontColor"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/dateIncomeText0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/dateIncome0"
+                android:layout_toStartOf="@id/dateIncome0"
+                android:text="@string/income"
+                android:textColor="@color/fontColor"
+                android:textSize="14sp" />
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -127,12 +163,12 @@
             android:padding="10dp">
             <ImageView
                 android:id="@+id/icon0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/property"/>
+                android:src="@drawable/salary"/>
 
             <TextView
                 android:id="@+id/billContent0"
@@ -140,10 +176,10 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/icon0"
                 android:layout_toEndOf="@id/icon0"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:text="工资"
+                android:text="@string/salary"
                 android:textColor="@color/fontColorDark"
                 android:textSize="14sp"/>
             <TextView
