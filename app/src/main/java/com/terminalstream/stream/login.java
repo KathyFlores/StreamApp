@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Intent;
 
 public class login extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,6 +18,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     EditText usernameET = null;
     EditText passwordET = null;
     TextView loginPromptET = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +38,16 @@ public class login extends AppCompatActivity implements View.OnClickListener {
             loginPromptET.setText(R.string.usernameError);
             return ;
         }
-        if(password.equals(""))
+        if(password.equals(""))//TODO:||don't pass
         {
             passwordET.setText(R.string.passwordError);
             return ;
         }
+//      TODO:else pass
+        Intent intent = new Intent(login.this,bill.class) ;    //切换Login Activity至User Activity
+        startActivity(intent);
+        finish();
+
+
     }
 }

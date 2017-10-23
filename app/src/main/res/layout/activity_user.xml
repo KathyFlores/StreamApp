@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fontColorLight">
+    <include layout="@layout/activity_top"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/property_layout"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/avatar"
+                app:riv_mutate_background="false"
+                app:riv_oval="true">
+
+            </com.makeramen.roundedimageview.RoundedImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textColor="@color/fontColorDark"
+                android:textSize="22sp"
+                android:layout_below="@id/avatar"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/edit"
+            android:gravity="center_vertical"
+            android:textColor="@color/fontColorDark"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:drawableRight="@drawable/more"
+            android:drawablePadding="236dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/hint"/>
+        <TextView
+            android:background="@color/white"
+            android:id="@+id/backup"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/export"
+            android:gravity="center_vertical"
+            android:textColor="@color/fontColorDark"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:drawableRight="@drawable/more"
+            android:drawablePadding="236dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/hint"/>
+        <TextView
+            android:background="@color/white"
+            android:id="@+id/help"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:text="@string/help"
+            android:gravity="center_vertical"
+            android:textColor="@color/fontColorDark"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:drawableRight="@drawable/more"
+            android:drawablePadding="200dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/hint"/>
+        <TextView
+            android:background="@color/white"
+            android:id="@+id/about"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/about"
+            android:gravity="center_vertical"
+            android:textColor="@color/fontColorDark"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:drawableRight="@drawable/more"
+            android:drawablePadding="236dp"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/navigate_bar"/>
+
+</RelativeLayout>

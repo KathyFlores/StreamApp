@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fontColorLight">
-    <include layout="@layout/activity_top"/>
+    <include layout="@layout/top_with_arrow"/>
 
     <LinearLayout
         android:id="@+id/select_pay_income"
@@ -42,7 +42,7 @@
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="458dp"
         android:layout_below="@id/select_pay_income"
         android:scrollbars="vertical">
 
@@ -50,6 +50,6 @@
         <!--<include layout="@layout/income_type"/>-->
     </ScrollView>
 
-    <include layout="@layout/navigate_bar"/>
+    <!--<include layout="@layout/navigate_bar"/>-->
 
 </RelativeLayout>

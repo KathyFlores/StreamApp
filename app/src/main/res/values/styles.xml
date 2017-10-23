@@ -11,4 +11,37 @@
         <item name="android:windowBackground">@drawable/splashscreen</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    <style name="title_text">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="button_text">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="menu_text">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="body_text">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="caption_text">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="subhead_text">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="headline_text">
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="display1_text">
+        <item name="android:textSize">34sp</item>
+    </style>
+    <style name="display2_text">
+        <item name="android:textSize">45sp</item>
+    </style>
+    <style name="display3_text">
+        <item name="android:textSize">56sp</item>
+    </style>
+    <style name="display4_text">
+        <item name="android:textSize">112sp</item>
+    </style>
 </resources>

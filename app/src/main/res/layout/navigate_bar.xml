@@ -13,6 +13,7 @@
         />
     <ImageView
         android:id="@+id/add"
+        android:clickable="true"
         android:layout_width="85dp"
         android:layout_height="75dp"
         android:layout_alignParentBottom="true"
@@ -32,6 +33,7 @@
 
         <TextView
             android:id="@+id/text_bill"
+            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -47,6 +49,7 @@
 
         <TextView
             android:id="@+id/text_property"
+            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -70,6 +73,7 @@
         android:layout_toRightOf="@id/add">
         <TextView
             android:id="@+id/text_chart"
+            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -84,6 +88,7 @@
 
         <TextView
             android:id="@+id/text_user"
+            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
