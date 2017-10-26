@@ -29,7 +29,6 @@ public class property extends AppCompatActivity implements View.OnClickListener 
         propertyBTN = (TextView) findViewById(R.id.text_property);
         propertyBTN.setOnClickListener(this);
         propertyBTN.setCompoundDrawables(null,drawable,null,null);
-        propertyBTN.setTextColor(mcontext.getResources().getColor(R.color.fontSelected));
         chartBTN = (TextView) findViewById(R.id.text_chart);
         chartBTN.setOnClickListener(this);
         userBTN = (TextView) findViewById(R.id.text_user);
@@ -54,7 +53,7 @@ public class property extends AppCompatActivity implements View.OnClickListener 
             case R.id.add:
                 Intent intent_add = new Intent(property.this, add_bill.class) ;    //切换Login Activity至User Activity
                 startActivity(intent_add);
-                finish();
+
                 break;
             case R.id.text_chart:
                 Intent intent_chart = new Intent(property.this, chart.class) ;    //切换Login Activity至User Activity

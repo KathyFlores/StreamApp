@@ -8,12 +8,11 @@
     <include layout="@layout/activity_top"/>
 
 
-
     <LinearLayout
-        android:id="@+id/property_layout"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="50dp"
+        android:id="@+id/user_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/topbar"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -38,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/username"
                 android:textColor="@color/fontColorDark"
-                android:textSize="22sp"
+                android:theme="@style/title_text"
                 android:layout_below="@id/avatar"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
@@ -48,14 +47,14 @@
             android:background="@color/white"
             android:id="@+id/edit"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:text="@string/edit"
             android:gravity="center_vertical"
             android:textColor="@color/fontColorDark"
-            android:textSize="18sp"
-            android:padding="10dp"
+            android:theme="@style/body_text"
+            android:paddingLeft="10dp"
             android:drawableRight="@drawable/more"
-            android:drawablePadding="236dp"
+            android:drawablePadding="262dp"
             />
         <View
             android:layout_width="match_parent"
@@ -67,14 +66,14 @@
             android:background="@color/white"
             android:id="@+id/backup"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:text="@string/export"
             android:gravity="center_vertical"
             android:textColor="@color/fontColorDark"
-            android:textSize="18sp"
-            android:padding="10dp"
+            android:theme="@style/body_text"
+            android:paddingLeft="10dp"
             android:drawableRight="@drawable/more"
-            android:drawablePadding="236dp"
+            android:drawablePadding="262dp"
             />
         <View
             android:layout_width="match_parent"
@@ -86,12 +85,12 @@
             android:background="@color/white"
             android:id="@+id/help"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:text="@string/help"
             android:gravity="center_vertical"
             android:textColor="@color/fontColorDark"
-            android:textSize="18sp"
-            android:padding="10dp"
+            android:theme="@style/body_text"
+            android:paddingLeft="10dp"
             android:drawableRight="@drawable/more"
             android:drawablePadding="200dp"
             />
@@ -105,14 +104,14 @@
             android:background="@color/white"
             android:id="@+id/about"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:text="@string/about"
             android:gravity="center_vertical"
             android:textColor="@color/fontColorDark"
-            android:textSize="18sp"
-            android:padding="10dp"
+            android:theme="@style/body_text"
+            android:paddingLeft="10dp"
             android:drawableRight="@drawable/more"
-            android:drawablePadding="236dp"
+            android:drawablePadding="262dp"
             />
     </LinearLayout>
 

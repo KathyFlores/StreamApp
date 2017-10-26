@@ -31,7 +31,6 @@ public class chart extends AppCompatActivity implements View.OnClickListener {
         chartBTN = (TextView) findViewById(R.id.text_chart);
         chartBTN.setOnClickListener(this);
         chartBTN.setCompoundDrawables(null,drawable,null,null);
-        chartBTN.setTextColor(mcontext.getResources().getColor(R.color.fontSelected));
         userBTN = (TextView) findViewById(R.id.text_user);
         userBTN.setOnClickListener(this);
         addBTN = (ImageView) findViewById(R.id.add);
@@ -54,7 +53,7 @@ public class chart extends AppCompatActivity implements View.OnClickListener {
             case R.id.add:
                 Intent intent_add = new Intent(chart.this, add_bill.class) ;    //切换Login Activity至User Activity
                 startActivity(intent_add);
-                finish();
+
                 break;
             case R.id.text_chart:
                 Intent intent_chart = new Intent(chart.this, chart.class) ;    //切换Login Activity至User Activity

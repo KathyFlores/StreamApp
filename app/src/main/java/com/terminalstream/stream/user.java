@@ -33,7 +33,6 @@ public class user extends AppCompatActivity implements View.OnClickListener {
         userBTN = (TextView) findViewById(R.id.text_user);
         userBTN.setOnClickListener(this);
         userBTN.setCompoundDrawables(null,drawable,null,null);
-        userBTN.setTextColor(mcontext.getResources().getColor(R.color.fontSelected));
         addBTN = (ImageView) findViewById(R.id.add);
         addBTN.setOnClickListener(this);
     }
@@ -54,7 +53,7 @@ public class user extends AppCompatActivity implements View.OnClickListener {
             case R.id.add:
                 Intent intent_add = new Intent(user.this, add_bill.class) ;    //切换Login Activity至User Activity
                 startActivity(intent_add);
-                finish();
+
                 break;
             case R.id.text_chart:
                 Intent intent_chart = new Intent(user.this, chart.class) ;    //切换Login Activity至User Activity

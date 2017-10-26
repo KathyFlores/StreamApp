@@ -10,7 +10,7 @@
         android:id="@+id/select_pay_income_chart"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/topbar"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="@string/expense"
             android:textColor="@color/fontColorDark"
-            android:textSize="18sp" />
+            android:theme="@style/title_text" />
 
         <View
             android:layout_width="1dp"
@@ -36,9 +36,11 @@
             android:gravity="center"
             android:text="@string/income"
             android:textColor="@color/fontColorDark"
-            android:textSize="18sp" />
+            android:theme="@style/title_text" />
     </LinearLayout>
     <View
+        android:id="@+id/divider0"
+        android:layout_below="@id/select_pay_income_chart"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/hint" />
@@ -46,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:layout_marginTop="111dp"
+        android:layout_below="@id/divider0"
         android:background="@color/white"
         >
 
@@ -57,7 +59,7 @@
             android:gravity="center"
             android:text="@string/week"
             android:textColor="@color/fontColor"
-            android:textSize="18sp" />
+            android:theme="@style/subhead_text" />
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
@@ -71,7 +73,7 @@
             android:gravity="center"
             android:text="@string/month"
             android:textColor="@color/fontColor"
-            android:textSize="18sp" />
+            android:theme="@style/subhead_text" />
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
@@ -85,7 +87,7 @@
             android:gravity="center"
             android:text="@string/year"
             android:textColor="@color/fontColor"
-            android:textSize="18sp" />
+            android:theme="@style/subhead_text" />
     </LinearLayout>
 
     <include layout="@layout/navigate_bar"/>

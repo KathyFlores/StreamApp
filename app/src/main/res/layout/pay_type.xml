@@ -8,21 +8,21 @@
     android:rowCount="7">
 
     <TextView
+        android:theme="@style/body_text"
         android:drawableTop="@drawable/meal"
         android:drawablePadding="10dp"
         android:padding="20dp"
         android:text="@string/meal"
         android:textAlignment="center"
-        android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:textColor="@color/fontColor"/>
     <TextView
+        android:theme="@style/body_text"
         android:drawableTop="@drawable/transportation"
         android:drawablePadding="10dp"
         android:padding="20dp"
         android:text="@string/transportation"
         android:textAlignment="center"
-        android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:textColor="@color/fontColor"/>
     <TextView
         android:drawableTop="@drawable/shopping"
         android:drawablePadding="10dp"
@@ -30,7 +30,7 @@
         android:text="@string/shopping"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/daily"
         android:drawablePadding="10dp"
@@ -38,7 +38,7 @@
         android:text="@string/daily"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/clothes"
         android:drawablePadding="10dp"
@@ -46,7 +46,7 @@
         android:text="@string/clothes"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
 
     <TextView
         android:drawableTop="@drawable/vegetable"
@@ -55,7 +55,7 @@
         android:text="@string/vegetable"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/fruit"
         android:drawablePadding="10dp"
@@ -63,7 +63,7 @@
         android:text="@string/fruit"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/snack"
         android:drawablePadding="10dp"
@@ -71,7 +71,7 @@
         android:text="@string/snack"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/book"
         android:drawablePadding="10dp"
@@ -79,7 +79,7 @@
         android:text="@string/book"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/study"
         android:drawablePadding="10dp"
@@ -87,7 +87,7 @@
         android:text="@string/study"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/house"
         android:drawablePadding="10dp"
@@ -95,7 +95,7 @@
         android:text="@string/house"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/investment"
         android:drawablePadding="10dp"
@@ -103,7 +103,7 @@
         android:text="@string/investment"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/social"
         android:drawablePadding="10dp"
@@ -111,7 +111,7 @@
         android:text="@string/social"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/amusement"
         android:drawablePadding="10dp"
@@ -119,7 +119,7 @@
         android:text="@string/amusement"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/makeup"
         android:drawablePadding="10dp"
@@ -127,7 +127,7 @@
         android:text="@string/makeup"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/call"
         android:drawablePadding="10dp"
@@ -135,7 +135,7 @@
         android:text="@string/call"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/sport"
         android:drawablePadding="10dp"
@@ -143,7 +143,7 @@
         android:text="@string/sport"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/redpacket"
         android:drawablePadding="10dp"
@@ -151,7 +151,7 @@
         android:text="@string/redpacket"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/travel"
         android:drawablePadding="10dp"
@@ -159,7 +159,7 @@
         android:text="@string/travel"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/medicine"
         android:drawablePadding="10dp"
@@ -167,7 +167,7 @@
         android:text="@string/medicine"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/office"
         android:drawablePadding="10dp"
@@ -175,7 +175,7 @@
         android:text="@string/office"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/digit"
         android:drawablePadding="10dp"
@@ -183,7 +183,7 @@
         android:text="@string/digit"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/gift"
         android:drawablePadding="10dp"
@@ -191,7 +191,7 @@
         android:text="@string/gift"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/wine"
         android:drawablePadding="10dp"
@@ -199,7 +199,7 @@
         android:text="@string/wine"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/repair"
         android:drawablePadding="10dp"
@@ -207,7 +207,7 @@
         android:text="@string/repair"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
     <TextView
         android:drawableTop="@drawable/other"
         android:drawablePadding="10dp"
@@ -215,7 +215,7 @@
         android:text="@string/other"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
-        android:textSize="16sp" />
+        android:theme="@style/body_text" />
 
 </GridLayout>
 

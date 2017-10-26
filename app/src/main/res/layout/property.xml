@@ -12,7 +12,7 @@
         android:id="@+id/property_layout"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/topbar"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -42,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/alipay"
                 android:textColor="@color/fontColorDark"
-                android:textSize="16sp"/>
+                android:theme="@style/subhead_text"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:text="￥5000"
                 android:textColor="@color/fontColor"
-                android:textSize="16sp"/>
+                android:theme="@style/subhead_text"/>
 
         </RelativeLayout>
     </LinearLayout>

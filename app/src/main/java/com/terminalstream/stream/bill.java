@@ -26,7 +26,6 @@ public class bill extends AppCompatActivity implements View.OnClickListener {
         Drawable drawable=ContextCompat.getDrawable(mcontext,R.drawable.bill_selected);
         drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
         billBTN = (TextView) findViewById(R.id.text_bill);
-        billBTN.setTextColor(mcontext.getResources().getColor(R.color.fontSelected));
         billBTN.setCompoundDrawables(null,drawable,null,null);
         billBTN.setOnClickListener(this);
         propertyBTN = (TextView) findViewById(R.id.text_property);
@@ -55,7 +54,7 @@ public class bill extends AppCompatActivity implements View.OnClickListener {
             case R.id.add:
                 Intent intent_add = new Intent(bill.this, add_bill.class) ;    //切换Login Activity至User Activity
                 startActivity(intent_add);
-                finish();
+
                 break;
             case R.id.text_chart:
                 Intent intent_chart = new Intent(bill.this, chart.class) ;    //切换Login Activity至User Activity

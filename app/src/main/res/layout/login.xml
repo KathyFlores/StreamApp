@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:textSize="35sp"
+        android:theme="@style/display2_text"
         android:text="@string/welcome"
         android:fontFamily="sans-serif"
         android:textColor="@color/hintLight"
@@ -32,15 +32,7 @@
 
             android:orientation="horizontal" >
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginLeft="10dp"-->
 
-                <!--android:text="用户名"-->
-                <!--android:textColor="@color/colorPrimary"-->
-                <!--android:textSize="17sp" />-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +55,7 @@
                 android:maxLength="11"
                 android:textColor="@color/fontColor"
                 android:textColorHint="@color/hint"
-                android:textSize="17sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <View
@@ -76,17 +68,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-
             android:orientation="horizontal" >
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:text="密　码"-->
-                <!--android:textColor="@color/colorPrimary"-->
-                <!--android:textSize="17sp" />-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +92,7 @@
                 android:maxLength="16"
                 android:textColor="@color/fontColor"
                 android:textColorHint="@color/hint"
-                android:textSize="17sp" />
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -124,7 +107,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/loginBTNtext"
         android:textColor="@color/hint"
-        android:textSize="17sp" />
+        android:theme="@style/title_text" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -140,14 +123,14 @@
             android:layout_marginStart="10dp"
             android:text="@string/forgetPassword"
             android:textColor="@color/colorPrimary"
-            android:textSize="15sp" />
+            android:theme="@style/body_text" />
         <TextView
             android:id="@+id/login_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:layout_centerInParent="true"
-            android:textSize="15sp"
+            android:theme="@style/body_text"
             android:textColor="@color/colorPrimary"
             />
         <TextView
@@ -159,7 +142,7 @@
             android:layout_marginEnd="10dp"
             android:text="@string/signUp"
             android:textColor="@color/colorPrimary"
-            android:textSize="15sp" />
+            android:theme="@style/body_text" />
     </RelativeLayout>
 
 
