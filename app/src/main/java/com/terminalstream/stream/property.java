@@ -43,6 +43,39 @@ public class property extends AppCompatActivity {
 
 
     }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+//        System.out.println("onRestoreInstanceState");
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        System.out.println("onSaveInstanceState");
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        System.out.println("onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        System.out.println("onResume");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        System.out.println("onStart");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+//        System.out.println("onRestart");
+    }
     private void initData(){
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.alipay,R.drawable.alipay,R.drawable.alipay));
@@ -79,7 +112,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_bill = new Intent(property.this, bill.class);
                 startActivity(intent_bill);
-                finish();
+//                finish();
             }
         });
 
@@ -88,7 +121,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_property = new Intent(property.this, property.class);
                 startActivity(intent_property);
-                finish();
+//                finish();
             }
         });
 
@@ -97,7 +130,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(property.this, chart.class) ;
                 startActivity(intent_chart);
-                finish();
+//                finish();
             }
         });
 
@@ -106,7 +139,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(property.this, user.class) ;
                 startActivity(intent_chart);
-                finish();
+//                finish();
             }
         });
 

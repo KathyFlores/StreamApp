@@ -22,6 +22,5 @@ public class add_bill extends AppCompatActivity implements View.OnClickListener 
 
         finish();
 
-
     }
 }

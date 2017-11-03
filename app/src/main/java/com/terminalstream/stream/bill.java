@@ -45,6 +45,39 @@ public class bill extends AppCompatActivity {
         setListener();
 
     }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        System.out.println("onRestoreInstanceState");
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("onSaveInstanceState");
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.out.println("onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("onResume");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("onStart");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.println("onRestart");
+    }
     private void initView(){
         mContext=getApplicationContext();
         Drawable drawable=ContextCompat.getDrawable(mContext,R.drawable.bill_selected);
@@ -60,6 +93,8 @@ public class bill extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter = new myAdapter());
+        //TODO:add divider
+        // recyclerView.addItemDecoration(new);
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 //        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimaryDark), getResources().getColor(R.color.colorAccent));
 //        swipeRefreshLayout.setProgressViewOffset(false,0, 50);
@@ -83,7 +118,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_bill = new Intent(bill.this, bill.class);
                 startActivity(intent_bill);
-                finish();
+//                finish();
             }
         });
 
@@ -92,7 +127,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_property = new Intent(bill.this, property.class);
                 startActivity(intent_property);
-                finish();
+//                finish();
             }
         });
 
@@ -101,7 +136,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(bill.this, chart.class) ;
                 startActivity(intent_chart);
-                finish();
+//                finish();
             }
         });
 
@@ -110,7 +145,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(bill.this, user.class) ;
                 startActivity(intent_chart);
-                finish();
+//                finish();
             }
         });
 

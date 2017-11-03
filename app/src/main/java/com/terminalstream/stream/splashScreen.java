@@ -12,7 +12,10 @@ public class splashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //to avoid the time spent on setContentView
         //setContentView(R.layout.splashscreen);
-
+        if((getIntent().getFlags()&Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT)!=0) {
+            finish();
+            return;
+        }
         new Handler().postDelayed(new Runnable(){
             public void run(){
                 Intent i = new Intent(splashScreen.this, login.class);
