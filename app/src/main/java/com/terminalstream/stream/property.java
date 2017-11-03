@@ -20,7 +20,7 @@ public class property extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.property);
+        setContentView(R.layout.activity_property);
         billBTN = (TextView) findViewById(R.id.text_bill);
         billBTN.setOnClickListener(this);
         Context mcontext=getApplicationContext();

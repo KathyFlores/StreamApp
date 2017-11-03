@@ -22,7 +22,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
         loginBTN = (Button) findViewById(R.id.loginButton);
         loginBTN.setOnClickListener(this);
         usernameET = (EditText) findViewById(R.id.username);

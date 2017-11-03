@@ -56,6 +56,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <include layout="@layout/navigate_bar"/>
+    <include layout="@layout/activity_navigatebar"/>
 
 </RelativeLayout>

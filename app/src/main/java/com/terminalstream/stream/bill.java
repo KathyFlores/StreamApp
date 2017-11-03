@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.support.v7.widget.RecyclerView;
 
 public class bill extends AppCompatActivity implements View.OnClickListener {
     TextView billBTN = null;
@@ -17,11 +17,14 @@ public class bill extends AppCompatActivity implements View.OnClickListener {
     TextView chartBTN = null;
     TextView userBTN = null;
     ImageView addBTN = null;
-
+    private static RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bill);
+        setContentView(R.layout.acticity_bill);
+
+        recyclerView=(RecyclerView)findViewById(R.id.bill_recycler);
+
         Context mcontext=getApplicationContext();
         Drawable drawable=ContextCompat.getDrawable(mcontext,R.drawable.bill_selected);
         drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());

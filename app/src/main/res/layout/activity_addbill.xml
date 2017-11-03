@@ -46,10 +46,9 @@
         android:layout_below="@id/select_pay_income"
         android:scrollbars="vertical">
 
-        <include layout="@layout/pay_type"/>
-        <!--<include layout="@layout/income_type"/>-->
+        <include layout="@layout/activity_paytype"/>
+        <!--<include layout="@layout/activity_incometype"/>-->
     </ScrollView>
 
-    <!--<include layout="@layout/navigate_bar"/>-->
 
 </RelativeLayout>
