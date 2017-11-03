@@ -10,62 +10,76 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class user extends AppCompatActivity implements View.OnClickListener {
+public class user extends AppCompatActivity {
 
-    TextView billBTN = null;
-    TextView propertyBTN = null;
-    TextView chartBTN = null;
-    TextView userBTN = null;
-    ImageView addBTN = null;
+    private TextView billBTN = null;
+    private TextView propertyBTN = null;
+    private TextView chartBTN = null;
+    private TextView userBTN = null;
+    private ImageView addBTN = null;
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        initView();
+        setListener();
+    }
+    private void initView(){
         billBTN = (TextView) findViewById(R.id.text_bill);
-        billBTN.setOnClickListener(this);
-        Context mcontext=getApplicationContext();
-        Drawable drawable= ContextCompat.getDrawable(mcontext,R.drawable.user_selected);
-        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+        mContext=getApplicationContext();
         propertyBTN = (TextView) findViewById(R.id.text_property);
-        propertyBTN.setOnClickListener(this);
         chartBTN = (TextView) findViewById(R.id.text_chart);
-        chartBTN.setOnClickListener(this);
         userBTN = (TextView) findViewById(R.id.text_user);
-        userBTN.setOnClickListener(this);
+        Drawable drawable= ContextCompat.getDrawable(mContext,R.drawable.user_selected);
+        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
         userBTN.setCompoundDrawables(null,drawable,null,null);
         addBTN = (ImageView) findViewById(R.id.add);
-        addBTN.setOnClickListener(this);
     }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.text_bill:
+    private void setListener(){
+        billBTN.setOnClickListener(new TextView.OnClickListener(){
+            @Override
+            public void onClick(View v){
                 Intent intent_bill = new Intent(user.this, bill.class);
                 startActivity(intent_bill);
                 finish();
-                break;
-            case R.id.text_property:
-                Intent intent_property = new Intent(user.this, property.class) ;    //切换Login Activity至User Activity
+            }
+        });
+
+        propertyBTN.setOnClickListener(new TextView.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent_property = new Intent(user.this, property.class);
                 startActivity(intent_property);
                 finish();
-                break;
-            case R.id.add:
-                Intent intent_add = new Intent(user.this, add_bill.class) ;    //切换Login Activity至User Activity
-                startActivity(intent_add);
+            }
+        });
 
-                break;
-            case R.id.text_chart:
-                Intent intent_chart = new Intent(user.this, chart.class) ;    //切换Login Activity至User Activity
+        chartBTN.setOnClickListener(new TextView.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent_chart = new Intent(user.this, chart.class) ;
                 startActivity(intent_chart);
                 finish();
-                break;
-            case R.id.text_user:
-                Intent intent_user = new Intent(user.this, user.class) ;    //切换Login Activity至User Activity
-                startActivity(intent_user);
-                finish();
-                break;
-        }
+            }
+        });
 
+        userBTN.setOnClickListener(new TextView.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent_chart = new Intent(user.this, user.class) ;
+                startActivity(intent_chart);
+                finish();
+            }
+        });
+
+        addBTN.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent_add = new Intent(user.this, add_bill.class) ;
+                startActivity(intent_add);
+            }
+        });
     }
 }

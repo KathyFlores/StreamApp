@@ -29,7 +29,8 @@
         <activity android:name=".property" />
         <activity android:name=".add_bill" />
         <activity android:name=".chart" />
-        <activity android:name=".user"/>
+        <activity android:name=".user" />
+
     </application>
 
 </manifest>

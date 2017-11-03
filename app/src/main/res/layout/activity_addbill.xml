@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fontColorLight">
-    <include layout="@layout/activity_top"/>
+    <include layout="@layout/appbar_layout"/>
 
     <LinearLayout
         android:id="@+id/select_pay_income"
@@ -46,7 +46,7 @@
         android:layout_below="@id/select_pay_income"
         android:scrollbars="vertical">
 
-        <include layout="@layout/activity_paytype"/>
+        <include layout="@layout/pay_type_layout"/>
         <!--<include layout="@layout/activity_incometype"/>-->
     </ScrollView>
 

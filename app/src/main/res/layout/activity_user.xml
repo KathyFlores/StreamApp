@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fontColorLight">
-    <include layout="@layout/activity_top"/>
+    <include layout="@layout/appbar_layout"/>
 
 
     <LinearLayout
@@ -118,6 +118,6 @@
             android:theme="@style/body_text" />
     </LinearLayout>
 
-    <include layout="@layout/activity_navigatebar"/>
+    <include layout="@layout/navigatebar_layout"/>
 
 </RelativeLayout>
