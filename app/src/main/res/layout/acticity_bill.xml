@@ -26,7 +26,8 @@
             android:format12Hour="yyyy    MM月"
             android:gravity="center"
             android:textColor="@color/fontColor"
-            android:theme="@style/subhead_text" />
+            android:theme="@style/subhead_text"
+            tools:ignore="NewApi" />
 
         <View
             android:layout_width="1dp"

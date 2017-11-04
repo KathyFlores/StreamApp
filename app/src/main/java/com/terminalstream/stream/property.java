@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,18 @@ public class property extends AppCompatActivity {
         super.onRestart();
 //        System.out.println("onRestart");
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     private void initData(){
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.alipay,R.drawable.alipay,R.drawable.alipay));
@@ -112,7 +125,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_bill = new Intent(property.this, bill.class);
                 startActivity(intent_bill);
-//                finish();
+                finish();
             }
         });
 
@@ -121,7 +134,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_property = new Intent(property.this, property.class);
                 startActivity(intent_property);
-//                finish();
+                finish();
             }
         });
 
@@ -130,7 +143,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(property.this, chart.class) ;
                 startActivity(intent_chart);
-//                finish();
+                finish();
             }
         });
 
@@ -139,7 +152,7 @@ public class property extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(property.this, user.class) ;
                 startActivity(intent_chart);
-//                finish();
+                finish();
             }
         });
 

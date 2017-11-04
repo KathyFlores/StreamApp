@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.view.KeyEvent;
 
 public class bill extends AppCompatActivity {
     private TextView billBTN = null;
@@ -78,6 +79,18 @@ public class bill extends AppCompatActivity {
         super.onRestart();
         System.out.println("onRestart");
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     private void initView(){
         mContext=getApplicationContext();
         Drawable drawable=ContextCompat.getDrawable(mContext,R.drawable.bill_selected);
@@ -118,7 +131,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_bill = new Intent(bill.this, bill.class);
                 startActivity(intent_bill);
-//                finish();
+                finish();
             }
         });
 
@@ -127,7 +140,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_property = new Intent(bill.this, property.class);
                 startActivity(intent_property);
-//                finish();
+                finish();
             }
         });
 
@@ -136,7 +149,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(bill.this, chart.class) ;
                 startActivity(intent_chart);
-//                finish();
+                finish();
             }
         });
 
@@ -145,7 +158,7 @@ public class bill extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(bill.this, user.class) ;
                 startActivity(intent_chart);
-//                finish();
+                finish();
             }
         });
 

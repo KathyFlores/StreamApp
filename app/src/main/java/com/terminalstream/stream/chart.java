@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,6 +60,18 @@ public class chart extends AppCompatActivity {
         super.onRestart();
 //        System.out.println("onRestart");
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     private void initView(){
         billBTN = (TextView) findViewById(R.id.text_bill);
         mContext = getApplicationContext();
@@ -77,7 +90,7 @@ public class chart extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_bill = new Intent(chart.this, bill.class);
                 startActivity(intent_bill);
-//                finish();
+                finish();
             }
         });
 
@@ -86,7 +99,7 @@ public class chart extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_property = new Intent(chart.this, property.class);
                 startActivity(intent_property);
-//                finish();
+                finish();
             }
         });
 
@@ -95,7 +108,7 @@ public class chart extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(chart.this, chart.class) ;
                 startActivity(intent_chart);
-//                finish();
+                finish();
             }
         });
 
@@ -104,7 +117,7 @@ public class chart extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent_chart = new Intent(chart.this, user.class) ;
                 startActivity(intent_chart);
-//                finish();
+                finish();
             }
         });
 
