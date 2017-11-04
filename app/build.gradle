@@ -29,4 +29,5 @@ dependencies {
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
     compile 'com.makeramen:roundedimageview:2.3.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
 }
