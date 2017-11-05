@@ -1,7 +1,7 @@
-package com.terminalstream.stream.constant;
+package stream.com.streamapp.constant;
 
 /**
- * Created by Alan on 2017/11/4.
+ * Created by Alan on 2017/11/5.
  */
 
 public class regex {

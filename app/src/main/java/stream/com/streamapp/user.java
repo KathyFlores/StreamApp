@@ -1,4 +1,9 @@
-package com.terminalstream.stream;
+package stream.com.streamapp;
+
+/**
+ * Created by Alan on 2017/11/5.
+ */
+
 
 import android.content.Context;
 import android.content.Intent;

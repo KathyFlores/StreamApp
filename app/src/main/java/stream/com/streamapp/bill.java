@@ -1,4 +1,21 @@
-package com.terminalstream.stream;
+package stream.com.streamapp;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 import java.util.ArrayList;
@@ -39,7 +56,7 @@ public class bill extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acticity_bill);
+        setContentView(R.layout.activity_bill);
 
         initData();
         initView();
@@ -93,7 +110,7 @@ public class bill extends AppCompatActivity {
     }
     private void initView(){
         mContext=getApplicationContext();
-        Drawable drawable=ContextCompat.getDrawable(mContext,R.drawable.bill_selected);
+        Drawable drawable= ContextCompat.getDrawable(mContext,R.drawable.bill_selected);
         drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
         billBTN = (TextView) findViewById(R.id.text_bill);
         billBTN.setCompoundDrawables(null,drawable,null,null);
@@ -215,3 +232,4 @@ public class bill extends AppCompatActivity {
     }
 
 }
+

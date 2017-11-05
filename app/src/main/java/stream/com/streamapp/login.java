@@ -1,10 +1,11 @@
-package com.terminalstream.stream;
+package stream.com.streamapp;
 
 /**
- * Created by KathyF on 2017/10/22.
+ * Created by Alan on 2017/11/5.
  */
 
-import com.terminalstream.stream.constant.*;
+import stream.com.streamapp.constant.regex;
+
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -18,7 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.terminalstream.stream.sql.query;
+import stream.com.streamapp.sql.query;
 
 import java.lang.ref.WeakReference;
 import java.util.regex.Matcher;
@@ -79,14 +80,19 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
             e1.printStackTrace();
         }
         Log.e("fff","****"+result);
-        ((login)mActivity.get()).finish = true;
-        ((login)mActivity.get()).ok = (boolean) result;
         return result;
     }
     @Override
     protected void onPostExecute(Object result)
     {
         Log.e("yyy","finish");
+        if((boolean)result)
+        {
+            ((login)mActivity.get()).jump();
+        }
+        else{
+            ((login)mActivity.get()).passwdError();
+        }
 //        String strMsg;
 //        if(result.equals(true))
 //        {
@@ -134,29 +140,25 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         }
         LoginAsyncTask myTask = new LoginAsyncTask(this,username,password);
         myTask.execute();
-        while(!finish) {Log.e("ooo","111");}
-        if(ok)
-        {
-            Log.e("ttt","ok");
-        }
-        else{
-            Log.e("ttt","false");
-        }
 
-        if(password.equals(""))//TODO:||don't pass
-        {
-            passwordET.setText(R.string.passwordError);
-            return ;
-        }
 //      TODO:else pass
+
+
+
+
+    }
+    public void jump()
+    {
         Intent intent = new Intent(login.this,bill.class) ;    //切换Login Activity至User Activity
         startActivity(intent);
         finish();
-
-
     }
-    public void ShowTip(String strMsg)
+    protected void passwdError()
     {
-        Log.e("fff",strMsg);
+        loginPromptET.setText(R.string.passwordError);
     }
+//    public void ShowTip(String strMsg)
+//    {
+//        Log.e("fff",strMsg);
+//    }
 }

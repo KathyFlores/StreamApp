@@ -1,4 +1,4 @@
-package com.terminalstream.stream;
+package stream.com.streamapp;
 
 import org.junit.Test;
 

@@ -1,4 +1,9 @@
-package com.terminalstream.stream;
+package stream.com.streamapp;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

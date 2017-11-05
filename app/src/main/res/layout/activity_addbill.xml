@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fontColorLight">
-    <include layout="@layout/appbar_layout"/>
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/fontColorLight">
+    <include layout="@layout/appbar_layout"
+        android:id="@+id/topbar"/>
 
     <LinearLayout
         android:id="@+id/select_pay_income"
@@ -42,11 +43,13 @@
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/select_pay_income"
         android:scrollbars="vertical">
 
-        <include layout="@layout/pay_type_layout"/>
+        <include layout="@layout/pay_type_layout"
+            />
         <!--<include layout="@layout/activity_incometype"/>-->
     </ScrollView>
 

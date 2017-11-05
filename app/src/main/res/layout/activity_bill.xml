@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fontColorLight">
-    <include layout="@layout/appbar_layout"/>
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/fontColorLight">
+    <include layout="@layout/appbar_layout"
+             android:id="@+id/topbar"/>
 
     <LinearLayout
         android:id="@+id/bill_top_layout"
@@ -164,10 +165,10 @@
 
         </RelativeLayout>
 
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/bill_recycler"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"/>-->
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/bill_recycler"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/bill_recycler"
             android:dividerHeight="1dp"
@@ -178,40 +179,40 @@
 
 
         <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="45dp"-->
-            <!--android:background="@color/white"-->
-            <!--android:padding="10dp">-->
-            <!--<ImageView-->
-                <!--android:id="@+id/icon0"-->
-                <!--android:layout_width="25dp"-->
-                <!--android:layout_height="25dp"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:src="@drawable/salary"/>-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:padding="10dp">-->
+        <!--<ImageView-->
+        <!--android:id="@+id/icon0"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:src="@drawable/salary"/>-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/billContent0"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_toRightOf="@id/icon0"-->
-                <!--android:layout_toEndOf="@id/icon0"-->
-                <!--android:layout_marginStart="10dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:text="@string/salary"-->
-                <!--android:textColor="@color/fontColorDark"-->
-                <!--android:theme="@style/body_text"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:text="1000"-->
-                <!--android:textColor="@color/fontColor"-->
-                <!--android:theme="@style/body_text"/>-->
+        <!--<TextView-->
+        <!--android:id="@+id/billContent0"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toRightOf="@id/icon0"-->
+        <!--android:layout_toEndOf="@id/icon0"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="@string/salary"-->
+        <!--android:textColor="@color/fontColorDark"-->
+        <!--android:theme="@style/body_text"/>-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="1000"-->
+        <!--android:textColor="@color/fontColor"-->
+        <!--android:theme="@style/body_text"/>-->
         <!--</RelativeLayout>-->
     </LinearLayout>
 

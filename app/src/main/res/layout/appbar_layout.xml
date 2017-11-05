@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/topbar"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:layout_alignParentTop="true"
-    android:background="@color/colorPrimary" >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/topbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/colorPrimary" >
 
 
 
 
-    <ImageView
-        android:id="@+id/back_button"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_centerVertical="true"
-        android:layout_margin="10dp"
-        android:visibility="gone"
-        android:src="@drawable/arrow_left" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/textOnPrimary"
-        android:text="@string/app_name"
-        android:theme="@style/headline_text"/>
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:src="@drawable/arrow_left" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/textOnPrimary"
+            android:text="@string/app_name"
+            android:theme="@style/headline_text"/>
 
-</RelativeLayout>
+    </RelativeLayout>
 </merge>
