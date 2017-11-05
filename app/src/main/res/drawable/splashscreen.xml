@@ -9,9 +9,10 @@
         </shape>
     </item>
     <item
-        android:top="140dp"
+        android:top="200dp"
         android:gravity="fill_horizontal"
         android:height="200dp"
+        android:width="500dp"
         >
         <bitmap
             android:id="@+id/welcome"
@@ -20,9 +21,9 @@
         </bitmap>
     </item>
     <item
-        android:width="240dp"
-        android:height="132dp"
-        android:top="440dp"
+        android:width="320dp"
+        android:height="176dp"
+        android:top="480dp"
         android:gravity="center_horizontal"
         >
         <bitmap
