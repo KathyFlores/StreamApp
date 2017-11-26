@@ -16,6 +16,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/payBTN"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -32,6 +33,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/hint" />
         <TextView
+            android:id="@+id/incomeBTN"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -47,10 +49,15 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/select_pay_income"
         android:scrollbars="vertical">
+        <FrameLayout
+            android:id="@+id/itemContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <include layout="@layout/pay_type_layout"
-            />
-        <!--<include layout="@layout/activity_incometype"/>-->
+        </FrameLayout>
+        <!--<include layout="@layout/pay_type_layout"-->
+            <!--/>-->
+        <!--<include layout="@layout/inconme_type_layout"/>-->
     </ScrollView>
 
 

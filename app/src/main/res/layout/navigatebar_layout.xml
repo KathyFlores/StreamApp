@@ -3,7 +3,7 @@
 
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
     <!--<include layout="@layout/activity_top" />-->
     <LinearLayout
         android:layout_width="85dp"
@@ -17,6 +17,7 @@
         android:clickable="true"
         android:layout_width="85dp"
         android:layout_height="75dp"
+        android:layout_marginBottom="-10dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/add" />

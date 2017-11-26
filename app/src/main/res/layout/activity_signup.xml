@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/background"
-              android:orientation="vertical" >
-    <!--<include layout="@layout/activity_top" />-->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="167dp"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -60,6 +60,42 @@
         </LinearLayout>
 
         <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/hint" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/phone"/>
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/phoneHint"
+                android:inputType="phone"
+                android:maxLength="16"
+                android:textColor="@color/fontColor"
+                android:textColorHint="@color/hint"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
@@ -98,7 +134,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/loginButton"
+        android:id="@+id/signupButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
@@ -107,11 +143,11 @@
         android:background="@drawable/login_button"
         >
         <TextView
-            android:id="@+id/loginTXT"
+            android:id="@+id/signUpTXT"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/loginBTNtext"
+            android:text="@string/signupBTNtext"
             android:textColor="@color/hint"
             android:textSize="22sp"/>
         <com.github.rahatarmanahmed.cpv.CircularProgressView
@@ -127,45 +163,44 @@
             />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" >
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp" >-->
 
-        <TextView
-            android:id="@+id/forgetPassword"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:text="@string/forgetPassword"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            />
-        <TextView
-            android:id="@+id/login_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_centerInParent="true"
-            android:textSize="14sp"
-            android:textColor="@color/colorPrimary"
-            />
-        <TextView
-            android:id="@+id/signUp"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:gravity="right"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:text="@string/signUp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/forgetPassword"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:text="@string/forgetPassword"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:textSize="14sp"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/login_prompt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text=""-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:textSize="14sp"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/signUp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:text="@string/signUp"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:textSize="14sp" />-->
+    <!--</RelativeLayout>-->
 
 
 </LinearLayout>

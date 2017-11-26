@@ -2,12 +2,21 @@
     <string name="app_name">流水</string>
     <string name="loginBTNtext">登　录</string>
     <string name="signUp">注册</string>
+    <string name="signupBTNtext">注　册</string>
     <string name="welcome">Welcome</string>
-    <string name="usernameHint">请输入您的用户名</string>
-    <string name="passwordHint">请输入您的密码</string>
+    <string name="usernameHint">请输入用户名</string>
+    <string name="passwordHint">请输入密码</string>
+    <string name="newpasswordHint">请输入新密码</string>
+    <string name="phoneHint">请输入手机号</string>
+    <string name="send">发送验证码</string>
+    <string name="safecodeHint">请输入验证码</string>
     <string name="forgetPassword">忘记密码</string>
-    <string name="usernameError">用户名错误！</string>
-    <string name="passwordError">密码错误！</string>
+    <string name="loginSuccess">登陆成功</string>
+    <string name="signupSuccess">注册成功</string>
+    <string name="usernameError">请输入用户名！</string>
+    <string name="passwordError">用户名或密码错误！</string>
+    <string name="passwordTooShort">密码至少为8位！</string>
+    <string name="usernameTaken">该用户名已存在！</string>
     <string name="bill">账单</string>
     <string name="property">资产</string>
     <string name="chart">图表</string>
@@ -67,4 +76,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

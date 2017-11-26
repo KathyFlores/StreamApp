@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="17dp"
-            android:layout_height="wrap_content"
-            android:columnCount="4"
-            android:orientation="horizontal"
-            android:rowCount="2">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/incomeType"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:columnCount="4"
+        android:rowCount="2"
+        >
     <TextView
+        android:id="@+id/salary"
         android:drawableTop="@drawable/salary"
         android:drawablePadding="10dp"
         android:padding="20dp"
@@ -16,6 +22,7 @@
         android:textColor="@color/fontColor"
         android:theme="@style/body_text" />
     <TextView
+        android:id="@+id/redpacket"
         android:drawableTop="@drawable/redpacket"
         android:drawablePadding="10dp"
         android:padding="20dp"
@@ -24,6 +31,7 @@
         android:textColor="@color/fontColor"
         android:theme="@style/body_text" />
     <TextView
+        android:id="@+id/parttime"
         android:drawableTop="@drawable/parttime"
         android:drawablePadding="10dp"
         android:padding="20dp"
@@ -32,6 +40,7 @@
         android:textColor="@color/fontColor"
         android:theme="@style/body_text" />
     <TextView
+        android:id="@+id/other"
         android:drawableTop="@drawable/other"
         android:drawablePadding="10dp"
         android:padding="20dp"
@@ -40,4 +49,5 @@
         android:textColor="@color/fontColor"
         android:theme="@style/body_text" />
 
-</GridLayout>
+    </GridLayout>
+</LinearLayout>

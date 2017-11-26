@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/fontColorLight">
-    <include layout="@layout/appbar_layout"
-             android:id="@+id/topbar"/>
-
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fontColorLight">
     <LinearLayout
         android:id="@+id/property_layout"
         android:layout_width="match_parent"
-        android:layout_height="455dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/topbar"
         android:orientation="vertical">
         <android.support.v7.widget.RecyclerView
@@ -60,7 +55,4 @@
 
         <!--</RelativeLayout>-->
     </LinearLayout>
-
-    <include layout="@layout/navigatebar_layout"/>
-
-</RelativeLayout>
+</LinearLayout>
