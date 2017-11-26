@@ -22,8 +22,8 @@
         android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/radius_border"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/login_box"
+
         android:orientation="vertical">
 
         <LinearLayout
@@ -103,8 +103,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/radius_border"
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/login_button"
+
         android:text="@string/loginBTNtext"
         android:textColor="@color/hint"
         android:theme="@style/title_text" />

@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-            <gradient
-                android:startColor="@color/backgroundLight"
-                android:endColor="@color/backgroundDark"
-                android:angle="45"/>
-        </shape>
-    </item>
-    <item
-        android:top="200dp"
-        android:gravity="fill_horizontal"
-        android:height="200dp"
-        android:width="500dp"
-        >
-        <bitmap
-            android:id="@+id/welcome"
-            android:src="@drawable/welcome">
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item>-->
+        <!--<shape>-->
+            <!--<gradient-->
+                <!--android:startColor="@color/backgroundLight"-->
+                <!--android:endColor="@color/backgroundDark"-->
+                <!--android:angle="45"/>-->
+        <!--</shape>-->
+    <!--</item>-->
+    <!--<item-->
+        <!--android:top="200dp"-->
+        <!--android:gravity="fill_horizontal"-->
+        <!--android:height="200dp"-->
+        <!--android:width="500dp"-->
+        <!--&gt;-->
+        <!--<bitmap-->
+            <!--android:id="@+id/welcome"-->
+            <!--android:src="@drawable/welcome">-->
 
-        </bitmap>
-    </item>
-    <item
-        android:width="320dp"
-        android:height="176dp"
-        android:top="480dp"
-        android:gravity="center_horizontal"
-        >
-        <bitmap
-            android:id="@+id/logo"
-            android:src="@drawable/logo"
-            >
-        </bitmap>
-    </item>
-</layer-list>
+
+
+        <!--</bitmap>-->
+    <!--</item>-->
+    <!--<item-->
+        <!--android:width="320dp"-->
+        <!--android:height="176dp"-->
+        <!--android:top="480dp"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--&gt;-->
+        <!--<bitmap-->
+            <!--android:id="@+id/logo"-->
+            <!--android:src="@drawable/logo"-->
+            <!--&gt;-->
+        <!--</bitmap>-->
+    <!--</item>-->
+<!--</layer-list>-->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/splash"
+    android:mipMap="true"
+    android:dither="true"
+
+    />
+
