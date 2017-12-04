@@ -4,15 +4,23 @@ package stream.com.streamapp;
  * Created by Alan on 2017/11/5.
  */
 
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 import stream.com.streamapp.constant.regex;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.app.AlertDialog;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,11 +33,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.mob.MobSDK;
+import com.mob.tools.MobUIShell;
 
 import stream.com.streamapp.home.BasicActivity;
 import stream.com.streamapp.sql.query;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,14 +63,6 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
     @Override
     protected void onPreExecute()
     {
-//        if(null == sDialog)
-//        {
-//            sDialog = new ProgressDialog(mActivity.get());
-//        }
-//        sDialog.setTitle("Please wait...");
-//        sDialog.setMessage("Logging...");
-//        sDialog.setCancelable(false);
-//        sDialog.show();
 
     }
     @Override
@@ -102,18 +106,9 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
         else{
             ((login)mActivity.get()).passwdError();
         }
-//        String strMsg;
-//        if(result.equals(true))
-//        {
-//            strMsg = "success";
-//        }
-//        else
-//            strMsg = "failed";
-//        ((login)mActivity.get()).ShowTip(strMsg);
-//        //取消进度条
-//        sDialog.cancel();
     }
 }
+
 
 
 
@@ -131,12 +126,53 @@ public class login extends AppCompatActivity {
     TextView loginTXT = null;
     TextView signUpBTN=null;
     TextView forgetPasswdBTN=null;
+    private String appKey="22cd1a36f1a40";
+    private String privateKey="cfcd48435cfa42c9b518f511d1c471f0";
+    String phone="11";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        MobSDK.init(this,appKey,privateKey);
+        //SMSSDK.initSDK(this,appKey,privateKey,true);
         initView();
         setListener();
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            int readPhone = checkSelfPermission(Manifest.permission.READ_PHONE_STATE);
+            int receiveSms = checkSelfPermission(Manifest.permission.RECEIVE_SMS);
+            int readSms = checkSelfPermission(Manifest.permission.READ_SMS);
+            int readContacts = checkSelfPermission(Manifest.permission.READ_CONTACTS);
+            int readSdcard = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+            int requestCode = 0;
+            ArrayList<String> permissions = new ArrayList<String>();
+            if (readPhone != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 0;
+                permissions.add(Manifest.permission.READ_PHONE_STATE);
+            }
+            if (receiveSms != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 1;
+                permissions.add(Manifest.permission.RECEIVE_SMS);
+            }
+            if (readSms != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 2;
+                permissions.add(Manifest.permission.READ_SMS);
+            }
+            if (readContacts != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 3;
+                permissions.add(Manifest.permission.READ_CONTACTS);
+            }
+            if (readSdcard != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 4;
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            if (requestCode > 0) {
+                String[] permission = new String[permissions.size()];
+                this.requestPermissions(permissions.toArray(permission), requestCode);
+                return;
+            }
+        }
     }
     private void initView(){
         loginBTN = (RelativeLayout) findViewById(R.id.loginButton);
@@ -180,9 +216,70 @@ public class login extends AppCompatActivity {
             }
         });
         forgetPasswdBTN.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
+                RegisterPage registerPage = new RegisterPage();
+                registerPage.setRegisterCallback(new EventHandler() {
+                    public void afterEvent(int event, int result, Object data) {
+                        // 解析注册结果
+                        if (result == SMSSDK.RESULT_COMPLETE) {
+                            @SuppressWarnings("unchecked")
+                            HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
+                            String country = (String) phoneMap.get("country");
+                            final String cphone = (String) phoneMap.get("phone");
+                            //phone=cphone;
+                            // 提交用户信息
+                            //registerUser(country, phone);
+                            if(event==SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE)
+                            {
+                                Log.e("fff","yanzhengwanle"+cphone);
+                                View newView = LayoutInflater.from(login.this).inflate(R.layout.new_password,null);
+                                final EditText newpassword = (EditText)newView.findViewById(R.id.newpassword);
+                                final AlertDialog.Builder newbuilder = new AlertDialog.Builder(login.this);
+                                newbuilder.setView(newView);
+                                newbuilder.setNegativeButton("取消",null);
+                                newbuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String newPassword = newpassword.getText().toString().trim();
+                                        if(newPassword.length()<8)
+                                        {
+                                            Toast.makeText(login.this,R.string.passwordTooShort,Toast.LENGTH_LONG).show();
+                                            newbuilder.setCancelable(false);
+                                        }
+                                        else{
+                                            //TODO:修改密码
+                                            String updateSql="update user set passwd = \""+newPassword+"\" where phone = \""+cphone+"\";";
+                                            Log.e("fff","sql:"+updateSql);
+                                            query tQuery = new query();
+                                            try {
+                                                tQuery.select("user",updateSql);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+
+
+
+                                    }
+                                });
+                                newbuilder.create().show();
+
+
+
+
+                            }
+                        }
+
+                    }
+                });
+
+                registerPage.show(login.this);
+                //
+                /*
                 final AlertDialog.Builder builder = new AlertDialog.Builder(login.this);
                 //builder.setMessage("hihi");
                 View view = LayoutInflater.from(login.this).inflate(R.layout.forget_password,null);
@@ -240,6 +337,7 @@ public class login extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.show();
+                */
             }
         });
     }
@@ -263,6 +361,7 @@ public class login extends AppCompatActivity {
         progressView.stopAnimation();
         loginTXT.setVisibility(View.VISIBLE);
     }
+
 //    public void ShowTip(String strMsg)
 //    {
 //        Log.e("fff",strMsg);

@@ -27,10 +27,6 @@ public class query {
      */
     static private String mAnswer="";
 
-    /*
-    ** use Okhttp3 to connect with Internet
-     */
-
 
     /*
     ** Call back Method
@@ -69,7 +65,7 @@ public class query {
                 RequestBody body = new FormBody.Builder()
                         .add("content", query)
                         .build();
-//                Log.e("fff",query);
+                Log.e("fff","query:"+query);
 //                Log.e("fff",body.toString());
                 /*
                 ** headers, url, body should be here

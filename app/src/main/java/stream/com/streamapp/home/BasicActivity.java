@@ -152,7 +152,7 @@ public class BasicActivity extends AppCompatActivity {
             mViewPager.setCurrentItem(1);
             selected(1);
         }
-    });
+        });
 
         chartBTN.setOnClickListener(new TextView.OnClickListener(){
             @Override

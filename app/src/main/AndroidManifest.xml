@@ -9,6 +9,18 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--PROTECTION_NORMAL -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--<uses-permission android:name="android.permission.INTERNET" />-->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--PROTECTION_DANGEROUS -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,6 +38,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale|layoutDirection"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <meta-data android:name="Mob-AppKey" android:value="moba6b6c6d6"/>
+        <meta-data android:name="Mob-AppSecret" android:value="b89d2427a3bc7ad1aea1e1e8c1d36bf3"/>
         <activity android:name=".login" />
         <activity android:name=".bill" />
         <activity android:name=".property" />
@@ -34,6 +54,7 @@
         <activity android:name=".user" />
         <activity android:name=".home.BasicActivity"></activity>
         <activity android:name=".Signup"></activity>
+
     </application>
 
 </manifest>
