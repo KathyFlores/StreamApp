@@ -57,6 +57,12 @@
         <activity android:name=".user" />
         <activity android:name=".home.BasicActivity"></activity>
         <activity android:name=".Signup"></activity>
+        <receiver android:name=".broadcast.smsRecevier" android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
