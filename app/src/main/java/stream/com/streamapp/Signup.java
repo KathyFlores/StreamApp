@@ -28,7 +28,7 @@ class SignupAsyncTask extends AsyncTask<Object,Object,Object>
     String userName,passwd,phoneNum;
     private final WeakReference<Activity> mActivity;
     boolean result = true;
-    private int errorType=0;
+    private int errorType=-1;
 
     SignupAsyncTask(Signup activity, String userName,String passwd,String phoneNum)
     {

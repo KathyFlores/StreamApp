@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -126,6 +127,7 @@ public class login extends AppCompatActivity {
     TextView loginTXT = null;
     TextView signUpBTN=null;
     TextView forgetPasswdBTN=null;
+    ImageView faceBTN = null;
     private String appKey="22cd1a36f1a40";
     private String privateKey="cfcd48435cfa42c9b518f511d1c471f0";
     String phone="11";
@@ -184,6 +186,7 @@ public class login extends AppCompatActivity {
         loginTXT = (TextView) findViewById(R.id.loginTXT);
         signUpBTN=(TextView)findViewById(R.id.signUp);
         forgetPasswdBTN =(TextView)findViewById(R.id.forgetPassword);
+        faceBTN=(ImageView)findViewById(R.id.face);
     }
     private void setListener(){
         loginBTN.setOnClickListener(new View.OnClickListener() {
@@ -197,7 +200,7 @@ public class login extends AppCompatActivity {
                 String password = passwordET.getText().toString().trim();
                 if (username.equals("")) {
                     loginPromptET.setText(R.string.usernameError);
-
+                    loginPromptET.setVisibility(View.VISIBLE);
                     progressView.setVisibility(View.GONE);
                     progressView.stopAnimation();
                     loginTXT.setVisibility(View.VISIBLE);
@@ -205,6 +208,21 @@ public class login extends AppCompatActivity {
                 }
                 LoginAsyncTask myTask = new LoginAsyncTask(login.this, username, password);
                 myTask.execute();
+            }
+        });
+        faceBTN.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                loginPromptET.setVisibility(View.GONE);
+                String username = usernameET.getText().toString().trim();
+                if(username.equals("")){
+                    loginPromptET.setText(R.string.usernameError);
+                    loginPromptET.setVisibility(View.VISIBLE);
+                    //return;
+                }
+                else{
+                    //TODO:调用相机，刷脸登录
+                }
             }
         });
         signUpBTN.setOnClickListener(new View.OnClickListener() {
@@ -356,7 +374,7 @@ public class login extends AppCompatActivity {
     protected void passwdError()
     {
         loginPromptET.setText(R.string.passwordError);
-
+        loginPromptET.setVisibility(View.VISIBLE);
         progressView.setVisibility(View.GONE);
         progressView.stopAnimation();
         loginTXT.setVisibility(View.VISIBLE);
