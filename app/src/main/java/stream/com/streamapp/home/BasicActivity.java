@@ -2,6 +2,7 @@ package stream.com.streamapp.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +14,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,8 @@ public class BasicActivity extends AppCompatActivity {
     private Drawable _drawable0, _drawable1, _drawable2, _drawable3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LitePal.initialize(this);//Init database.
+        SQLiteDatabase db = LitePal.getDatabase();
         setContentView(R.layout.activity_basic);
         super.onCreate(savedInstanceState);
 

@@ -10,11 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import stream.com.streamapp.R;
+import stream.com.streamapp.db.Bills;
 
 /**
  * Created by KathyF on 2017/11/26.
@@ -53,11 +58,15 @@ public class BillFragment extends Fragment {
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.amusement,R.drawable.book,R.drawable.clothes));
         categoryList = new ArrayList<Integer>(Arrays.asList(R.string.amusement,R.string.book,R.string.clothes));
-        for(int i=0;i<3;i++)
-        {
-            dataList.add("test"+i);
+        try {
+            for (int i = 0; i < 3; i++) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                double sum = DataSupport.select("user_id", "0").where("date > ?", sdf.parse("2017-12-01").toString()).where("date < ?", sdf.parse("2018-01-01").toString()).sum(Bills.class,"amount",double.class);
+                dataList.add(String.valueOf(sum));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
 
     }
     class myAdapter extends RecyclerView.Adapter<myAdapter.myViewHolder> {

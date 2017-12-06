@@ -78,7 +78,7 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
             {
 
                 String res=m.group(0).replaceAll("(passwd|<br>)","");
-                Log.e("shina",m.group(0));
+            //    Log.e("shina",m.group(0));
                 if(res.equals(passwd))
                 {
                     result = true;
@@ -93,13 +93,13 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
-        Log.e("fff","****"+result);
+        //Log.e("fff","****"+result);
         return result;
     }
     @Override
     protected void onPostExecute(Object result)
     {
-        Log.e("yyy","finish");
+       // Log.e("yyy","finish");
         if((boolean)result)
         {
             ((login)mActivity.get()).jump();
@@ -119,6 +119,15 @@ public class login extends AppCompatActivity {
     boolean finish = false;
     boolean ok = false;
 
+    public static int getUser_id() {
+        return user_id;
+    }
+
+    public static void setUser_id(int user_id) {
+        login.user_id = user_id;
+    }
+
+    static int user_id = 0;
     RelativeLayout loginBTN = null;
     EditText usernameET = null;
     EditText passwordET = null;
@@ -252,7 +261,7 @@ public class login extends AppCompatActivity {
                             //registerUser(country, phone);
                             if(event==SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE)
                             {
-                                Log.e("fff","yanzhengwanle"+cphone);
+                         //       Log.e("fff","yanzhengwanle"+cphone);
                                 View newView = LayoutInflater.from(login.this).inflate(R.layout.new_password,null);
                                 final EditText newpassword = (EditText)newView.findViewById(R.id.newpassword);
                                 final AlertDialog.Builder newbuilder = new AlertDialog.Builder(login.this);
@@ -270,7 +279,7 @@ public class login extends AppCompatActivity {
                                         else{
                                             //TODO:修改密码
                                             String updateSql="update user set passwd = \""+newPassword+"\" where phone = \""+cphone+"\";";
-                                            Log.e("fff","sql:"+updateSql);
+                                         //   Log.e("fff","sql:"+updateSql);
                                             query tQuery = new query();
                                             try {
                                                 tQuery.select("user",updateSql);
@@ -367,6 +376,7 @@ public class login extends AppCompatActivity {
         progressView.stopAnimation();
         loginTXT.setText(R.string.loginSuccess);
         loginTXT.setVisibility(View.VISIBLE);
+        //TODO:user_id
         Intent intent = new Intent(login.this,BasicActivity.class) ;    //切换Login Activity至User Activity
         startActivity(intent);
         finish();

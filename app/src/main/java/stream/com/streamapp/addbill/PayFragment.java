@@ -4,13 +4,19 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.Date;
+
 import stream.com.streamapp.R;
+import stream.com.streamapp.db.Bills;
 
 /**
  * Created by KathyF on 2017/11/26.
@@ -90,61 +96,89 @@ public class PayFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v){
         //TODO：绑定种类
+        String type = new String();
         switch(v.getId())
         {
             case R.id.meal:
+                type = "meal";
                 break;
             case R.id.transportation:
+                type = "transportation";
                 break;
             case R.id.shopping:
+                type = "shopping";
                 break;
             case R.id.daily:
+                type = "daily";
                 break;
             case R.id.clothes:
+                type = "clothes";
                 break;
             case R.id.vegetables:
+                type = "vegetables";
                 break;
             case R.id.fruit:
+                type = "fruit";
                 break;
             case R.id.snack:
+                type = "snack";
                 break;
             case R.id.book:
+                type = "book";
                 break;
             case R.id.study:
+                type = "study";
                 break;
             case R.id.house:
+                type = "house";
                 break;
             case R.id.investment:
+                type = "investment";
                 break;
             case R.id.social:
+                type = "social";
                 break;
             case R.id.amusement:
+                type = "amusement";
                 break;
             case R.id.makeup:
+                type = "makeup";
                 break;
             case R.id.call:
+                type = "call";
                 break;
             case R.id.sport:
+                type = "sport";
                 break;
             case R.id.travel:
+                type = "travel";
                 break;
             case R.id.medicine:
+                type = "medicine";
                 break;
             case R.id.office:
+                type = "office";
                 break;
             case R.id.digit:
+                type = "digit";
                 break;
             case R.id.gift:
+                type = "gift";
                 break;
             case R.id.repair:
+                type = "repair";
                 break;
             case R.id.wine:
+                type = "wine";
                 break;
             case R.id.redpacket:
+                type = "redpacket";
                 break;
             case R.id.other:
+                type = "other";
                 break;
         }
+        final String typeFinal = new String(type) ;
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.bill_info,null);
         final EditText amountET = dialogView.findViewById(R.id.amount);
@@ -154,10 +188,18 @@ public class PayFragment extends Fragment implements View.OnClickListener{
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO:处理
+                Bills bill = new Bills();
                 String amount=amountET.getText().toString().trim();
                 String note = noteET.getText().toString().trim();
+                bill.setType(typeFinal);
+                bill.setAmount(Double.valueOf(amount));
+                bill.setNote(note);
+                bill.setPlace("somewhere");
+                bill.setDate(new Date());
+                bill.setUser_id(0);
+                bill.save();
 
+                Log.d("insetttttttttt", DataSupport.findAll(Bills.class).toString());
             }
         });
         AlertDialog dialog = builder.create();
