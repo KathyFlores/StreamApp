@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,13 @@ public class BillFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter = new myAdapter());
+        mAdapter.setOnItemClickListener(new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion) {
+                Toast.makeText(getActivity(),"hi",Toast.LENGTH_SHORT).show();
+                //TODO:显示账单详情
+            }
+        });
         //TODO:add divider
         // recyclerView.addItemDecoration(new);
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
@@ -50,6 +58,7 @@ public class BillFragment extends Fragment {
     }
 
     private void initData(){
+        // TODO: 从数据库中读取账单数据，绑定到这里，以下是绑定的demo
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.amusement,R.drawable.book,R.drawable.clothes));
         categoryList = new ArrayList<Integer>(Arrays.asList(R.string.amusement,R.string.book,R.string.clothes));
@@ -61,12 +70,16 @@ public class BillFragment extends Fragment {
 
     }
     class myAdapter extends RecyclerView.Adapter<myAdapter.myViewHolder> {
+        private MyItemClickListener mItemClickListener;
+        public void setOnItemClickListener(MyItemClickListener listener){
+            this.mItemClickListener=listener;
+        }
         @Override
         public myAdapter.myViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             myAdapter.myViewHolder holder = new myAdapter.myViewHolder(LayoutInflater.from(
                     getActivity()).inflate(R.layout.bill_item_layout, parent,
-                    false));
+                    false),mItemClickListener);
             return holder;
         }
 
@@ -87,11 +100,22 @@ public class BillFragment extends Fragment {
             TextView category;
             TextView data;
             ImageView icon;
-            public myViewHolder(View view){
+            private MyItemClickListener mListener;
+            public myViewHolder(View view,MyItemClickListener listener){
                 super (view);
+
                 category = (TextView)view.findViewById(R.id.category);
                 data = (TextView)view.findViewById(R.id.data);
                 icon = (ImageView)view.findViewById(R.id.icon);
+                this.mListener = listener;
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(mListener != null){
+                            mListener.onItemClick(v,getAdapterPosition());
+                        }
+                    }
+                });
             }
         }
     }

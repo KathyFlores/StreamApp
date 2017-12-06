@@ -40,6 +40,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //compile files('lib/MobCommons-2017.0607.1736.jar')
     //compile files('lib/MobTools-2017.0607.1736.jar')
+    compile 'com.github.hss01248:DialogUtil:1.2.5'
     compile name: 'SMSSDK-3.0.0', ext: 'aar'
     compile name: 'SMSSDKGUI-3.0.0', ext: 'aar'
     compile files('src/main/java/stream/com/streamapp/lib/MobCommons-2017.0607.1736.jar')
