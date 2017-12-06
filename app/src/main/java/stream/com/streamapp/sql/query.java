@@ -80,7 +80,7 @@ public class query {
                 String ans= tResponse.body().string();
 //                Log.e("eee",ans);
 
-                Message msg = new Message();
+                //Message msg = new Message();
                 Bundle data = new Bundle();
                 data.putString("ans",ans);
 //                Log.e("fff",ans);
