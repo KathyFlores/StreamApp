@@ -1,6 +1,7 @@
 package stream.com.streamapp.home;
 
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.yalantis.phoenix.PullToRefreshView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +34,8 @@ public class PropertyFragment extends Fragment {
     private List<Integer> categoryList;
     private List<String> dataList;
     private myAdapter mAdapter;
+    private PullToRefreshView mPullToRefreshView;
+    private boolean isRefreshing = false;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_property, null);
         initData();
@@ -61,6 +66,20 @@ public class PropertyFragment extends Fragment {
             public void onItemClick(View view, int postion) {
                 Toast.makeText(getActivity(),"hi",Toast.LENGTH_SHORT).show();
                 //TODO:显示资产详情
+            }
+        });
+        mPullToRefreshView=(PullToRefreshView)view.findViewById(R.id.pull_to_refresh);
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                isRefreshing=true;
+                mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        new MyTask().execute();
+                        mPullToRefreshView.setRefreshing(false);
+                    }
+                }, 2000);
             }
         });
     }
@@ -111,6 +130,19 @@ public class PropertyFragment extends Fragment {
                     }
                 });
             }
+        }
+    }
+    class MyTask extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] objects){
+            initData();
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Object o){
+            super.onPostExecute(o);
+            isRefreshing=false;
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

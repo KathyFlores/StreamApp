@@ -1,5 +1,6 @@
 package stream.com.streamapp.home;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.yalantis.phoenix.PullToRefreshView;
 
 import org.litepal.crud.DataSupport;
 
@@ -33,6 +36,8 @@ public class BillFragment extends Fragment {
     private List<Integer> categoryList;
     private List<String> dataList;
     private myAdapter mAdapter;
+    private PullToRefreshView mPullToRefreshView;
+    private boolean isRefreshing = false;
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragemnt_bill, null);
@@ -60,10 +65,25 @@ public class BillFragment extends Fragment {
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 //        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimaryDark), getResources().getColor(R.color.colorAccent));
 //        swipeRefreshLayout.setProgressViewOffset(false,0, 50);
+        mPullToRefreshView=(PullToRefreshView)view.findViewById(R.id.pull_to_refresh);
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                isRefreshing=true;
+                mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        new MyTask().execute();
+                        mPullToRefreshView.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
     }
 
     private void initData(){
         // TODO: 从数据库中读取账单数据，绑定到这里，以下是绑定的demo
+        //预期实现目标：从上往下按照添加日期的先后顺序显示，最上面的是最后添加的。同时图表与类别list也需要维护
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.amusement,R.drawable.book,R.drawable.clothes));
         categoryList = new ArrayList<Integer>(Arrays.asList(R.string.amusement,R.string.book,R.string.clothes));
@@ -128,4 +148,18 @@ public class BillFragment extends Fragment {
             }
         }
     }
+    class MyTask extends AsyncTask{
+        @Override
+        protected Object doInBackground(Object[] objects){
+            initData();
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Object o){
+            super.onPostExecute(o);
+            isRefreshing=false;
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 }
+
