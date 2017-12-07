@@ -15,12 +15,14 @@ import android.widget.Toast;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import org.litepal.crud.DataSupport;
+import org.w3c.dom.Text;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import stream.com.streamapp.R;
 import stream.com.streamapp.db.Bills;
@@ -36,19 +38,25 @@ public class BillFragment extends Fragment {
     private List<Integer> categoryList;
     private List<String> dataList;
     private myAdapter mAdapter;
+    private TextView incomeSum, expenseSum;
+    double income,expense;
     private PullToRefreshView mPullToRefreshView;
     private boolean isRefreshing = false;
+
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragemnt_bill, null);
 
         initData();
         initView();
+        incomeSum.setText(String.valueOf(income)+" 元");
+        expenseSum.setText(String.valueOf(expense)+" 元");
         //setListener();
         return view;
     }
     private void initView(){
-
+        incomeSum = (TextView)view.findViewById(R.id.incomeSum);
+        expenseSum = (TextView)view.findViewById(R.id.expenseSum);
         recyclerView=view.findViewById(R.id.bill_recycler);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -84,6 +92,9 @@ public class BillFragment extends Fragment {
     private void initData(){
         // TODO: 从数据库中读取账单数据，绑定到这里，以下是绑定的demo
         //预期实现目标：从上往下按照添加日期的先后顺序显示，最上面的是最后添加的。同时图表与类别list也需要维护
+
+        income=0;// TODO: 计算总收入
+        expense=0;//TODO: 计算总支出
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.amusement,R.drawable.book,R.drawable.clothes));
         categoryList = new ArrayList<Integer>(Arrays.asList(R.string.amusement,R.string.book,R.string.clothes));
@@ -93,6 +104,7 @@ public class BillFragment extends Fragment {
                 double sum = DataSupport.select("user_id", "0").where("date > ?", sdf.parse("2017-12-01").toString()).where("date < ?", sdf.parse("2018-01-01").toString()).sum(Bills.class,"amount",double.class);
                 dataList.add(String.valueOf(sum));
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -156,6 +168,8 @@ public class BillFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Object o){
+            expenseSum.setText(String.valueOf(expense)+" 元");
+            incomeSum.setText(String.valueOf(income)+" 元");
             super.onPostExecute(o);
             isRefreshing=false;
             mAdapter.notifyDataSetChanged();

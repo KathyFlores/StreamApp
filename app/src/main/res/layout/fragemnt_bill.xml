@@ -51,13 +51,13 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/income"
+                android:id="@+id/incomeSum"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
                 android:gravity="center_horizontal|top"
                 android:padding="3dp"
-                android:text="1000元"
+
                 android:textColor="@color/fontColorDark"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -79,88 +79,91 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/expense"
+                android:id="@+id/expenseSum"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
                 android:gravity="center_horizontal|top"
                 android:padding="3dp"
-                android:text="0元"
+
                 android:textColor="@color/fontColorDark"
                 android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hint"/>
     <LinearLayout
         android:id="@+id/bill_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/bill_top_layout"
         android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_marginBottom="5dp">-->
 
-            <TextView
-                android:id="@+id/date0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="10月21日 星期六"
-                android:theme="@style/body_text"
-                android:textColor="@color/fontColor"/>
+            <!--<TextView-->
+                <!--android:id="@+id/date0"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="end"-->
+                <!--android:text="10月21日 星期六"-->
+                <!--android:theme="@style/body_text"-->
+                <!--android:textColor="@color/fontColor"/>-->
 
-            <TextView
-                android:id="@+id/dateExpense0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:text="0"
-                android:textColor="@color/fontColor"
-                android:theme="@style/body_text" />
-            <TextView
-                android:id="@+id/dateExpenseText0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/dateExpense0"
-                android:layout_toStartOf="@id/dateExpense0"
-                android:text="@string/expense"
-                android:textColor="@color/fontColor"
-                android:theme="@style/body_text" />
+            <!--<TextView-->
+                <!--android:id="@+id/dateExpense0"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginStart="5dp"-->
+                <!--android:text="0"-->
+                <!--android:textColor="@color/fontColor"-->
+                <!--android:theme="@style/body_text" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/dateExpenseText0"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toLeftOf="@id/dateExpense0"-->
+                <!--android:layout_toStartOf="@id/dateExpense0"-->
+                <!--android:text="@string/expense"-->
+                <!--android:textColor="@color/fontColor"-->
+                <!--android:theme="@style/body_text" />-->
 
-            <TextView
-                android:id="@+id/dateIncome0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/dateExpenseText0"
-                android:layout_toStartOf="@id/dateExpenseText0"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
-                android:text="1000"
-                android:textColor="@color/fontColor"
-                android:theme="@style/body_text" />
-            <TextView
-                android:id="@+id/dateIncomeText0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/dateIncome0"
-                android:layout_toStartOf="@id/dateIncome0"
-                android:text="@string/income"
-                android:textColor="@color/fontColor"
-                android:theme="@style/body_text" />
+            <!--<TextView-->
+                <!--android:id="@+id/dateIncome0"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toLeftOf="@id/dateExpenseText0"-->
+                <!--android:layout_toStartOf="@id/dateExpenseText0"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginStart="5dp"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:text="1000"-->
+                <!--android:textColor="@color/fontColor"-->
+                <!--android:theme="@style/body_text" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/dateIncomeText0"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toLeftOf="@id/dateIncome0"-->
+                <!--android:layout_toStartOf="@id/dateIncome0"-->
+                <!--android:text="@string/income"-->
+                <!--android:textColor="@color/fontColor"-->
+                <!--android:theme="@style/body_text" />-->
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
         <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/bill_recycler"-->
