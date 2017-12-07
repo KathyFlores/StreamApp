@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +54,7 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
     String userName,passwd;
     private final WeakReference<Activity> mActivity;
     boolean result = true;
+    private int user_id;
 
     LoginAsyncTask(login activity, String userName,String passwd)
     {
@@ -81,7 +83,20 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
             //    Log.e("shina",m.group(0));
                 if(res.equals(passwd))
                 {
-                    result = true;
+                    sqlQuery="select id from user where name = \"" + userName + "\";";
+                    rePd=tQuery.select("user",sqlQuery);
+                    //<br>id<br>1<br>
+                    r=Pattern.compile(regex.idPattern);
+                    m=r.matcher(rePd);
+                    if(m.find())
+                    {
+                        res=m.group(0).replaceAll("(id|<br>)","");
+                        user_id=Integer.parseInt(res);
+                        result=true;
+                    }
+                    else{
+                        result=false;
+                    }
                 }
                 else{
                     result = false;
@@ -102,7 +117,7 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
        // Log.e("yyy","finish");
         if((boolean)result)
         {
-            ((login)mActivity.get()).jump();
+            ((login)mActivity.get()).jump(user_id);
         }
         else{
             ((login)mActivity.get()).passwdError();
@@ -149,12 +164,15 @@ public class login extends AppCompatActivity {
         initView();
         setListener();
 
+
+
         if (Build.VERSION.SDK_INT >= 23) {
             int readPhone = checkSelfPermission(Manifest.permission.READ_PHONE_STATE);
             int receiveSms = checkSelfPermission(Manifest.permission.RECEIVE_SMS);
             int readSms = checkSelfPermission(Manifest.permission.READ_SMS);
             int readContacts = checkSelfPermission(Manifest.permission.READ_CONTACTS);
             int readSdcard = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            int hasNotification=checkSelfPermission(Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE);
 
             int requestCode = 0;
             ArrayList<String> permissions = new ArrayList<String>();
@@ -181,7 +199,11 @@ public class login extends AppCompatActivity {
             if (requestCode > 0) {
                 String[] permission = new String[permissions.size()];
                 this.requestPermissions(permissions.toArray(permission), requestCode);
-                return;
+            }
+            if(hasNotification!=PackageManager.PERMISSION_GRANTED)
+            {
+                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+                startActivity(intent);
             }
         }
     }
@@ -369,7 +391,7 @@ public class login extends AppCompatActivity {
         });
     }
 
-    public void jump()
+    public void jump(int user_id)
     {
         loginPromptET.setVisibility(View.GONE);
         progressView.setVisibility(View.GONE);
@@ -377,6 +399,10 @@ public class login extends AppCompatActivity {
         loginTXT.setText(R.string.loginSuccess);
         loginTXT.setVisibility(View.VISIBLE);
         //TODO:user_id
+        setUser_id(user_id);
+        Log.e("fff","userid:"+getUser_id());
+
+
         Intent intent = new Intent(login.this,BasicActivity.class) ;    //切换Login Activity至User Activity
         startActivity(intent);
         finish();
