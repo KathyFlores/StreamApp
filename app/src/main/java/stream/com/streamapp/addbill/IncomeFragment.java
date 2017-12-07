@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.litepal.LitePal;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import stream.com.streamapp.R;
@@ -81,7 +82,9 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
                 bill.setAmount(Double.valueOf(amount));
                 bill.setNote(note);
                 bill.setPlace("somewhere");
-                bill.setDate(new Date());
+                bill.setInOrOut("in");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                bill.setDate(sdf.format(new Date()));
                 bill.setUser_id(0);
                 bill.save();
             }

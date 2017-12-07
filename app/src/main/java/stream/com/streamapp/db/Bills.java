@@ -15,10 +15,19 @@ public class Bills extends DataSupport{
     private int id;
     private int user_id;
     private double amount;
-    private Date date;
+    private String date;
     private String place;
+    private String inOrOut;//收入或支出
     private String type;
     private String note;
+
+    public String getInOrOut() {
+        return inOrOut;
+    }
+
+    public void setInOrOut(String inOrOut) {
+        this.inOrOut = inOrOut;
+    }
 
     public int getId() {
         return id;
@@ -44,11 +53,11 @@ public class Bills extends DataSupport{
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import org.litepal.crud.DataSupport;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import stream.com.streamapp.R;
 import stream.com.streamapp.db.Bills;
+import stream.com.streamapp.login;
 
 /**
  * Created by KathyF on 2017/11/26.
@@ -195,8 +197,10 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                 bill.setAmount(Double.valueOf(amount));
                 bill.setNote(note);
                 bill.setPlace("somewhere");
-                bill.setDate(new Date());
-                bill.setUser_id(0);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                bill.setDate(sdf.format(new Date()));
+                bill.setInOrOut("out");
+                bill.setUser_id(login.getUser_id());
                 bill.save();
 
                 Log.d("insetttttttttt", DataSupport.findAll(Bills.class).toString());
