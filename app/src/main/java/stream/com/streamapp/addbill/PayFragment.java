@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
@@ -202,8 +203,8 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                 bill.setInOrOut("out");
                 bill.setUser_id(login.getUser_id());
                 bill.save();
-
-                Log.d("insetttttttttt", DataSupport.findAll(Bills.class).toString());
+                Toast.makeText(getActivity(),"账单添加成功",Toast.LENGTH_SHORT).show();
+                //Log.d("insetttttttttt", DataSupport.findAll(Bills.class).toString());
             }
         });
         AlertDialog dialog = builder.create();

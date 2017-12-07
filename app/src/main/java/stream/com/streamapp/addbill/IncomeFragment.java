@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hss01248.dialog.material.MaterialDialog;
 
 import org.litepal.LitePal;
 
@@ -87,6 +90,7 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
                 bill.setDate(sdf.format(new Date()));
                 bill.setUser_id(0);
                 bill.save();
+                Toast.makeText(getActivity(),"账单添加成功",Toast.LENGTH_SHORT).show();
             }
         });
         AlertDialog dialog = builder.create();
