@@ -3,10 +3,12 @@ package stream.com.streamapp.home;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,14 +18,9 @@ import android.widget.Toast;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import org.litepal.crud.DataSupport;
-import org.w3c.dom.Text;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import stream.com.streamapp.R;
 import stream.com.streamapp.db.Bills;
@@ -42,6 +39,7 @@ public class BillFragment extends Fragment {
     private List<Integer> iconList;
     private List<Integer> categoryList;
     private List<String> dataList;
+
     private List<String> typeList;
     private myAdapter mAdapter;
     private TextView incomeSum, expenseSum;
@@ -52,7 +50,7 @@ public class BillFragment extends Fragment {
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragemnt_bill, null);
-
+        //PopupMenu
         initData();
         initView();
         incomeSum.setText(String.valueOf(income)+" 元");
@@ -66,6 +64,7 @@ public class BillFragment extends Fragment {
         recyclerView=view.findViewById(R.id.bill_recycler);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter = new myAdapter());
 
 //        });
@@ -78,8 +77,24 @@ public class BillFragment extends Fragment {
         });
         mAdapter.setOnItemLongClickListener(new MyItemLongClickListener() {
             @Override
-            public void onLongItemClick(View view, int position) {
-                Toast.makeText(getActivity(),"hia",Toast.LENGTH_SHORT).show();
+            public void onLongItemClick(View v, int position) {
+                PopupMenu popupMenu = new PopupMenu(getContext(),v);
+                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        //TODO:数据库里删除记录，维护income和expense
+                        /*dataList.remove(position);
+                        iconList.remove(position);
+                        categoryList.remove(position);
+                        mAdapter.notifyItemRemoved(position);*/
+                        mAdapter.notifyDataSetChanged();
+                        Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+
+                popupMenu.show(); //showing popup menu
+
                 //TODO:添加删除
             }
         });
@@ -111,12 +126,11 @@ public class BillFragment extends Fragment {
         income = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), "2017-12-01", "2018-01-01" ,"in" ).sum(Bills.class, "amount", double.class);
 
         expense= DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), "2017-12-01", "2018-01-01" ,"out" ).sum(Bills.class, "amount", double.class);
-
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>();
         categoryList = new ArrayList<Integer>();
         List<Bills> bills = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).order("date desc").limit(5).find(Bills.class);
-        for (int i = 0; i < ((bills.size()>5)?5:bills.size()); i++) {
+        for (int i = 0; i < /*((bills.size()>5)?5:*/bills.size(); i++) {
             dataList.add( (bills.get(i).getInOrOut().equals("in") ? "+":"-") + String.valueOf(bills.get(i).getAmount()));
             switch(bills.get(i).getType())
             {
