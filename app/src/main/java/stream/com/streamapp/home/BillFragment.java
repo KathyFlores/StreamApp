@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,29 +76,29 @@ public class BillFragment extends Fragment {
                 //TODO:显示账单详情
             }
         });
-        mAdapter.setOnItemLongClickListener(new MyItemLongClickListener() {
-            @Override
-            public void onLongItemClick(View v, int position) {
-                PopupMenu popupMenu = new PopupMenu(getContext(),v);
-                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        //TODO:数据库里删除记录，维护income和expense
-                        /*dataList.remove(position);
-                        iconList.remove(position);
-                        categoryList.remove(position);
-                        mAdapter.notifyItemRemoved(position);*/
-                        mAdapter.notifyDataSetChanged();
-                        Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-
-                popupMenu.show(); //showing popup menu
-
-                //TODO:添加删除
-            }
-        });
+//        mAdapter.setOnItemLongClickListener(new MyItemLongClickListener() {
+//            @Override
+//            public void onLongItemClick(View v, int position) {
+////                PopupMenu popupMenu = new PopupMenu(getContext(),v);
+////                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
+////                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+////                    public boolean onMenuItemClick(MenuItem item) {
+////                        //数据库里删除记录，维护income和expense
+////                        /*dataList.remove(position);
+////                        iconList.remove(position);
+////                        categoryList.remove(position);
+////                        mAdapter.notifyItemRemoved(position);*/
+////                        mAdapter.notifyDataSetChanged();
+////                        Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
+////                        return true;
+////                    }
+////                });
+////
+////                popupMenu.show(); //showing popup menu
+//
+//                //TODO:添加删除
+//            }
+//        });
         //TODO:add divider
         // recyclerView.addItemDecoration(new);
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
@@ -250,9 +251,9 @@ public class BillFragment extends Fragment {
         public void setOnItemClickListener(MyItemClickListener listener){
             this.mItemClickListener=listener;
         }
-        public void setOnItemLongClickListener(MyItemLongClickListener listener){
+        /*public void setOnItemLongClickListener(MyItemLongClickListener listener){
             this.myItemLongClickListener=listener;
-        }
+        }*/
         @Override
         public myAdapter.myViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -297,7 +298,7 @@ public class BillFragment extends Fragment {
                         }
                     }
                 });
-                view.setOnLongClickListener(new View.OnLongClickListener(){
+                /*view.setOnLongClickListener(new View.OnLongClickListener(){
                     @Override
                     public boolean onLongClick(View v){
                         if (mOnLongItemClickListener != null) {
@@ -306,6 +307,20 @@ public class BillFragment extends Fragment {
                         return false;
                     }
 
+                });*/
+                view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                    @Override
+                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                        menu.add("delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                //TODO:数据库里删除记录，维护income和expense
+                                mAdapter.notifyDataSetChanged();
+                                Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
+                                return true;
+                            }
+                        });
+                    }
                 });
 
             }
