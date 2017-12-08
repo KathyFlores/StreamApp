@@ -29,6 +29,7 @@ import stream.com.streamapp.R;
 import stream.com.streamapp.db.Bills;
 import stream.com.streamapp.login;
 
+
 import static java.lang.String.valueOf;
 
 /**
@@ -66,11 +67,20 @@ public class BillFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter = new myAdapter());
+
+//        });
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int postion) {
                 Toast.makeText(getActivity(),"hi",Toast.LENGTH_SHORT).show();
                 //TODO:显示账单详情
+            }
+        });
+        mAdapter.setOnItemLongClickListener(new MyItemLongClickListener() {
+            @Override
+            public void onLongItemClick(View view, int position) {
+                Toast.makeText(getActivity(),"hia",Toast.LENGTH_SHORT).show();
+                //TODO:添加删除
             }
         });
         //TODO:add divider
@@ -222,15 +232,19 @@ public class BillFragment extends Fragment {
     }
     class myAdapter extends RecyclerView.Adapter<myAdapter.myViewHolder> {
         private MyItemClickListener mItemClickListener;
+        private MyItemLongClickListener myItemLongClickListener;
         public void setOnItemClickListener(MyItemClickListener listener){
             this.mItemClickListener=listener;
+        }
+        public void setOnItemLongClickListener(MyItemLongClickListener listener){
+            this.myItemLongClickListener=listener;
         }
         @Override
         public myAdapter.myViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             myAdapter.myViewHolder holder = new myAdapter.myViewHolder(LayoutInflater.from(
                     getActivity()).inflate(R.layout.bill_item_layout, parent,
-                    false),mItemClickListener);
+                    false),mItemClickListener,myItemLongClickListener);
             return holder;
         }
 
@@ -252,13 +266,15 @@ public class BillFragment extends Fragment {
             TextView data;
             ImageView icon;
             private MyItemClickListener mListener;
-            public myViewHolder(View view,MyItemClickListener listener){
+            private MyItemLongClickListener mOnLongItemClickListener;
+            public myViewHolder(View view,MyItemClickListener listener,MyItemLongClickListener longClickListener){
                 super (view);
 
                 category = (TextView)view.findViewById(R.id.category);
                 data = (TextView)view.findViewById(R.id.data);
                 icon = (ImageView)view.findViewById(R.id.icon);
                 this.mListener = listener;
+                this.mOnLongItemClickListener = longClickListener;
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -267,6 +283,17 @@ public class BillFragment extends Fragment {
                         }
                     }
                 });
+                view.setOnLongClickListener(new View.OnLongClickListener(){
+                    @Override
+                    public boolean onLongClick(View v){
+                        if (mOnLongItemClickListener != null) {
+                            mOnLongItemClickListener.onLongItemClick(v, getAdapterPosition());
+                        }
+                        return false;
+                    }
+
+                });
+
             }
         }
     }
