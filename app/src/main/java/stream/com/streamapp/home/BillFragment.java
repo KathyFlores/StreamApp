@@ -1,5 +1,6 @@
 package stream.com.streamapp.home;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,7 +41,7 @@ public class BillFragment extends Fragment {
     private List<Integer> iconList;
     private List<Integer> categoryList;
     private List<String> dataList;
-
+    private List<Bills> bills;
     private List<String> typeList;
     private myAdapter mAdapter;
     private TextView incomeSum, expenseSum;
@@ -71,8 +72,13 @@ public class BillFragment extends Fragment {
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int postion) {
-                Toast.makeText(getActivity(),"hi",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"hi",Toast.LENGTH_SHORT).show();
                 //TODO:显示账单详情
+                Intent intent = new Intent(getContext(), BillDetail.class);
+                int BillId = bills.get(postion).getId();
+                //TODO:上面这句话不知道对不对，position是这个view在列表中的位置，最上面的item的position是0，得到这个Bill的id传进新的activity中
+                intent.putExtra("BillId",BillId);
+                startActivity(intent);
             }
         });
 
@@ -107,7 +113,7 @@ public class BillFragment extends Fragment {
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>();
         categoryList = new ArrayList<Integer>();
-        List<Bills> bills = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).order("date desc").limit(5).find(Bills.class);
+        bills = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).order("date desc").limit(5).find(Bills.class);
         for (int i = 0; i < /*((bills.size()>5)?5:*/bills.size(); i++) {
             dataList.add( (bills.get(i).getInOrOut().equals("in") ? "+":"-") + String.valueOf(bills.get(i).getAmount()));
             switch(bills.get(i).getType())
@@ -215,6 +221,14 @@ public class BillFragment extends Fragment {
                 case "other":
                     categoryList.add(R.string.other);
                     iconList.add(R.drawable.other);
+                    break;
+                case "parttime":
+                    categoryList.add(R.string.parttime);
+                    iconList.add(R.drawable.parttime);
+                    break;
+                case "salary":
+                    categoryList.add(R.string.salary);
+                    iconList.add(R.drawable.salary);
                     break;
             }
 

@@ -64,8 +64,13 @@
     <string name="week">周</string>
     <string name="month">月</string>
     <string name="year">年</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="type">类型</string>
+    <string name="amount">金额</string>
     <string name="delete">删除</string>
+    <string name="time">时间</string>
+    <string name="place">地点</string>
+    <string name="note">备注</string>
+    <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

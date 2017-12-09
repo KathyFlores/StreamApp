@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="stream.com.streamapp"
-    >
+    package="stream.com.streamapp">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -9,19 +8,17 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--PROTECTION_NORMAL -->
+    <!-- PROTECTION_NORMAL -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--<uses-permission android:name="android.permission.INTERNET" />-->
+    <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <!--PROTECTION_DANGEROUS -->
+    <!-- PROTECTION_DANGEROUS -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -47,26 +44,37 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <meta-data android:name="Mob-AppKey" android:value="moba6b6c6d6"/>
-        <meta-data android:name="Mob-AppSecret" android:value="b89d2427a3bc7ad1aea1e1e8c1d36bf3"/>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="moba6b6c6d6" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="b89d2427a3bc7ad1aea1e1e8c1d36bf3" />
+
         <activity android:name=".login" />
         <activity android:name=".addbill.add_bill" />
-        <activity android:name=".home.BasicActivity"/>
-        <activity android:name=".Signup"/>
-        <receiver android:name=".broadcast.smsRecevier" android:permission="android.permission.BROADCAST_SMS">
+        <activity android:name=".home.BasicActivity" />
+        <activity android:name=".Signup" />
+
+        <receiver
+            android:name=".broadcast.smsRecevier"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <service android:name=".notificationlistener.notificationListener"
-                 android:label="@string/service_name"
-                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+
+        <service
+            android:name=".notificationlistener.notificationListener"
+            android:label="@string/service_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
 
+        <activity android:name=".home.BillDetail"></activity>
     </application>
 
 </manifest>

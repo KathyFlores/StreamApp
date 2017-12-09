@@ -105,9 +105,7 @@ public class BasicActivity extends AppCompatActivity {
         _drawable2.setBounds(0,0,_drawable2.getMinimumWidth(),_drawable2.getMinimumHeight());
         _drawable3.setBounds(0,0,_drawable3.getMinimumWidth(),_drawable3.getMinimumHeight());
         billBTN = (TextView) findViewById(R.id.text_bill);
-        Drawable drawable= ContextCompat.getDrawable(mContext,R.drawable.bill_selected);
-        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-        billBTN.setCompoundDrawables(null,drawable,null,null);
+        billBTN.setCompoundDrawables(null,_drawable0,null,null);
         propertyBTN = (TextView) findViewById(R.id.text_property);
         chartBTN = (TextView) findViewById(R.id.text_chart);
         userBTN = (TextView) findViewById(R.id.text_user);
