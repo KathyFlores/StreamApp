@@ -51,7 +51,6 @@ public class BillFragment extends Fragment {
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragemnt_bill, null);
-        //PopupMenu
         initData();
         initView();
         incomeSum.setText(String.valueOf(income)+" 元");
@@ -76,29 +75,7 @@ public class BillFragment extends Fragment {
                 //TODO:显示账单详情
             }
         });
-//        mAdapter.setOnItemLongClickListener(new MyItemLongClickListener() {
-//            @Override
-//            public void onLongItemClick(View v, int position) {
-////                PopupMenu popupMenu = new PopupMenu(getContext(),v);
-////                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
-////                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-////                    public boolean onMenuItemClick(MenuItem item) {
-////                        //数据库里删除记录，维护income和expense
-////                        /*dataList.remove(position);
-////                        iconList.remove(position);
-////                        categoryList.remove(position);
-////                        mAdapter.notifyItemRemoved(position);*/
-////                        mAdapter.notifyDataSetChanged();
-////                        Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
-////                        return true;
-////                    }
-////                });
-////
-////                popupMenu.show(); //showing popup menu
-//
-//                //TODO:添加删除
-//            }
-//        });
+
         //TODO:add divider
         // recyclerView.addItemDecoration(new);
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
@@ -247,19 +224,17 @@ public class BillFragment extends Fragment {
     }
     class myAdapter extends RecyclerView.Adapter<myAdapter.myViewHolder> {
         private MyItemClickListener mItemClickListener;
-        private MyItemLongClickListener myItemLongClickListener;
+
         public void setOnItemClickListener(MyItemClickListener listener){
             this.mItemClickListener=listener;
         }
-        /*public void setOnItemLongClickListener(MyItemLongClickListener listener){
-            this.myItemLongClickListener=listener;
-        }*/
+
         @Override
         public myAdapter.myViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             myAdapter.myViewHolder holder = new myAdapter.myViewHolder(LayoutInflater.from(
                     getActivity()).inflate(R.layout.bill_item_layout, parent,
-                    false),mItemClickListener,myItemLongClickListener);
+                    false),mItemClickListener);
             return holder;
         }
 
@@ -281,15 +256,14 @@ public class BillFragment extends Fragment {
             TextView data;
             ImageView icon;
             private MyItemClickListener mListener;
-            private MyItemLongClickListener mOnLongItemClickListener;
-            public myViewHolder(View view,MyItemClickListener listener,MyItemLongClickListener longClickListener){
+            public myViewHolder(View view,MyItemClickListener listener){
                 super (view);
 
                 category = (TextView)view.findViewById(R.id.category);
                 data = (TextView)view.findViewById(R.id.data);
                 icon = (ImageView)view.findViewById(R.id.icon);
                 this.mListener = listener;
-                this.mOnLongItemClickListener = longClickListener;
+
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -298,16 +272,7 @@ public class BillFragment extends Fragment {
                         }
                     }
                 });
-                /*view.setOnLongClickListener(new View.OnLongClickListener(){
-                    @Override
-                    public boolean onLongClick(View v){
-                        if (mOnLongItemClickListener != null) {
-                            mOnLongItemClickListener.onLongItemClick(v, getAdapterPosition());
-                        }
-                        return false;
-                    }
 
-                });*/
                 view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                     @Override
                     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

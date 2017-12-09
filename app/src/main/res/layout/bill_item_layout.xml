@@ -28,17 +28,7 @@
         android:text="@string/salary"
         android:textColor="@color/fontColorDark"
         android:textSize="16sp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/category"
-        android:layout_toEndOf="@id/category"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="1800/0/0"
-        android:textColor="@color/fontColor"
-        android:textSize="16sp"/>
+    
     <TextView
         android:id="@+id/data"
         android:layout_width="wrap_content"
