@@ -91,6 +91,17 @@
             android:text="@string/year"
             android:textColor="@color/fontColor"
             android:textSize="16sp" />
+
     </LinearLayout>
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+    <lecho.lib.hellocharts.view.PieChartView
+        android:id="@+id/pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp"/>
+
 
 </LinearLayout>
