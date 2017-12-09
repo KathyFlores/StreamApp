@@ -41,7 +41,7 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
     compile 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
-
+    compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
     //compile files('lib/MobCommons-2017.0607.1736.jar')
     //compile files('lib/MobTools-2017.0607.1736.jar')
     /*compile 'com.github.hss01248:DialogUtil:1.2.5'
