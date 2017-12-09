@@ -198,7 +198,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                 bill.setAmount(Double.valueOf(amount));
                 bill.setNote(note);
                 bill.setPlace("somewhere");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 bill.setDate(sdf.format(new Date()));
                 bill.setInOrOut("out");
                 bill.setUser_id(login.getUser_id());
