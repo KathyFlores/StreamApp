@@ -40,6 +40,8 @@ dependencies {
     compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
+    compile 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
+
     //compile files('lib/MobCommons-2017.0607.1736.jar')
     //compile files('lib/MobTools-2017.0607.1736.jar')
     /*compile 'com.github.hss01248:DialogUtil:1.2.5'

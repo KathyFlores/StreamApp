@@ -1,34 +1,41 @@
 package stream.com.streamapp.home;
 
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jzxiang.pickerview.TimePickerDialog;
 import com.yalantis.phoenix.PullToRefreshView;
-
+import com.jzxiang.pickerview.data.Type;
+import com.jzxiang.pickerview.listener.OnDateSetListener;
 import org.litepal.crud.DataSupport;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import stream.com.streamapp.R;
 import stream.com.streamapp.db.Bills;
 import stream.com.streamapp.login;
-
-
 import static java.lang.String.valueOf;
 
 /**
@@ -42,13 +49,13 @@ public class BillFragment extends Fragment {
     private List<Integer> categoryList;
     private List<String> dataList;
     private List<Bills> bills;
-    private List<String> typeList;
     private myAdapter mAdapter;
     private TextView incomeSum, expenseSum;
+    private LinearLayout pickTime;
     double income,expense;
     private PullToRefreshView mPullToRefreshView;
-    private boolean isRefreshing = false;
-
+    private TextView yearTV, monthTV;
+    TimePickerDialog timePickerDialog;
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragemnt_bill, null);
@@ -62,13 +69,42 @@ public class BillFragment extends Fragment {
     private void initView(){
         incomeSum = (TextView)view.findViewById(R.id.incomeSum);
         expenseSum = (TextView)view.findViewById(R.id.expenseSum);
+        yearTV = view.findViewById(R.id.yearTV);
+        monthTV = view.findViewById(R.id.monthTV);
         recyclerView=view.findViewById(R.id.bill_recycler);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter = new myAdapter());
+        timePickerDialog = new TimePickerDialog.Builder()
+                .setType(Type.YEAR_MONTH)
+                .setThemeColor(R.color.colorPrimary)
+                .setCallBack(new OnDateSetListener(){
+                    @Override
+                    public void onDateSet(TimePickerDialog timePickerDialog, long millseconds) {
+                        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String text = sf.format(new Date(millseconds));
+                        String year = text.substring(0,4);
+                        String month = text.substring(5,7);
+                        Log.e("year",year);
+                        Log.e("month",month);
+                        yearTV.setText(year+"年");
+                        monthTV.setText(month+"月");
+                        //TODO:维护data
 
-//        });
+                        //维护好以后
+                        mAdapter.notifyDataSetChanged();
+                    }
+                })
+                .build();
+        pickTime = view.findViewById(R.id.pickTime);
+        pickTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                timePickerDialog.show(getChildFragmentManager(),"选择日期");
+            }
+        });
+
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int postion) {
@@ -87,11 +123,12 @@ public class BillFragment extends Fragment {
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 //        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimaryDark), getResources().getColor(R.color.colorAccent));
 //        swipeRefreshLayout.setProgressViewOffset(false,0, 50);
+
         mPullToRefreshView=(PullToRefreshView)view.findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                isRefreshing=true;
+
                 mPullToRefreshView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -316,7 +353,7 @@ public class BillFragment extends Fragment {
             expenseSum.setText(String.valueOf(expense)+" 元");
             incomeSum.setText(String.valueOf(income)+" 元");
             super.onPostExecute(o);
-            isRefreshing=false;
+
             mAdapter.notifyDataSetChanged();
         }
     }

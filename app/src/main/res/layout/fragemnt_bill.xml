@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
 
     android:background="@color/fontColorLight">
+
     <LinearLayout
         android:id="@+id/bill_top_layout"
         android:layout_width="match_parent"
@@ -12,20 +13,44 @@
         android:layout_below="@id/topbar"
         android:background="@color/white"
         android:orientation="horizontal">
-
-        <TextClock
-
-            android:id="@+id/time"
+        <LinearLayout
+            android:id="@+id/pickTime"
+            android:clickable="true"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            android:format12Hour="yyyy    MM月"
-            android:gravity="center"
-            android:textColor="@color/fontColor"
-            android:textSize="16sp"
-            tools:ignore="NewApi" />
+            <TextView
+                android:id="@+id/yearTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="2017年"
+                android:textColor="@color/fontColor"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/monthTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="12月"
+                    android:textColor="@color/fontColor"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_margin="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_down"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <View
             android:layout_width="1dp"
