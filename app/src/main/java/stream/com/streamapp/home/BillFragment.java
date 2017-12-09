@@ -49,7 +49,6 @@ public class BillFragment extends Fragment {
     private List<Integer> categoryList;
     private List<String> dataList;
     private List<Bills> bills;
-    private List<Integer> id;
     private myAdapter mAdapter;
     private TextView incomeSum, expenseSum;
     private LinearLayout pickTime;
@@ -67,6 +66,7 @@ public class BillFragment extends Fragment {
         //setListener();
         return view;
     }
+
     private void initView(){
         incomeSum = (TextView)view.findViewById(R.id.incomeSum);
         expenseSum = (TextView)view.findViewById(R.id.expenseSum);
@@ -118,7 +118,25 @@ public class BillFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        mAdapter.setOnItemLongClickListener(new MyItemLongClickListener(){
+            @Override
+            public void onLongItemClick(View v, int position){
+                final int pos = position;
+                PopupMenu popupMenu = new PopupMenu(getContext(),v);
+                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        //TODO:删除item
+                        int BillId = bills.get(pos).getId();
+                        Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
 
+                        return true;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
         //TODO:add divider
         // recyclerView.addItemDecoration(new);
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
@@ -276,17 +294,19 @@ public class BillFragment extends Fragment {
     }
     class myAdapter extends RecyclerView.Adapter<myAdapter.myViewHolder> {
         private MyItemClickListener mItemClickListener;
-
+        private MyItemLongClickListener myItemLongClickListener;
         public void setOnItemClickListener(MyItemClickListener listener){
             this.mItemClickListener=listener;
         }
-
+        public void setOnItemLongClickListener(MyItemLongClickListener listener){
+            this.myItemLongClickListener = listener;
+        }
         @Override
         public myAdapter.myViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             myAdapter.myViewHolder holder = new myAdapter.myViewHolder(LayoutInflater.from(
                     getActivity()).inflate(R.layout.bill_item_layout, parent,
-                    false),mItemClickListener);
+                    false),mItemClickListener,myItemLongClickListener);
             return holder;
         }
 
@@ -308,14 +328,15 @@ public class BillFragment extends Fragment {
             TextView data;
             ImageView icon;
             private MyItemClickListener mListener;
-            public myViewHolder(View view,MyItemClickListener listener){
+            private MyItemLongClickListener myItemLongClickListener;
+            public myViewHolder(View view,MyItemClickListener listener,MyItemLongClickListener longClickListener){
                 super (view);
 
                 category = (TextView)view.findViewById(R.id.category);
                 data = (TextView)view.findViewById(R.id.data);
                 icon = (ImageView)view.findViewById(R.id.icon);
                 this.mListener = listener;
-
+                this.myItemLongClickListener=longClickListener;
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -324,7 +345,16 @@ public class BillFragment extends Fragment {
                         }
                     }
                 });
-
+                view.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if(myItemLongClickListener!=null){
+                            myItemLongClickListener.onLongItemClick(v,getAdapterPosition());
+                        }
+                        return false;
+                    }
+                });
+                /*
                 view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                     @Override
                     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -332,14 +362,13 @@ public class BillFragment extends Fragment {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 //TODO:数据库里删除记录，维护income和expense
-                                
                                 mAdapter.notifyDataSetChanged();
                                 Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
                                 return true;
                             }
                         });
                     }
-                });
+                });*/
 
             }
         }
