@@ -10,7 +10,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import stream.com.streamapp.R;
+import stream.com.streamapp.db.Bills;
+import stream.com.streamapp.login;
 
 public class BillDetail extends AppCompatActivity {
     private int BillId;
@@ -25,6 +31,7 @@ public class BillDetail extends AppCompatActivity {
     private Drawable icon;
     private double mAmount;
     private String mInOrOut,mNote,mTime,mPlace,mCategory;
+    private List<Bills> mBill;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +51,14 @@ public class BillDetail extends AppCompatActivity {
         time = (TextView)findViewById(R.id.time);
         place = (TextView)findViewById(R.id.place);
         //TODO:根据billid维护以下数据
-        mAmount = 0;
-        mInOrOut = "out";
-        mNote = "note";
-        mPlace= "place";
-        mTime = "2017/12/25";
-        mCategory = "meal";
+        mBill = DataSupport.where("id = ? ", String.valueOf(BillId)).find(Bills.class);
+
+        mAmount = mBill.get(0).getAmount();
+        mInOrOut = (mBill.get(0).getInOrOut() == "in")?"收入":"支出" ;
+        mNote = mBill.get(0).getNote();
+        mPlace= mBill.get(0).getPlace();
+        mTime = mBill.get(0).getDate();
+        mCategory = mBill.get(0).getType();
 
         //绑定数据不用管，都做好了
         InOrOut.setText(mInOrOut);

@@ -49,6 +49,7 @@ public class BillFragment extends Fragment {
     private List<Integer> categoryList;
     private List<String> dataList;
     private List<Bills> bills;
+    private List<Integer> id;
     private myAdapter mAdapter;
     private TextView incomeSum, expenseSum;
     private LinearLayout pickTime;
@@ -331,6 +332,7 @@ public class BillFragment extends Fragment {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 //TODO:数据库里删除记录，维护income和expense
+                                
                                 mAdapter.notifyDataSetChanged();
                                 Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
                                 return true;
