@@ -320,13 +320,14 @@ public class BillDetail extends AppCompatActivity {
         newNote = note.getText().toString();
         newPlace = place.getText().toString();
         newAmount = Double.valueOf(amount.getText().toString());
-        ContentValues values = new ContentValues();
-        values.put("inOrOut", "newInOrOut");
-        values.put("time", "newTime");
-        values.put("note", "newNote");
-        values.put("place", "newPlace");
-        values.put("amount", "newAmount");
-        DataSupport.update(Bills.class, values, BillId);
+        Bills newBill = new Bills();
+        newBill.setInOrOut(newInOrOut);
+        newBill.setDate(newTime);
+        newBill.setNote(newNote);
+        newBill.setPlace(newPlace);
+        newBill.setAmount(newAmount);
+        newBill.update(BillId);
+        //DataSupport.update(Bills.class, values, BillId);
         changed=true;
         //TODO: 在数据库中修改
 
