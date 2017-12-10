@@ -4,12 +4,21 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import lecho.lib.hellocharts.gesture.ContainerScrollType;
 import lecho.lib.hellocharts.model.PieChartData;
@@ -27,6 +36,8 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
+import stream.com.streamapp.db.Bills;
+import stream.com.streamapp.login;
 
 /**
  * Created by KathyF on 2017/11/26.
@@ -38,7 +49,7 @@ public class ChartFragment extends Fragment {
     private TextView day;
     private TextView month;
     private TextView year;
-    private int InOrOut = 0;//0:支出, 1:收入
+    private String InOrOut = "out";//0:支出, 1:收入
     private int scale = 0;//0:日， 1:月, 2:年
     private View view;
 
@@ -79,7 +90,7 @@ public class ChartFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_chart, null);
         initView();
         setListener();
-        decideWhichToDraw();
+        Draw();
         return view;
     }
     private void initView(){
@@ -95,14 +106,14 @@ public class ChartFragment extends Fragment {
         income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InOrOut=1;
+                InOrOut="in";
 
             }
         });
         expense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InOrOut=0;
+                InOrOut="out";
             }
         });
         day.setOnClickListener(new View.OnClickListener() {
@@ -127,28 +138,161 @@ public class ChartFragment extends Fragment {
     //TODO: 数据接入
     //需要填充 dataIn: 表示横坐标
     //需要填充 pointInX: 表示每一个点的x坐标  pointInY:表示每一个点的y坐标
-    private void setData()
+    private void setData(String InOrOut, int scale)
     {
         dateIn.clear();
         pointInX.clear();
         pointInY.clear();
-        //TODO:  delete first
-        for(int i=0;i<10;i++)
+        Calendar calendar = Calendar.getInstance();
+        Date d=new Date();
+        calendar.setTime(d);
+        for(int i=0;i<5;i++)
         {
-            dateIn.add(i,Integer.toString(i));
+            String text;
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            switch (scale){
+                case 0://日
+                    text = sf.format(calendar.getTime());
+                    calendar.add(Calendar.DATE, -1);
+                    dateIn.add(i,text);
+                    break;
+                case 1://月
+                    text = sf.format(calendar.getTime());
+                    calendar.add(Calendar.MONTH, -1);
+                    dateIn.add(i,text.substring(0,7));
+                    break;
+                case 2://年
+                    text = sf.format(calendar.getTime());
+                    calendar.add(Calendar.YEAR, -1);
+                    dateIn.add(i,text.substring(0,4));
+                    break;
+                default:break;
+            }
         }
-        for(int i=0;i<15;i++)
+
+        d=new Date();
+        calendar.setTime(d);
+
+        for(int i=0;i<5;i++)
         {
-            pointInX.add(i,(float)(i/15.0*10.0));
-            pointInY.add(i,(float)i);
+            pointInX.add(i,(float)i);
+            double sum = 0;
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            if (scale == 0) {
+                calendar.add(Calendar.DATE, 1);//后一天日期
+                String day1 = sf.format(calendar.getTime());
+                calendar.add(Calendar.DATE, -2);//前一天日期
+                String day2 = sf.format(calendar.getTime());
+                sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut).sum(Bills.class, "amount", double.class);
+            }
+            if (scale == 1) {
+                calendar.add(Calendar.MONTH, 1);//后一个月日期
+                String month1 = sf.format(calendar.getTime());
+                calendar.add(Calendar.MONTH, -2);//前一个月日期
+                String month2 = sf.format(calendar.getTime());
+                sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), month2.substring(0, 7), month1.substring(0, 7), InOrOut).sum(Bills.class, "amount", double.class);
+            }
+            if (scale == 2 ) {
+                calendar.add(Calendar.YEAR, 1);//后一年日期
+                String year1 = sf.format(calendar.getTime());
+                calendar.add(Calendar.YEAR, -2);//前一年日期
+                String year2 = sf.format(calendar.getTime());
+                sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), year2.substring(0, 4), year1.substring(0, 4), InOrOut).sum(Bills.class, "amount", double.class);
+            }
+            pointInY.add(i, (float)sum);
         }
+        Collections.reverse(dateIn);
+        Collections.reverse(pointInY);
+
         mPieData.clear();
         mlabels.clear();
-        // TODO: delete first
-        for(int i=0;i<3;i++)
-        {
-            mPieData.add((float)(i+1));
-            mlabels.add("test"+i);
+       String[] labelsOut = {"meal","transportation","shopping",
+               "daily","clothes","vegetables","fruit","snack",
+               "book","study", "house", "investment", "social",
+               "amusement", "makeup", "call", "sport", "travel",
+               "medicine", "office", "digit", "gift", "repair",
+               "wine", "redpacket", "other"};
+        String[] labelsIn = {"salary", "redpacket", "parttime", "other"};
+        Log.d("labelsIn", String.valueOf(labelsIn.length));
+        Log.d("scale",String.valueOf(scale));
+        Log.d("inorout",InOrOut);
+        if (InOrOut.equals("in")) {
+
+            for (int i = 0; i < labelsIn.length; i++) {
+                double sum = 0;
+                String day1, day2;
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                if (scale == 0) {//近七天以来
+                    d = new Date();
+                    calendar.setTime(d);
+                    calendar.add(calendar.DATE, 1);
+                    day1 = sf.format(calendar.getTime());
+                    calendar.add(calendar.DATE, -7);
+                    day2 = sf.format(calendar.getTime());
+                    sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsIn[i]).sum(Bills.class, "amount", double.class);
+                    Log.d("date1", day1);
+                    Log.d("date2", day2);
+                    Log.d("sum", String.valueOf(sum));
+                }
+                if (scale == 1) {//近三月以来
+                    d = new Date();
+                    calendar.setTime(d);
+                    calendar.add(calendar.MONTH, 1);
+                    day1 = sf.format(calendar.getTime());
+                    calendar.add(calendar.MONTH, -3);
+                    day2 = sf.format(calendar.getTime());
+                    sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsIn[i]).sum(Bills.class, "amount", double.class);
+
+                }
+                if (scale == 2) {//近一年来
+                    d = new Date();
+                    calendar.setTime(d);
+                    calendar.add(calendar.YEAR, 1);
+                    day1 = sf.format(calendar.getTime());
+                    calendar.add(calendar.YEAR, -2);
+                    day2 = sf.format(calendar.getTime());
+                    sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsIn[i]).sum(Bills.class, "amount", double.class);
+                }
+                Log.d("pi", labelsIn[i] + String.valueOf(sum));
+                mPieData.add((float) sum);
+                mlabels.add(labelsIn[i]);
+            }
+        }
+        if (InOrOut.equals("out")) {
+            for (int i = 0; i < labelsOut.length; i++) {
+                double sum = 0;
+                String day1, day2;
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                if (scale == 0) {//近七天以来
+                    d = new Date();
+                    calendar.setTime(d);
+                    calendar.add(calendar.DATE, 1);
+                    day1 = sf.format(calendar.getTime());
+                    calendar.add(calendar.DATE, -7);
+                    day2 = sf.format(calendar.getTime());
+                    sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsOut[i]).sum(Bills.class, "amount", double.class);
+                }
+                if (scale == 1) {//近三月以来
+                    d = new Date();
+                    calendar.setTime(d);
+                    calendar.add(calendar.MONTH, 1);
+                    day1 = sf.format(calendar.getTime());
+                    calendar.add(calendar.MONTH, -3);
+                    day2 = sf.format(calendar.getTime());
+                    sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsOut[i]).sum(Bills.class, "amount", double.class);
+                }
+                if (scale == 2) {//近一年来
+                    d = new Date();
+                    calendar.setTime(d);
+                    calendar.add(calendar.YEAR, 1);
+                    day1 = sf.format(calendar.getTime());
+                    calendar.add(calendar.YEAR, -2);
+                    day2 = sf.format(calendar.getTime());
+                    sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsOut[i]).sum(Bills.class, "amount", double.class);
+                }
+                mPieData.add((float) sum);
+                mlabels.add(labelsOut[i]);
+            }
         }
     }
 
@@ -189,38 +333,38 @@ public class ChartFragment extends Fragment {
 
     }
     //TODO:完善chart绘制-- select 数据之后调用setData函数填充数据
-    private void decideWhichToDraw(){
+    private void Draw(){
 
         //-----   test -----
-        setData();
+        setData(InOrOut, scale);
         getData();
         drawLineChart();
         drawPieChart();
         //-----   test -----
-        switch (InOrOut){
-            case 0://支出
-                if(scale==0){//日支出，绘制pie chart与line chart
+        //switch (InOrOut){
+        //    case "out"://支出
+        //        if(scale==0){//日支出，绘制pie chart与line chart
 
-                }
-                else if(scale==1){//月支出，绘制pie chart与line chart
+        //        }
+        //        else if(scale==1){//月支出，绘制pie chart与line chart
 
-                }
-                else if(scale==2){//年支出，绘制pie chart
+         //       }
+         //       else if(scale==2){//年支出，绘制pie chart
 
-                }
-                break;
-            case 1://收入
-                if(scale==0){
+         //       }
+        //        break;
+        //    case "in"://收入
+         //       if(scale==0){
 
-                }
-                else if(scale==1){
+         //       }
+         //       else if(scale==1){
 
-                }
-                else if(scale==2){
+         //       }
+         //       else if(scale==2){
 
-                }
-                break;
-        }
+         //       }
+          //      break;
+        //}
     }
 
     private void drawPieChart()
