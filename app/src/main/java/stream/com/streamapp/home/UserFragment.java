@@ -28,7 +28,7 @@ public class UserFragment extends Fragment {
     }
     private void initView(){
         username=view.findViewById(R.id.username);
-        edit=view.findViewById(R.id.edit);
+        edit=view.findViewById(R.id.editprofile);
         backup=view.findViewById(R.id.backup);
         about=view.findViewById(R.id.about);
         help=view.findViewById(R.id.help);
