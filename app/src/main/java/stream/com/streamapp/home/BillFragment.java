@@ -205,14 +205,14 @@ public class BillFragment extends Fragment {
             default:break;
         }
         //Log.d("nextmonth", nextMonth);
-        income = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01" ,"in" ).sum(Bills.class, "amount", double.class);
+        income = DataSupport.where("user_id = ? and date >= ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01" ,"in" ).sum(Bills.class, "amount", double.class);
 
-        expense= DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01" ,"out" ).sum(Bills.class, "amount", double.class);
+        expense= DataSupport.where("user_id = ? and date >= ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01" ,"out" ).sum(Bills.class, "amount", double.class);
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>();
         categoryList = new ArrayList<Integer>();
         //Log.d("date", mYear+"-"+mMonth+"-01");
-        bills = DataSupport.where("user_id = ? and date > ? and date < ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01").order("date desc").limit(5).find(Bills.class);
+        bills = DataSupport.where("user_id = ? and date >= ? and date < ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01").order("date desc").limit(5).find(Bills.class);
         for (int i = 0; i < /*((bills.size()>5)?5:*/bills.size(); i++) {
             dataList.add( (bills.get(i).getInOrOut().equals("in") ? "+":"-") + String.valueOf(bills.get(i).getAmount()));
             switch(bills.get(i).getType())
