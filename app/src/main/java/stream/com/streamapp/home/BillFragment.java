@@ -75,6 +75,15 @@ public class BillFragment extends Fragment {
         expenseSum = (TextView)view.findViewById(R.id.expenseSum);
         yearTV = view.findViewById(R.id.yearTV);
         monthTV = view.findViewById(R.id.monthTV);
+        if (mYear.equals("0"))
+        {
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String text = sf.format(new Date());
+            mYear = text.substring(0,4);
+            mMonth = text.substring(5,7);
+            yearTV.setText(mYear+"年");
+            monthTV.setText(mMonth+"月");
+        }
         recyclerView=view.findViewById(R.id.bill_recycler);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -167,15 +176,7 @@ public class BillFragment extends Fragment {
     private void initData(){
         // TODO: 从数据库中读取账单数据，绑定到这里，以下是绑定的demo
         //预期实现目标：从上往下按照添加日期的先后顺序显示，最上面的是最后添加的。同时图表与类别list也需要维护
-        if (mYear.equals("0"))
-        {
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String text = sf.format(new Date());
-            mYear = text.substring(0,4);
-            Log.d("year", mYear);
-            mMonth = text.substring(5,7);
-            Log.d("month", mMonth);
-        }
+
         String nextYear = mMonth.equals("12")? String.valueOf(Integer.valueOf(mYear)+1):mYear;
         //Log.d("nextyear", nextYear);
         String nextMonth = "";
