@@ -1,5 +1,6 @@
 package stream.com.streamapp.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -40,6 +41,14 @@ public class UserFragment extends Fragment {
             public void onClick(View view) {
                 excelOperation.setData();
                 excelOperation.createExcel(getActivity());
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editUser = new Intent();
+                editUser.setClass(getActivity(),EditUserInfo.class);
+                startActivity(editUser);
             }
         });
     }
