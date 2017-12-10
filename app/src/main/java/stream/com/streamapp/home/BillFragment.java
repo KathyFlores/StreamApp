@@ -62,6 +62,14 @@ public class BillFragment extends Fragment {
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragemnt_bill, null);
+        if (mYear.equals("0"))
+        {
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String text = sf.format(new Date());
+            mYear = text.substring(0,4);
+            mMonth = text.substring(5,7);
+
+        }
         initData();
         initView();
         incomeSum.setText(String.valueOf(income)+" 元");
@@ -75,15 +83,9 @@ public class BillFragment extends Fragment {
         expenseSum = (TextView)view.findViewById(R.id.expenseSum);
         yearTV = view.findViewById(R.id.yearTV);
         monthTV = view.findViewById(R.id.monthTV);
-        if (mYear.equals("0"))
-        {
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String text = sf.format(new Date());
-            mYear = text.substring(0,4);
-            mMonth = text.substring(5,7);
-            yearTV.setText(mYear+"年");
-            monthTV.setText(mMonth+"月");
-        }
+
+        yearTV.setText(mYear+"年");
+        monthTV.setText(mMonth+"月");
         recyclerView=view.findViewById(R.id.bill_recycler);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
