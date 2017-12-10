@@ -48,4 +48,5 @@ dependencies {
     compile 'org.litepal.android:core:1.6.0'
     compile files('src/main/java/stream/com/streamapp/lib/MobCommons-2017.0607.1736.jar')
     compile files('src/main/java/stream/com/streamapp/lib/MobTools-2017.0607.1736.jar')
+    compile files('src/main/java/stream/com/streamapp/jxl/jxl-2.6.jar')
 }

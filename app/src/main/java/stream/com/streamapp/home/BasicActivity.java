@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.litepal.LitePal;
 
@@ -211,6 +212,21 @@ public class BasicActivity extends AppCompatActivity {
                 chartBTN.setCompoundDrawables(null,drawable2,null,null);
                 userBTN.setCompoundDrawables(null,_drawable3,null,null);
                 break;
+        }
+    }
+    public void handle(int request)
+    {
+        switch (request)
+        {
+            case (1):
+            {
+                Toast.makeText(this,"保存成功",Toast.LENGTH_LONG).show();
+                break;
+            }
+            case (2):
+            {
+                Toast.makeText(this,"保存失败，请检查权限",Toast.LENGTH_LONG).show();
+            }
         }
     }
 

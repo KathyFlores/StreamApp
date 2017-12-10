@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import stream.com.streamapp.R;
+import stream.com.streamapp.excel.excelOperation;
 
 /**
  * Created by KathyF on 2017/11/26.
@@ -34,6 +35,12 @@ public class UserFragment extends Fragment {
         help=view.findViewById(R.id.help);
     }
     private void setListener(){
-
+        backup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                excelOperation.setData();
+                excelOperation.createExcel(getActivity());
+            }
+        });
     }
 }
