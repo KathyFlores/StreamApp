@@ -45,6 +45,7 @@ import static java.lang.String.valueOf;
 public class BillFragment extends Fragment {
     private static RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
+
     private List<Integer> iconList;
     private List<Integer> categoryList;
     private List<String> dataList;
@@ -55,6 +56,8 @@ public class BillFragment extends Fragment {
     double income,expense;
     private PullToRefreshView mPullToRefreshView;
     private TextView yearTV, monthTV;
+    String mYear = "0";
+    String mMonth = "0";
     TimePickerDialog timePickerDialog;
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,14 +88,14 @@ public class BillFragment extends Fragment {
                     public void onDateSet(TimePickerDialog timePickerDialog, long millseconds) {
                         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         String text = sf.format(new Date(millseconds));
-                        String year = text.substring(0,4);
-                        String month = text.substring(5,7);
-                        Log.e("year",year);
-                        Log.e("month",month);
-                        yearTV.setText(year+"年");
-                        monthTV.setText(month+"月");
+                        mYear = text.substring(0,4);
+                        mMonth = text.substring(5,7);
+                        //Log.d("year", mYear);
+                        yearTV.setText(mYear+"年");
+                        monthTV.setText(mMonth+"月");
+                        initData();
+                        new MyTask().execute();
                         //TODO:维护data
-
                         //维护好以后
                         mAdapter.notifyDataSetChanged();
                     }
@@ -129,6 +132,8 @@ public class BillFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         //TODO:删除item
                         int BillId = bills.get(pos).getId();
+                        DataSupport.deleteAll(Bills.class,"id = ?", String.valueOf(BillId));
+                        new MyTask().execute();
                         Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
 
                         return true;
@@ -162,14 +167,42 @@ public class BillFragment extends Fragment {
     private void initData(){
         // TODO: 从数据库中读取账单数据，绑定到这里，以下是绑定的demo
         //预期实现目标：从上往下按照添加日期的先后顺序显示，最上面的是最后添加的。同时图表与类别list也需要维护
+        if (mYear.equals("0"))
+        {
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String text = sf.format(new Date());
+            mYear = text.substring(0,4);
+            Log.d("year", mYear);
+            mMonth = text.substring(5,7);
+            Log.d("month", mMonth);
+        }
+        String nextYear = mMonth.equals("12")? String.valueOf(Integer.valueOf(mYear)+1):mYear;
+        //Log.d("nextyear", nextYear);
+        String nextMonth = "";
+        switch (mMonth){
+            case "01": nextMonth="02";break;
+            case "02": nextMonth="03";break;
+            case "03": nextMonth="04";break;
+            case "04": nextMonth="05";break;
+            case "05": nextMonth="06";break;
+            case "06": nextMonth="07";break;
+            case "07": nextMonth="08";break;
+            case "08": nextMonth="09";break;
+            case "09": nextMonth="10";break;
+            case "10": nextMonth="11";break;
+            case "11": nextMonth="12";break;
+            case "12": nextMonth="01";break;
+            default:break;
+        }
+        //Log.d("nextmonth", nextMonth);
+        income = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01" ,"in" ).sum(Bills.class, "amount", double.class);
 
-        income = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), "2017-12-01", "2018-01-01" ,"in" ).sum(Bills.class, "amount", double.class);
-
-        expense= DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), "2017-12-01", "2018-01-01" ,"out" ).sum(Bills.class, "amount", double.class);
+        expense= DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01" ,"out" ).sum(Bills.class, "amount", double.class);
         dataList =new ArrayList<String>();
         iconList = new ArrayList<Integer>();
         categoryList = new ArrayList<Integer>();
-        bills = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).order("date desc").limit(5).find(Bills.class);
+        //Log.d("date", mYear+"-"+mMonth+"-01");
+        bills = DataSupport.where("user_id = ? and date > ? and date < ?", String.valueOf(login.getUser_id()), mYear+"-"+mMonth+"-01", nextYear+"-"+nextMonth+"-01").order("date desc").limit(5).find(Bills.class);
         for (int i = 0; i < /*((bills.size()>5)?5:*/bills.size(); i++) {
             dataList.add( (bills.get(i).getInOrOut().equals("in") ? "+":"-") + String.valueOf(bills.get(i).getAmount()));
             switch(bills.get(i).getType())

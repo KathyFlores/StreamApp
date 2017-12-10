@@ -96,6 +96,7 @@ public class ChartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 InOrOut=1;
+
             }
         });
         expense.setOnClickListener(new View.OnClickListener() {
