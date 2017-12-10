@@ -13,15 +13,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.angmarch.views.NiceSpinner;
 import org.litepal.crud.DataSupport;
 import org.w3c.dom.Text;
 
