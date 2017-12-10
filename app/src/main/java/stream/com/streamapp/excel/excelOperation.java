@@ -90,16 +90,19 @@ public class excelOperation {
             return;
 
         } catch (IOException e) {
+
             e.printStackTrace();
         } catch (RowsExceededException e) {
             e.printStackTrace();
         } catch (WriteException e) {
             e.printStackTrace();
-        }finally {
-            //final WeakReference<Activity> mActivity=new WeakReference<Activity> (activity);
-            //((BasicActivity)mActivity.get()).handle(2);
         }
 
+    }
+    private void solveFail(Activity activity)
+    {
+        final WeakReference<Activity> mActivity=new WeakReference<Activity> (activity);
+        ((BasicActivity)mActivity.get()).handle(2);
     }
     public static void verifyStoragePermissions(Activity activity) {
 
