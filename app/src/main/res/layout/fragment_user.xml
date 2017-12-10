@@ -50,7 +50,7 @@
             android:drawableRight="@drawable/more"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/edit"
+            android:text="@string/editprofile"
             android:textColor="@color/fontColorDark"
             android:theme="@style/body_text" />
 

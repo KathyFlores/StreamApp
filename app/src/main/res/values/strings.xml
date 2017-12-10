@@ -26,7 +26,7 @@
     <string name="help">帮助与反馈</string>
     <string name="about">关于流水</string>
     <string name="export">导出账单</string>
-    <string name="edit">修改资料</string>
+    <string name="editprofile">修改资料</string>
     <string name="username">用户名</string>
     <string name="expense">支出</string>
     <string name="income">收入</string>
@@ -66,7 +66,9 @@
     <string name="year">年</string>
     <string name="type">类型</string>
     <string name="amount">金额</string>
+    <string name="edit">编辑</string>
     <string name="delete">删除</string>
+    <string name="save">保存</string>
     <string name="time">时间</string>
     <string name="place">地点</string>
     <string name="note">备注</string>

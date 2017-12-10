@@ -209,7 +209,7 @@ public class Signup extends AppCompatActivity {
             case 0://username taken
                 Toast.makeText(Signup.this,R.string.usernameTaken,Toast.LENGTH_LONG).show();
                 break;
-                //TODO: add error type
+
             case 1:
                 Toast.makeText(Signup.this,R.string.usernameTaken,Toast.LENGTH_LONG).show();
         }
@@ -219,7 +219,7 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean success;
-                //TODO:增加错误类型
+
                 int errorType=-1;//0 用户名被占用
                 String username = usernameET.getText().toString().trim();
                 String password = passwordET.getText().toString().trim();
@@ -243,7 +243,7 @@ public class Signup extends AppCompatActivity {
                     Toast.makeText(Signup.this,R.string.passwordTooShort,Toast.LENGTH_LONG).show();
                 }
                 else {
-                    //TODO: send data to database
+
                     SignupAsyncTask myTask = new SignupAsyncTask(Signup.this, username, password,phone);
                     myTask.execute();
 
@@ -268,7 +268,7 @@ public class Signup extends AppCompatActivity {
                         {
                             case 0://username taken
                                 Toast.makeText(Signup.this,R.string.usernameTaken,Toast.LENGTH_LONG).show();
-                                //TODO: add error type
+
                         }
                     }*/
                 }

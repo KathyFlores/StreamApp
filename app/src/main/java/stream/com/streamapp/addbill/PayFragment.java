@@ -98,7 +98,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
     }
     @Override
     public void onClick(View v){
-        //TODO：绑定种类
+
         String type = new String();
         switch(v.getId())
         {

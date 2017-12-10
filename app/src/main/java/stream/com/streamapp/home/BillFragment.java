@@ -45,7 +45,7 @@ import static java.lang.String.valueOf;
 public class BillFragment extends Fragment {
     private static RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
-
+    private final static int REQUEST_CODE = 1;
     private List<Integer> iconList;
     private List<Integer> categoryList;
     private List<String> dataList;
@@ -74,10 +74,22 @@ public class BillFragment extends Fragment {
         initView();
         incomeSum.setText(String.valueOf(income)+" 元");
         expenseSum.setText(String.valueOf(expense)+" 元");
+
         //setListener();
         return view;
     }
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 当otherActivity中返回数据的时候，会响应此方法
+        // requestCode和resultCode必须与请求startActivityForResult()和返回setResult()的时候传入的值一致。
+        if (requestCode == REQUEST_CODE && resultCode == BillDetail.RESULT_CODE) {
+            Bundle bundle=data.getExtras();
+            boolean changed = bundle.getBoolean("result");
+            Log.e("changed",Boolean.toString(changed));
+            if(changed)
+                new MyTask().execute();
+        }
+    }
     private void initView(){
         incomeSum = (TextView)view.findViewById(R.id.incomeSum);
         expenseSum = (TextView)view.findViewById(R.id.expenseSum);
@@ -106,9 +118,7 @@ public class BillFragment extends Fragment {
                         monthTV.setText(mMonth+"月");
                         initData();
                         new MyTask().execute();
-                        //TODO:维护data
-                        //维护好以后
-                        mAdapter.notifyDataSetChanged();
+
                     }
                 })
                 .build();
@@ -123,13 +133,12 @@ public class BillFragment extends Fragment {
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int postion) {
-                //Toast.makeText(getActivity(),"hi",Toast.LENGTH_SHORT).show();
-                //TODO:显示账单详情
+
                 Intent intent = new Intent(getContext(), BillDetail.class);
                 int BillId = bills.get(postion).getId();
-                //TODO:上面这句话不知道对不对，position是这个view在列表中的位置，最上面的item的position是0，得到这个Bill的id传进新的activity中
                 intent.putExtra("BillId",BillId);
-                startActivity(intent);
+
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
         mAdapter.setOnItemLongClickListener(new MyItemLongClickListener(){
@@ -137,11 +146,11 @@ public class BillFragment extends Fragment {
             public void onLongItemClick(View v, int position){
                 final int pos = position;
                 PopupMenu popupMenu = new PopupMenu(getContext(),v);
-                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.deletemenu,popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        //TODO:删除item
+
                         int BillId = bills.get(pos).getId();
                         DataSupport.deleteAll(Bills.class,"id = ?", String.valueOf(BillId));
                         new MyTask().execute();
@@ -176,8 +185,6 @@ public class BillFragment extends Fragment {
     }
 
     private void initData(){
-        // TODO: 从数据库中读取账单数据，绑定到这里，以下是绑定的demo
-        //预期实现目标：从上往下按照添加日期的先后顺序显示，最上面的是最后添加的。同时图表与类别list也需要维护
 
         String nextYear = mMonth.equals("12")? String.valueOf(Integer.valueOf(mYear)+1):mYear;
         //Log.d("nextyear", nextYear);
@@ -390,26 +397,11 @@ public class BillFragment extends Fragment {
                         return false;
                     }
                 });
-                /*
-                view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                    @Override
-                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                        menu.add("delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                //TODO:数据库里删除记录，维护income和expense
-                                mAdapter.notifyDataSetChanged();
-                                Toast.makeText(getActivity(),"已删除",Toast.LENGTH_SHORT).show();
-                                return true;
-                            }
-                        });
-                    }
-                });*/
 
             }
         }
     }
-    class MyTask extends AsyncTask{
+    public class MyTask extends AsyncTask{
         @Override
         protected Object doInBackground(Object[] objects){
             initData();

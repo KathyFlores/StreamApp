@@ -1,17 +1,32 @@
 package stream.com.streamapp.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.angmarch.views.NiceSpinner;
 import org.litepal.crud.DataSupport;
+import org.w3c.dom.Text;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import stream.com.streamapp.R;
@@ -20,18 +35,25 @@ import stream.com.streamapp.login;
 
 public class BillDetail extends AppCompatActivity {
     private int BillId;
+    public final static int RESULT_CODE=1;
+    private boolean isEdit = false;
+    private boolean changed = false;
     private Context mContext;
     private ImageView backBTN=null;
     private TextView category = null;
     private TextView InOrOut = null;
-    private TextView amount = null;
-    private TextView note = null;
-    private TextView time = null;
-    private TextView place = null;
+    private EditText amount = null;
+    private EditText note = null;
+    private EditText time = null;
+    private EditText place = null;
+    private TextView editBTN,deleteBTN;
     private Drawable icon;
+    private Drawable arrow;
     private double mAmount;
     private String mInOrOut,mNote,mTime,mPlace,mCategory;
     private List<Bills> mBill;
+    KeyListener amountListener,noteListener,timeListener,placeListener;
+    PopupMenu popupMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +62,65 @@ public class BillDetail extends AppCompatActivity {
         BillId=extras.getInt("BillId");
         Log.e("BillId:",""+BillId);
         initView();
+        setListener();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            intent.putExtra("result", changed);
+            setResult(RESULT_CODE, intent);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
     private void initView(){
+        editBTN=(TextView)findViewById(R.id.editBTN);
+        deleteBTN=(TextView)findViewById(R.id.deleteBTN);
         backBTN = (ImageView)findViewById(R.id.back_button);
         category = (TextView)findViewById(R.id.category);
         mContext=getApplicationContext();
-        InOrOut = (TextView)findViewById(R.id.InOrOut);
-        amount = (TextView)findViewById(R.id.amount);
-        note = (TextView)findViewById(R.id.note);
-        time = (TextView)findViewById(R.id.time);
-        place = (TextView)findViewById(R.id.place);
-        //TODO:根据billid维护以下数据
+        InOrOut = (TextView) findViewById(R.id.InOrOut);
+        amount = (EditText)findViewById(R.id.amount);
+        amountListener=amount.getKeyListener();
+        amount.setKeyListener(null);
+        amount.setEnabled(false);
+        note = (EditText)findViewById(R.id.note);
+        noteListener=note.getKeyListener();
+        note.setKeyListener(null);
+        note.setEnabled(false);
+        time = (EditText)findViewById(R.id.time);
+        timeListener=time.getKeyListener();
+        time.setKeyListener(null);
+        time.setEnabled(false);
+        place = (EditText)findViewById(R.id.place);
+        placeListener=place.getKeyListener();
+        place.setKeyListener(null);
+        place.setEnabled(false);
+        arrow= ContextCompat.getDrawable(mContext,R.drawable.arrow_down);
+
+        popupMenu = new PopupMenu(this,InOrOut);
+        popupMenu.getMenuInflater().inflate(R.menu.inoroutmenu,popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId()==R.id.in){
+                    InOrOut.setText(R.string.income);
+                }
+                else if(item.getItemId()==R.id.out){
+                    InOrOut.setText(R.string.expense);
+                }
+
+                return true;
+            }
+        });
+
         mBill = DataSupport.where("id = ? ", String.valueOf(BillId)).find(Bills.class);
 
         mAmount = mBill.get(0).getAmount();
-        mInOrOut = (mBill.get(0).getInOrOut() == "in")?"收入":"支出" ;
+        mInOrOut = (mBill.get(0).getInOrOut().equals("in"))?"收入":"支出" ;
         mNote = mBill.get(0).getNote();
         mPlace= mBill.get(0).getPlace();
         mTime = mBill.get(0).getDate();
@@ -183,11 +249,84 @@ public class BillDetail extends AppCompatActivity {
         }
         icon.setBounds(0,0,icon.getMinimumWidth(),icon.getMinimumHeight());
         category.setCompoundDrawables(null,icon,null,null);
+
+    }
+    private void setListener(){
         backBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("result", changed);
+                setResult(RESULT_CODE, intent);
                 finish();
             }
         });
+        InOrOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(mContext,"hi",Toast.LENGTH_SHORT).show();
+                if(isEdit)
+                    popupMenu.show();
+            }
+        });
+        editBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isEdit){//编辑态, 点击保存
+                    isEdit=false;
+                    editBTN.setText(R.string.edit);
+                    time.setKeyListener(null);
+                    time.setEnabled(false);
+                    amount.setKeyListener(null);
+                    amount.setEnabled(false);
+                    place.setKeyListener(null);
+                    place.setEnabled(false);
+                    note.setKeyListener(null);
+                    note.setEnabled(false);
+                    InOrOut.setCompoundDrawables(null, null, null, null);
+                    save();
+                }
+                else {//
+                    isEdit = true;
+                    editBTN.setText(R.string.save);
+                    time.setKeyListener(timeListener);
+                    time.setEnabled(true);
+                    amount.setKeyListener(amountListener);
+                    amount.setEnabled(true);
+                    place.setKeyListener(placeListener);
+                    place.setEnabled(true);
+                    note.setKeyListener(noteListener);
+                    note.setEnabled(true);
+                    arrow.setBounds(0, 0, arrow.getMinimumWidth(), arrow.getMinimumHeight());
+                    InOrOut.setCompoundDrawables(null, null, arrow, null);
+                }
+            }
+        });
+        deleteBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changed=true;
+                DataSupport.deleteAll(Bills.class,"id = ?", String.valueOf(BillId));
+                Toast.makeText(BillDetail.this,"已删除",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.putExtra("result", changed);
+                setResult(RESULT_CODE, intent);
+                finish();
+            }
+        });
+    }
+    private void save(){
+        String newInOrOut, newTime, newPlace, newNote;
+        double newAmount;
+        newInOrOut = InOrOut.getText().toString();
+        newTime = time.getText().toString();
+        newNote = note.getText().toString();
+        newPlace = place.getText().toString();
+        newAmount = Double.valueOf(amount.getText().toString());
+        changed=true;
+        //TODO: 在数据库中修改
+
+
+        Toast.makeText(this,"已保存",Toast.LENGTH_SHORT).show();
     }
 }

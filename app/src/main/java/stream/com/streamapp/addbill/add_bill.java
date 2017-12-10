@@ -30,9 +30,6 @@ public class add_bill extends AppCompatActivity{
         setContentView(R.layout.activity_addbill);
         initView();
         setListener();
-
-
-
     }
     private void initView()
     {

@@ -274,7 +274,7 @@ public class login extends AppCompatActivity {
                     //return;
                 }
                 else{
-                    //TODO:调用相机，刷脸登录
+
                     openCamera();
                 }
             }
@@ -318,7 +318,7 @@ public class login extends AppCompatActivity {
                                             newbuilder.setCancelable(false);
                                         }
                                         else{
-                                            //TODO:修改密码
+
                                             String updateSql="update user set passwd = \""+newPassword+"\" where phone = \""+cphone+"\";";
                                          //   Log.e("fff","sql:"+updateSql);
                                             query tQuery = new query();

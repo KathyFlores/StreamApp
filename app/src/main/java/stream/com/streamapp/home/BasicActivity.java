@@ -35,6 +35,7 @@ public class BasicActivity extends AppCompatActivity {
     private MyFragmentPagerAdapter madapter;
     private Drawable drawable0, drawable1, drawable2, drawable3;
     private Drawable _drawable0, _drawable1, _drawable2, _drawable3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LitePal.initialize(this);//Init database.

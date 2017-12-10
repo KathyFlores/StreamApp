@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"  >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:background="@color/colorPrimary">
         <ImageView
+
             android:id="@+id/back_button"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_margin="10dp"
             android:src="@drawable/arrow_left" />
         <TextView
+
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:text="@string/type"
             android:textSize="16sp"
             android:textAlignment="center"
@@ -46,10 +52,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:layout_margin="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/income"
             android:textSize="16sp"
-            android:textColor="@color/fontColorDark"/>
+            android:textColor="@color/fontColorDark"
+            />
 
     </LinearLayout>
     <View
@@ -69,17 +81,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_gravity="center"
+
             android:textAlignment="center"
             android:text="@string/amount"
             android:textSize="16sp"
             android:textColor="@color/fontColor"/>
-        <TextView
+        <EditText
             android:id="@+id/amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:layout_margin="10dp"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingEnd="20dp"
+            android:inputType="numberDecimal"
             android:text="1000"
             android:textSize="16sp"
             android:textColor="@color/fontColorDark"/>
@@ -101,18 +118,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:text="@string/note"
+
             android:textSize="16sp"
             android:textAlignment="center"
             android:textColor="@color/fontColor"/>
-        <TextView
+        <EditText
             android:id="@+id/note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:layout_margin="10dp"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingEnd="20dp"
             android:text="无"
+            android:inputType="text"
             android:textSize="16sp"
             android:textColor="@color/fontColorDark"/>
     </LinearLayout>
@@ -133,18 +155,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:text="@string/time"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textColor="@color/fontColor"/>
-        <TextView
+        <EditText
             android:id="@+id/time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:layout_margin="10dp"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingEnd="20dp"
             android:text="2018/1/1"
+            android:inputType="datetime"
             android:textSize="16sp"
             android:textColor="@color/fontColorDark"/>
     </LinearLayout>
@@ -165,19 +191,67 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:text="@string/place"
             android:textSize="16sp"
             android:textAlignment="center"
             android:textColor="@color/fontColor"/>
-        <TextView
+        <EditText
             android:id="@+id/place"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:layout_margin="10dp"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingEnd="20dp"
             android:text="where"
+            android:inputType="text"
             android:textSize="16sp"
             android:textColor="@color/fontColorDark"/>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:id="@+id/edit_delete_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <TextView
+                android:id="@+id/editBTN"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="@string/edit"
+                android:textColor="@color/fontColor"
+                android:textSize="20sp"
+                android:gravity="center"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/fontColorLight"/>
+            <TextView
+                android:id="@+id/deleteBTN"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="@string/delete"
+                android:textColor="@color/fontColor"
+                android:textSize="20sp"
+                android:gravity="center"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/fontColorLight"
+            android:layout_above="@id/edit_delete_layout"/>
+    </RelativeLayout>
 </LinearLayout>

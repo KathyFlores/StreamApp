@@ -52,7 +52,6 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v){
         String type = new String();
-        //TODO：绑定种类
         switch(v.getId())
         {
             case R.id.salary:
@@ -91,6 +90,7 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
                 bill.setUser_id(login.getUser_id());
                 bill.save();
                 Toast.makeText(getActivity(),"账单添加成功",Toast.LENGTH_SHORT).show();
+
             }
         });
         AlertDialog dialog = builder.create();
