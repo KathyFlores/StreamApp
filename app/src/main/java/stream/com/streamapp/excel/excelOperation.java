@@ -90,16 +90,18 @@ public class excelOperation {
             return;
 
         } catch (IOException e) {
-
+            solveFail(activity);
             e.printStackTrace();
         } catch (RowsExceededException e) {
+            solveFail(activity);
             e.printStackTrace();
         } catch (WriteException e) {
+            solveFail(activity);
             e.printStackTrace();
         }
 
     }
-    private void solveFail(Activity activity)
+    private static void solveFail(Activity activity)
     {
         final WeakReference<Activity> mActivity=new WeakReference<Activity> (activity);
         ((BasicActivity)mActivity.get()).handle(2);
