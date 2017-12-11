@@ -28,7 +28,7 @@ import io.valuesfeng.picker.utils.PicturePickerUtils;
 import stream.com.streamapp.R;
 
 public class EditUserInfo extends AppCompatActivity {
-
+    ImageView backBTN = null;
     private TextView mChangePhoto;
     private TextView mChangeName;
     public static final int REQUEST_CODE_CHOOSE = 1;
@@ -42,11 +42,19 @@ public class EditUserInfo extends AppCompatActivity {
     }
     private void initView()
     {
+        backBTN = (ImageView) findViewById(R.id.back_button);
+        backBTN.setVisibility(View.VISIBLE);
         mChangeName=(TextView)findViewById(R.id.changeName);
         mChangePhoto=(TextView)findViewById(R.id.changePhoto);
     }
     private void setListener()
     {
+        backBTN.setOnClickListener(new TextView.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mChangePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +79,9 @@ public class EditUserInfo extends AppCompatActivity {
 
                     }
                 });
+                AlertDialog dialog = builder.create();
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
             }
         });
     }

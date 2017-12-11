@@ -1,5 +1,6 @@
 package stream.com.streamapp.home;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -107,31 +108,35 @@ public class ChartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 InOrOut="in";
-
+                Draw();
             }
         });
         expense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InOrOut="out";
+                Draw();
             }
         });
         day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scale = 0;
+                Draw();
             }
         });
         month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scale = 1;
+                Draw();
             }
         });
         year.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scale = 2;
+                Draw();
             }
         });
     }
@@ -254,8 +259,10 @@ public class ChartFragment extends Fragment {
                     sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsIn[i]).sum(Bills.class, "amount", double.class);
                 }
                 Log.d("pi", labelsIn[i] + String.valueOf(sum));
-                mPieData.add((float) sum);
-                mlabels.add(labelsIn[i]);
+                if(sum!=0) {
+                    mPieData.add((float) sum);
+                    mlabels.add(labelsIn[i]);
+                }
             }
         }
         if (InOrOut.equals("out")) {
