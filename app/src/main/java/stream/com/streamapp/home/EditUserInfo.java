@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
+
 import android.os.Message;
 import android.os.Parcel;
 import android.provider.MediaStore;
@@ -21,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -48,6 +51,7 @@ public class EditUserInfo extends AppCompatActivity {
     private List<Uri> mSelected;
     private final String uploadPhoto="http://47.95.245.4:9999/editphoto";
     private final OkHttpClient client = new OkHttpClient();
+
     private Handler mHandler=new Handler()
     {
         @Override
@@ -67,6 +71,7 @@ public class EditUserInfo extends AppCompatActivity {
 
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,6 +207,7 @@ public class EditUserInfo extends AppCompatActivity {
 
             }
         }
-    }
 
+
+    }
 }

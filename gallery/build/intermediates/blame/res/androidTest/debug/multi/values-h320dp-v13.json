@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-h320dp-v13/values-h320dp-v13.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 57,
+                    "endOffset": 108
+                },
+                "from": {
+                    "file": "/Users/Alan/.android/build-cache/dae391914e76bb2a412f9b2c0e667ac134c81c21/output/res/values-h320dp/values-h320dp.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 231,
+                        "endColumn": 57,
+                        "endOffset": 284
+                    }
+                }
+            }
+        ]
+    }
+]
