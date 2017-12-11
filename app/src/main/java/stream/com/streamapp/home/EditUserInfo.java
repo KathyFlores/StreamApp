@@ -35,6 +35,8 @@ import io.valuesfeng.picker.engine.GlideEngine;
 import io.valuesfeng.picker.engine.LoadEngine;
 import io.valuesfeng.picker.engine.PicassoEngine;
 import io.valuesfeng.picker.utils.PicturePickerUtils;
+import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -42,6 +44,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import stream.com.streamapp.R;
+import stream.com.streamapp.login;
 
 public class EditUserInfo extends AppCompatActivity {
     ImageView backBTN = null;
@@ -50,6 +53,7 @@ public class EditUserInfo extends AppCompatActivity {
     public static final int REQUEST_CODE_CHOOSE = 1;
     private List<Uri> mSelected;
     private final String uploadPhoto="http://47.95.245.4:9999/editphoto";
+    private final String serverUrl="http://47.95.245.4/query.php";
     private final OkHttpClient client = new OkHttpClient();
 
     private Handler mHandler=new Handler()
@@ -67,6 +71,14 @@ public class EditUserInfo extends AppCompatActivity {
             else if(content.equals("1"))
             {
                 Toast.makeText(getApplicationContext(),"上传图片失败，请检查权限与网络",Toast.LENGTH_LONG).show();
+            }
+            else if(content.equals("2"))
+            {
+                Toast.makeText(getApplicationContext(),"修改用户名成功",Toast.LENGTH_LONG).show();
+            }
+            else if(content.equals("3"))
+            {
+                Toast.makeText(getApplicationContext(),"修改用户名失败",Toast.LENGTH_LONG).show();
             }
 
         }
@@ -111,10 +123,41 @@ public class EditUserInfo extends AppCompatActivity {
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String newUsername=usernameET.getText().toString().trim();
+                        final String newUsername=usernameET.getText().toString().trim();
                         //TODO:修改用户名为newUsername
+                        Thread tt= new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int id= login.getUser_id();
+                                String query="update user set name=\""+newUsername+"\" where id ="+id+";";
+                                RequestBody body = new FormBody.Builder()
+                                        .add("content", query)
+                                        .build();
+                                Request tRequest = new Request.Builder()
+                                        .url(serverUrl)
+                                        .post(body)
+                                        .build();
+                                Call call = client.newCall(tRequest);
+                                Response tResponse = null;
+                                try {
+                                    tResponse = call.execute();
+                                    Bundle re=new Bundle();
+                                    re.putString("Return","2");
+                                    Message msg=new Message();
+                                    msg.setData(re);
+                                    mHandler.sendMessage(msg);
+                                } catch (IOException e) {
+                                    Bundle re=new Bundle();
+                                    re.putString("Return","3");
+                                    Message msg=new Message();
+                                    msg.setData(re);
+                                    e.printStackTrace();
+                                }
 
-                        Toast.makeText(EditUserInfo.this,"用户名已修改",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        tt.start();
+                        //Toast.makeText(EditUserInfo.this,"用户名已修改",Toast.LENGTH_SHORT).show();
 
                     }
                 });

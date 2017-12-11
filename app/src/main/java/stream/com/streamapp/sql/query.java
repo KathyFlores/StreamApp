@@ -106,7 +106,7 @@ public class query {
         mAnswer = "";
         myThread tThread=new myThread(mUrl,query);
         tThread.start();
-        while(mAnswer=="")
+        while(mAnswer.equals(""))
         {
             Log.e("rrr","111");
         }

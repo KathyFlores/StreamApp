@@ -164,7 +164,7 @@ public class login extends AppCompatActivity {
         login.user_id = user_id;
     }
 
-    static int user_id = 0;
+    private static int user_id = 0;
     RelativeLayout loginBTN = null;
     EditText usernameET = null;
     EditText passwordET = null;
