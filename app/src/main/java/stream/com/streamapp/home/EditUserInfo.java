@@ -1,15 +1,20 @@
 package stream.com.streamapp.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -48,11 +53,31 @@ public class EditUserInfo extends AppCompatActivity {
                 changePhoto();
             }
         });
+        mChangeName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(EditUserInfo.this);
+                View dialogView = LayoutInflater.from(EditUserInfo.this).inflate(R.layout.edit_username,null);
+                final EditText usernameET = dialogView.findViewById(R.id.new_username);
+                builder.setView(dialogView);
+                builder.setNegativeButton("取消",null);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newUsername=usernameET.getText().toString().trim();
+                        //TODO:修改用户名为newUsername
+
+                        Toast.makeText(EditUserInfo.this,"用户名已修改",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
     }
     private void changePhoto()
     {
         Picker.from(this)
-                .count(3)
+                .count(1)
                 .enableCamera(true)
                 //.setEngine(new GlideEngine())
                 .setEngine(new PicassoEngine())
@@ -66,52 +91,10 @@ public class EditUserInfo extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             mSelected = PicturePickerUtils.obtainResult(data);
             for (Uri u : mSelected) {
-                Log.i("picture", u.getPath());
+                Log.e("picture", u.getPath());
+                //TODO：修改头像
             }
         }
     }
 
-
-    static class CustomEngine implements LoadEngine {
-        @Override
-        public void displayImage(String path, ImageView imageView) {
-            Log.i("picture", path);
-        }
-
-        @Override
-        public void displayCameraItem(ImageView imageView) {
-
-        }
-
-        @Override
-        public void scrolling(GridView view) {
-
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-        }
-
-        public CustomEngine() {
-
-        }
-
-        protected CustomEngine(Parcel in) {
-        }
-
-        public static final Creator<CustomEngine> CREATOR = new Creator<CustomEngine>() {
-            public CustomEngine createFromParcel(Parcel source) {
-                return new CustomEngine(source);
-            }
-
-            public CustomEngine[] newArray(int size) {
-                return new CustomEngine[size];
-            }
-        };
-    }
 }

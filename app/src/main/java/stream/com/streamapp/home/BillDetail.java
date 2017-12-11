@@ -320,8 +320,9 @@ public class BillDetail extends AppCompatActivity {
         newNote = note.getText().toString();
         newPlace = place.getText().toString();
         newAmount = Double.valueOf(amount.getText().toString());
+        Log.e("inorout",newInOrOut);
         Bills newBill = new Bills();
-        newBill.setInOrOut(newInOrOut);
+        newBill.setInOrOut(newInOrOut.equals("收入")?"in":"out");
         newBill.setDate(newTime);
         newBill.setNote(newNote);
         newBill.setPlace(newPlace);

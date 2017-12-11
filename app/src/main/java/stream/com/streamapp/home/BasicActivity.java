@@ -87,6 +87,9 @@ public class BasicActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+    public void finish(){
+        super.finish();
+    }
     private void InitView()
     {
         mContext=getApplicationContext();

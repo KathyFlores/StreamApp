@@ -60,11 +60,7 @@
         <activity android:name=".home.BasicActivity">
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".Signup"/>
 

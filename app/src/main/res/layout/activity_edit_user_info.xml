@@ -4,6 +4,7 @@
               android:layout_height="match_parent"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/fontColorLight">
+    <include layout="@layout/appbar_layout"/>
     <LinearLayout
         android:id="@+id/user_layout"
         android:layout_width="fill_parent"
@@ -14,16 +15,16 @@
         <TextView
             android:id="@+id/changeName"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:background="@color/white"
-            android:drawablePadding="262dp"
+            android:drawablePadding="200dp"
             android:drawableRight="@drawable/more"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/changeUserName"
             android:textColor="@color/fontColorDark"
-            android:theme="@style/body_text" />
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
@@ -35,7 +36,7 @@
         <TextView
             android:id="@+id/changePhoto"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:background="@color/white"
             android:drawablePadding="262dp"
             android:drawableRight="@drawable/more"
@@ -43,13 +44,7 @@
             android:paddingLeft="10dp"
             android:text="@string/changePhoto"
             android:textColor="@color/fontColorDark"
-            android:theme="@style/body_text" />
+            android:textSize="18sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/hint" />
     </LinearLayout>
 </LinearLayout>

@@ -113,5 +113,14 @@
             android:text="@string/about"
             android:textColor="@color/fontColorDark"
             android:theme="@style/body_text" />
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/logoutBTNtext"
+            android:textSize="20sp"
+            android:textColor="@color/fontColorLight"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/loggout_button"/>
     </LinearLayout>
 </LinearLayout>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/fontColorLight">
 
     <LinearLayout
@@ -93,15 +95,31 @@
             android:textSize="16sp" />
 
     </LinearLayout>
-    <lecho.lib.hellocharts.view.LineChartView
-        android:id="@+id/line_chart"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-    <lecho.lib.hellocharts.view.PieChartView
-        android:id="@+id/pie_chart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="20dp"/>
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <lecho.lib.hellocharts.view.LineChartView
+                android:id="@+id/line_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="50dp"/>
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/pie_chart"
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:layout_margin="40dp"
+                />
+            <View
+                android:layout_height="75dp"
+                android:layout_width="match_parent"/>
 
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
