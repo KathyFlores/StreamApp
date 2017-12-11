@@ -3,8 +3,13 @@ package stream.com.streamapp.home;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcel;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +23,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import io.valuesfeng.picker.Picker;
@@ -25,6 +32,12 @@ import io.valuesfeng.picker.engine.GlideEngine;
 import io.valuesfeng.picker.engine.LoadEngine;
 import io.valuesfeng.picker.engine.PicassoEngine;
 import io.valuesfeng.picker.utils.PicturePickerUtils;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import stream.com.streamapp.R;
 
 public class EditUserInfo extends AppCompatActivity {
@@ -33,6 +46,27 @@ public class EditUserInfo extends AppCompatActivity {
     private TextView mChangeName;
     public static final int REQUEST_CODE_CHOOSE = 1;
     private List<Uri> mSelected;
+    private final String uploadPhoto="http://47.95.245.4:9999/editphoto";
+    private final OkHttpClient client = new OkHttpClient();
+    private Handler mHandler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            Bundle bd=msg.getData();
+            String content=bd.getString("Return");
+            if(content.equals("0"))
+            {
+                Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_LONG).show();
+            }
+            else if(content.equals("1"))
+            {
+                Toast.makeText(getApplicationContext(),"上传图片失败，请检查权限与网络",Toast.LENGTH_LONG).show();
+            }
+
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,8 +136,70 @@ public class EditUserInfo extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             mSelected = PicturePickerUtils.obtainResult(data);
             for (Uri u : mSelected) {
-                Log.e("picture", u.getPath());
-                //TODO：修改头像
+                //Bundle id=data.getExtras();
+                Log.e("fff", u.toString());
+                Log.i("picture", u.getPath());
+                try {
+                    Bitmap mBitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), u);
+                    String[] filePathColumns = {MediaStore.Images.Media.DATA};
+                    Cursor c = getContentResolver().query(u, filePathColumns, null, null, null);
+                    c.moveToFirst();
+                    int columnIndex = c.getColumnIndex(filePathColumns[0]);
+                    String imagePath = c.getString(columnIndex);
+                    Log.e("fff", imagePath);
+                    final File mFile = new File(imagePath);
+                    Thread uploadThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), mFile);
+
+
+                            RequestBody requestBody = new MultipartBody.Builder()
+                                    .setType(MultipartBody.FORM)
+                                    .addFormDataPart("file", "1", fileBody)
+                                    .addFormDataPart("id", "1")//Integer.toString(getUser_id()))
+                                    .build();
+
+                            Request request = new Request.Builder()
+                                    .url(uploadPhoto)
+                                    .post(requestBody)
+                                    .build();
+
+                            Response response;
+                            try {
+                                response = client.newCall(request).execute();
+                                String jsonString = response.body().string();
+                                Log.e("fff","photo:"+jsonString);
+                                if (jsonString.contains("<p>1</p>")) {
+                                    Bundle re=new Bundle();
+                                    re.putString("Return","0");
+                                    Message msg=new Message();
+                                    msg.setData(re);
+                                    mHandler.sendMessage(msg);
+                                } else {
+                                    Bundle re=new Bundle();
+                                    re.putString("Return","1");
+                                    Message msg=new Message();
+                                    msg.setData(re);
+                                    mHandler.sendMessage(msg);
+                                }
+
+                            } catch (IOException e) {
+                                Bundle re=new Bundle();
+                                re.putString("Return","1");
+                                Message msg=new Message();
+                                msg.setData(re);
+                                mHandler.sendMessage(msg);
+                                Log.d("ff", "upload IOException ", e);
+                            }
+                        }
+                    });
+                    uploadThread.start();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }
