@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/ic_camera.png",
+        "source": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/ic_camera.png"
+    },
+    {
+        "merged": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/pick_photo_checkbox_check.png",
+        "source": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/pick_photo_checkbox_check.png"
+    },
+    {
+        "merged": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/image_not_exist.png",
+        "source": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/image_not_exist.png"
+    },
+    {
+        "merged": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/pick_photo_checkbox_normal.png",
+        "source": "/Users/Alan/Desktop/course/android/project/StreamApp/gallery/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/pick_photo_checkbox_normal.png"
+    }
+]
