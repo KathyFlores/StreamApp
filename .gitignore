@@ -1,5 +1,6 @@
 *.iml
 .vs
+gallery
 .gradle
 *.log
 /local.properties
