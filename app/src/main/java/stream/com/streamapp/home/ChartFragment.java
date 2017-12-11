@@ -186,23 +186,26 @@ public class ChartFragment extends Fragment {
             if (scale == 0) {
                 calendar.add(Calendar.DATE, 1);//后一天日期
                 String day1 = sf.format(calendar.getTime());
-                calendar.add(Calendar.DATE, -2);//前一天日期
+                calendar.add(Calendar.DATE, -1);//前一天日期
                 String day2 = sf.format(calendar.getTime());
                 sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), day2, day1, InOrOut).sum(Bills.class, "amount", double.class);
+                calendar.add(Calendar.DATE, -1);
             }
             if (scale == 1) {
                 calendar.add(Calendar.MONTH, 1);//后一个月日期
                 String month1 = sf.format(calendar.getTime());
-                calendar.add(Calendar.MONTH, -2);//前一个月日期
+                calendar.add(Calendar.MONTH, -1);//前一个月日期
                 String month2 = sf.format(calendar.getTime());
                 sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), month2.substring(0, 7), month1.substring(0, 7), InOrOut).sum(Bills.class, "amount", double.class);
+                calendar.add(Calendar.MONTH, -1);
             }
             if (scale == 2 ) {
                 calendar.add(Calendar.YEAR, 1);//后一年日期
                 String year1 = sf.format(calendar.getTime());
-                calendar.add(Calendar.YEAR, -2);//前一年日期
+                calendar.add(Calendar.YEAR, -1);//前一年日期
                 String year2 = sf.format(calendar.getTime());
                 sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ?", String.valueOf(login.getUser_id()), year2.substring(0, 4), year1.substring(0, 4), InOrOut).sum(Bills.class, "amount", double.class);
+                calendar.add(Calendar.YEAR, -1);
             }
             pointInY.add(i, (float)sum);
         }
