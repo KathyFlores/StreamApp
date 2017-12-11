@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.io.File;
+
 import stream.com.streamapp.R;
 import stream.com.streamapp.excel.excelOperation;
 import stream.com.streamapp.login;
@@ -45,7 +47,8 @@ public class UserFragment extends Fragment {
         avatar = view.findViewById(R.id.avatar);
         avatar.setImageResource(R.drawable.avatar);//默认头像
         //TODO: 设置头像，调用方法如下: 参数由edituserinfo.java得到
-        //avatar.setImageURI(/*这里是图片的地址*/);
+
+        avatar.setImageURI(Uri.fromFile(new File(login.getBasicDir()+"/"+login.getUser_id()+".jpg")));
 
         logoutBTN=view.findViewById(R.id.logout);
         username=view.findViewById(R.id.username);//TODO: 设置为用户的用户名

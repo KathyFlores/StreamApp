@@ -62,7 +62,9 @@ import stream.com.streamapp.sql.query;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,7 +104,6 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
             Matcher m = r.matcher(rePd);
             if(m.find())
             {
-
                 String res=m.group(0).replaceAll("(passwd|<br>)","");
                 if(res.equals(passwd))
                 {
@@ -145,16 +146,24 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
         }
     }
 }
-
-
-
-
-
 public class login extends AppCompatActivity {
 
     boolean finish = false;
     boolean ok = false;
     String mFilePath="/temp.jpeg";
+
+
+    public static String getBasicDir() {
+        return basicDir;
+    }
+
+    public static void setBasicDir(String basicDir) {
+        login.basicDir = basicDir;
+    }
+
+    private static String basicDir="";
+
+
 
     public static int getUser_id() {
         return user_id;
@@ -240,6 +249,9 @@ public class login extends AppCompatActivity {
         signUpBTN=(TextView)findViewById(R.id.signUp);
         forgetPasswdBTN =(TextView)findViewById(R.id.forgetPassword);
         faceBTN=(ImageView)findViewById(R.id.face);
+        //setCacheDiry(this.getCacheDir().toString());
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        setBasicDir(storageDir.getAbsolutePath());
     }
     private void setListener(){
         loginBTN.setOnClickListener(new View.OnClickListener() {
@@ -328,17 +340,9 @@ public class login extends AppCompatActivity {
                                                 e.printStackTrace();
                                             }
                                         }
-
-
-
-
                                     }
                                 });
                                 newbuilder.create().show();
-
-
-
-
                             }
                         }
 
@@ -348,6 +352,52 @@ public class login extends AppCompatActivity {
                 registerPage.show(login.this);
             }
         });
+    }
+
+    public class getPhoto implements Runnable{
+        private File path;
+        public getPhoto(File tmp)
+        {
+            this.path=tmp;
+        }
+        private final String serverUrl="http://47.95.245.4:9999/getphoto/[%d]/";
+        @Override
+        public void run() {
+            String url=serverUrl.replace("[%d]",""+login.getUser_id());
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response;
+            try {
+                response = client.newCall(request).execute();
+                InputStream inputStream = response.body().byteStream();//得到图片的流
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File file = new File(storageDir.getAbsolutePath(), "/"+login.getUser_id()+".jpg");
+                FileOutputStream fos = null;
+                try {
+                    file.createNewFile();
+                    fos = new FileOutputStream(file.getAbsolutePath());
+                    if (fos != null) {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                        Log.e("fff",file.getAbsolutePath());
+                        fos.close();
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            } catch (IOException e) {
+                Bundle re=new Bundle();
+                re.putString("Return","1");
+                Message msg=new Message();
+                msg.setData(re);
+                //mHandler.sendMessage(msg);
+                Log.d("ff", "upload IOException ", e);
+            }
+        }
     }
 
     public void jump(int user_id)
@@ -360,7 +410,8 @@ public class login extends AppCompatActivity {
         //TODO:user_id
         setUser_id(user_id);
         Log.e("fff","userid:"+getUser_id());
-
+        Thread t=new Thread(new getPhoto(this.getCacheDir()));
+        t.start();
 
         Intent intent = new Intent(login.this,BasicActivity.class) ;    //切换Login Activity至User Activity
         startActivity(intent);
@@ -385,6 +436,7 @@ public class login extends AppCompatActivity {
                 storageDir
         );
         mFilePath = image.getAbsolutePath();
+
         return image;
     }
     /*
@@ -513,9 +565,4 @@ public class login extends AppCompatActivity {
             }
         }
     }
-
-//    public void ShowTip(String strMsg)
-//    {
-//        Log.e("fff",strMsg);
-//    }
 }
