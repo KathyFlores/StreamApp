@@ -45,6 +45,18 @@
             android:text="@string/changePhoto"
             android:textColor="@color/fontColorDark"
             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/changeFace"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:drawablePadding="200dp"
+            android:drawableRight="@drawable/more"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/changeFace"
+            android:textColor="@color/fontColorDark"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </LinearLayout>

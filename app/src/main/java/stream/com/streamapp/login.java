@@ -4,6 +4,8 @@ package stream.com.streamapp;
  * Created by Alan on 2017/11/5.
  */
 
+import stream.com.streamapp.profile.photo;
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
@@ -70,17 +72,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 class LoginAsyncTask extends AsyncTask<Object,Object,Object>
 {
-    private static ProgressDialog sDialog;
     String userName,passwd;
     private final WeakReference<Activity> mActivity;
     boolean result = true;
     private int user_id;
+
 
     LoginAsyncTask(login activity, String userName,String passwd)
     {
@@ -139,10 +142,19 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
     {
         if((boolean)result)
         {
-            ((login)mActivity.get()).jump(user_id);
+            Bundle re=new Bundle();
+            re.putString("Return","0");
+            re.putInt("ID",user_id);
+            Message msg=new Message();
+            msg.setData(re);
+            ((login)mActivity.get()).mHandler.sendMessage(msg);
         }
         else{
-            ((login)mActivity.get()).passwdError();
+            Bundle re=new Bundle();
+            re.putString("Return","2");
+            Message msg=new Message();
+            msg.setData(re);
+            ((login)mActivity.get()).mHandler.sendMessage(msg);
         }
     }
 }
@@ -151,28 +163,7 @@ public class login extends AppCompatActivity {
     boolean finish = false;
     boolean ok = false;
     String mFilePath="/temp.jpeg";
-
-
-    public static String getBasicDir() {
-        return basicDir;
-    }
-
-    public static void setBasicDir(String basicDir) {
-        login.basicDir = basicDir;
-    }
-
     private static String basicDir="";
-
-
-
-    public static int getUser_id() {
-        return user_id;
-    }
-
-    public static void setUser_id(int user_id) {
-        login.user_id = user_id;
-    }
-
     private static int user_id = 0;
     RelativeLayout loginBTN = null;
     EditText usernameET = null;
@@ -185,8 +176,79 @@ public class login extends AppCompatActivity {
     ImageView faceBTN = null;
     private String appKey="22cd1a36f1a40";
     private String privateKey="cfcd48435cfa42c9b518f511d1c471f0";
-    String phone="11";
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient.Builder().connectTimeout(20, TimeUnit.SECONDS).build();
+
+
+    /*
+     * @param   mHandler:  call back function call this to send message to main thread
+     * @return  0： 登陆成功
+     *          1:  faceError
+     *          2:  passwordError
+     *
+     */
+    public Handler mHandler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            Bundle bd=msg.getData();
+            String content=bd.getString("Return");
+            if(content.equals("0"))
+            {
+
+                loginPromptET.setVisibility(View.GONE);
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                loginTXT.setText(R.string.loginSuccess);
+                loginTXT.setVisibility(View.VISIBLE);
+                int uid=bd.getInt("ID");
+                //TODO:user_id
+                setUser_id(uid);
+                Log.e("fff","userid:"+getUser_id());
+
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                photo.setPath(storageDir.getAbsolutePath());
+                photo.download(getUser_id());
+
+                Intent intent = new Intent(login.this,BasicActivity.class) ;    //切换Login Activity至User Activity
+                startActivity(intent);
+                finish();
+            }
+            else if(content.equals("1"))//face error
+            {
+                loginPromptET.setText(R.string.faceError);
+                loginPromptET.setVisibility(View.VISIBLE);
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                loginTXT.setVisibility(View.VISIBLE);
+            }
+            else if(content.equals("2"))//password error
+            {
+                loginPromptET.setText(R.string.passwordError);
+                loginPromptET.setVisibility(View.VISIBLE);
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                loginTXT.setVisibility(View.VISIBLE);
+            }
+
+        }
+    };
+
+
+    public static String getBasicDir() {
+        return basicDir;
+    }
+    public static void setBasicDir(String basicDir) {
+        login.basicDir = basicDir;
+    }
+    public static int getUser_id() {
+        return user_id;
+    }
+    public static void setUser_id(int user_id) {
+        login.user_id = user_id;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -249,7 +311,6 @@ public class login extends AppCompatActivity {
         signUpBTN=(TextView)findViewById(R.id.signUp);
         forgetPasswdBTN =(TextView)findViewById(R.id.forgetPassword);
         faceBTN=(ImageView)findViewById(R.id.face);
-        //setCacheDiry(this.getCacheDir().toString());
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         setBasicDir(storageDir.getAbsolutePath());
     }
@@ -286,8 +347,18 @@ public class login extends AppCompatActivity {
                     //return;
                 }
                 else{
-
-                    openCamera();
+                    int id=getid(username);
+                    if(id==-1)
+                    {
+                        Bundle re=new Bundle();
+                        re.putString("Return","1");
+                        Message msg=new Message();
+                        msg.setData(re);
+                        mHandler.sendMessage(msg);
+                    }
+                    else{
+                        openCamera(id);
+                    }
                 }
             }
         });
@@ -332,7 +403,6 @@ public class login extends AppCompatActivity {
                                         else{
 
                                             String updateSql="update user set passwd = \""+newPassword+"\" where phone = \""+cphone+"\";";
-                                         //   Log.e("fff","sql:"+updateSql);
                                             query tQuery = new query();
                                             try {
                                                 tQuery.select("user",updateSql);
@@ -354,77 +424,7 @@ public class login extends AppCompatActivity {
         });
     }
 
-    public class getPhoto implements Runnable{
-        private File path;
-        public getPhoto(File tmp)
-        {
-            this.path=tmp;
-        }
-        private final String serverUrl="http://47.95.245.4:9999/getphoto/[%d]/";
-        @Override
-        public void run() {
-            String url=serverUrl.replace("[%d]",""+login.getUser_id());
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
 
-            Response response;
-            try {
-                response = client.newCall(request).execute();
-                InputStream inputStream = response.body().byteStream();//得到图片的流
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                File file = new File(storageDir.getAbsolutePath(), "/"+login.getUser_id()+".jpg");
-                FileOutputStream fos = null;
-                try {
-                    file.createNewFile();
-                    fos = new FileOutputStream(file.getAbsolutePath());
-                    if (fos != null) {
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                        Log.e("fff",file.getAbsolutePath());
-                        fos.close();
-                    }
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            } catch (IOException e) {
-                Bundle re=new Bundle();
-                re.putString("Return","1");
-                Message msg=new Message();
-                msg.setData(re);
-                //mHandler.sendMessage(msg);
-                Log.d("ff", "upload IOException ", e);
-            }
-        }
-    }
-
-    public void jump(int user_id)
-    {
-        loginPromptET.setVisibility(View.GONE);
-        progressView.setVisibility(View.GONE);
-        progressView.stopAnimation();
-        loginTXT.setText(R.string.loginSuccess);
-        loginTXT.setVisibility(View.VISIBLE);
-        //TODO:user_id
-        setUser_id(user_id);
-        Log.e("fff","userid:"+getUser_id());
-        Thread t=new Thread(new getPhoto(this.getCacheDir()));
-        t.start();
-
-        Intent intent = new Intent(login.this,BasicActivity.class) ;    //切换Login Activity至User Activity
-        startActivity(intent);
-        finish();
-    }
-    protected void passwdError()
-    {
-        loginPromptET.setText(R.string.passwordError);
-        loginPromptET.setVisibility(View.VISIBLE);
-        progressView.setVisibility(View.GONE);
-        progressView.stopAnimation();
-        loginTXT.setVisibility(View.VISIBLE);
-    }
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -439,11 +439,34 @@ public class login extends AppCompatActivity {
 
         return image;
     }
+    private int getid(String userName)
+    {
+        query tQuery = new query();
+        String sqlQuery="select id from user where name = \"" + userName + "\";";
+        String rePd= null;
+        try {
+            rePd = tQuery.select("user",sqlQuery);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //<br>id<br>1<br>
+        Pattern r=Pattern.compile(regex.idPattern);
+        Matcher m=r.matcher(rePd);
+        if(m.find())
+        {
+            String res=m.group(0).replaceAll("(id|<br>)","");
+            return Integer.parseInt(res);
+        }
+        else{
+            return -1;
+        }
+    }
     /*
      *  调用系统相机 拍摄完成后用回调函数解决后续逻辑问题
      */
-    private void openCamera()
+    private void openCamera(int uid)
     {
+
         Intent id=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (id.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
@@ -457,12 +480,7 @@ public class login extends AppCompatActivity {
                 id.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 id.putExtra("android.intent.extras.CAMERA_FACING_FRONT", 1);
                 id.putExtra("android.intent.extras.CAMERA_FACING", 1);
-//                id.putExtra("crop", "true");
-//                id.putExtra("aspectX", 1);
-//                id.putExtra("aspectY", 1);
-//                id.putExtra("outputX", 100);
-//                id.putExtra("outputY", 100);
-//                id.putExtra("scale", true);
+                setUser_id(uid);
                 startActivityForResult(id, 1);
             }
         }
@@ -475,18 +493,8 @@ public class login extends AppCompatActivity {
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-///                .addPart(
-//                        Headers.of("Content-Disposition", "form-data; name=\"file\"; filename=\"" + fileName + "\""),
-//                        RequestBody.create(MEDIA_TYPE_PNG, file))
-//                .addPart(
-//                        Headers.of("Content-Disposition", "form-data; name=\"imagetype\""),
-//                        RequestBody.create(null, imageType))
-//                .addPart(
-//                        Headers.of("Content-Disposition", "form-data; name=\"userphone\""),
-//                        RequestBody.create(null, userPhone))
-
                 .addFormDataPart("file", "1", fileBody)
-                .addFormDataPart("id", "1")//Integer.toString(getUser_id()))
+                .addFormDataPart("id", ""+getUser_id())//Integer.toString(getUser_id()))
                 .addFormDataPart("isInsert", "0")
                 .build();
 
@@ -499,20 +507,31 @@ public class login extends AppCompatActivity {
         try {
             response = client.newCall(request).execute();
             String jsonString = response.body().string();
-            Log.d("fff"," upload jsonString ="+jsonString);
-
-            JSONObject jsonObject = new JSONObject(jsonString);
-            int errorCode = jsonObject.getInt("errorCode");
-            if(errorCode == 0){
-
-                //Log.d(TAG," upload data ="+jsonObject.getString("data"));
-                //return jsonObject.getString("data");
+            Pattern r = Pattern.compile("<p>.*?</p>");
+            Matcher m = r.matcher(jsonString);
+            if(m.find())
+            {
+                double emb=Double.valueOf(m.group(0).replace("<p>","").replace("</p>",""));
+                if (emb<0.88)
+                {
+                    Bundle re=new Bundle();
+                    re.putString("Return","0");
+                    re.putInt("ID",getUser_id());
+                    Message msg=new Message();
+                    msg.setData(re);
+                    mHandler.sendMessage(msg);
+                }
+                else{
+                    Bundle re=new Bundle();
+                    re.putString("Return","1");
+                    Message msg=new Message();
+                    msg.setData(re);
+                    mHandler.sendMessage(msg);
+                }
             }
 
         } catch (IOException e) {
             Log.d("ff","upload IOException ",e);
-        }catch (JSONException e){
-            Log.d("fff","upload JSONException ",e);
         }
         return;
     }
@@ -544,25 +563,12 @@ public class login extends AppCompatActivity {
                         }
                     });
                     tThread.start();
-//                    fis = new FileInputStream(mFilePath);
-//                    Bitmap bitmap = BitmapFactory.decodeStream(fis);
-//                    Matrix m=new Matrix();
-//                    //m.postRotate(90);
-//                    WindowManager wm = this.getWindowManager();
-//                    int width = wm.getDefaultDisplay().getWidth();
-//                    int height = wm.getDefaultDisplay().getHeight();
-//                    int picwidth= (int) (width);
-//                    int picheight= (int) (height*0.4);
-//                    Bitmap xbitmap=Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),m,true);
-//                    Bitmap cropped = ThumbnailUtils.extractThumbnail(xbitmap, picwidth, picheight);
 
-
-
-                    //mPic.setImageBitmap(cropped);
                 } finally {
                     //fis.close();// 关闭流
                 }
             }
         }
     }
+
 }

@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 
 import android.os.Message;
 import android.os.Parcel;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,12 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.valuesfeng.picker.Picker;
 import io.valuesfeng.picker.engine.GlideEngine;
@@ -46,15 +53,19 @@ import okhttp3.Response;
 import stream.com.streamapp.R;
 import stream.com.streamapp.login;
 
+import static stream.com.streamapp.login.setUser_id;
+
 public class EditUserInfo extends AppCompatActivity {
     ImageView backBTN = null;
+    private String mFilePath="";
     private TextView mChangePhoto;
     private TextView mChangeName;
+    private TextView mChangeFace;
     public static final int REQUEST_CODE_CHOOSE = 1;
     private List<Uri> mSelected;
     private final String uploadPhoto="http://47.95.245.4:9999/editphoto";
     private final String serverUrl="http://47.95.245.4/query.php";
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient.Builder().connectTimeout(20, TimeUnit.SECONDS).build();
 
     private Handler mHandler=new Handler()
     {
@@ -80,6 +91,14 @@ public class EditUserInfo extends AppCompatActivity {
             {
                 Toast.makeText(getApplicationContext(),"修改用户名失败",Toast.LENGTH_LONG).show();
             }
+            else if(content.equals("4"))
+            {
+                Toast.makeText(getApplicationContext(),"上传人脸成功",Toast.LENGTH_LONG).show();
+            }
+            else if(content.equals("5"))
+            {
+                Toast.makeText(getApplicationContext(),"人脸无法被识别，请重新上传",Toast.LENGTH_LONG).show();
+            }
 
         }
     };
@@ -97,6 +116,7 @@ public class EditUserInfo extends AppCompatActivity {
         backBTN.setVisibility(View.VISIBLE);
         mChangeName=(TextView)findViewById(R.id.changeName);
         mChangePhoto=(TextView)findViewById(R.id.changePhoto);
+        mChangeFace=(TextView)findViewById(R.id.changeFace);
     }
     private void setListener()
     {
@@ -157,8 +177,6 @@ public class EditUserInfo extends AppCompatActivity {
                             }
                         });
                         tt.start();
-                        //Toast.makeText(EditUserInfo.this,"用户名已修改",Toast.LENGTH_SHORT).show();
-
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -166,16 +184,53 @@ public class EditUserInfo extends AppCompatActivity {
                 dialog.show();
             }
         });
+        mChangeFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCamera(login.getUser_id());
+            }
+        });
+    }
+    private void openCamera(int uid)
+    {
+
+        Intent id=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (id.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Log.e("wrong file", ex.getMessage(), ex);
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "stream.com.streamapp.fileprovider", photoFile);
+                id.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                id.putExtra("android.intent.extras.CAMERA_FACING_FRONT", 1);
+                id.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                setUser_id(uid);
+                startActivityForResult(id, 999);
+            }
+        }
+    }
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpeg",
+                storageDir
+        );
+        mFilePath = image.getAbsolutePath();
+        return image;
     }
     private void changePhoto()
     {
         Picker.from(this)
                 .count(1)
                 .enableCamera(true)
-                //.setEngine(new GlideEngine())
                 .setEngine(new PicassoEngine())
-//                .setEngine(new ImageLoaderEngine())
-                //.setEngine(new CustomEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
     }
     @Override
@@ -239,6 +294,13 @@ public class EditUserInfo extends AppCompatActivity {
                                 msg.setData(re);
                                 mHandler.sendMessage(msg);
                                 Log.d("ff", "upload IOException ", e);
+                            } catch(Exception e)
+                            {
+                                Bundle re=new Bundle();
+                                re.putString("Return","1");
+                                Message msg=new Message();
+                                msg.setData(re);
+                                mHandler.sendMessage(msg);
                             }
                         }
                     });
@@ -249,6 +311,61 @@ public class EditUserInfo extends AppCompatActivity {
                 }
 
             }
+        }
+        else if(requestCode==999&&resultCode==RESULT_OK)
+        {
+            final File ff=new File(mFilePath);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), ff);
+
+
+                    RequestBody requestBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("file", "1", fileBody)
+                            .addFormDataPart("id", ""+login.getUser_id())//Integer.toString(getUser_id()))
+                            .addFormDataPart("isInsert", "1")
+                            .build();
+
+                    Request request = new Request.Builder()
+                            .url("http://10.214.129.171:9999/upload")
+                            .post(requestBody)
+                            .build();
+
+                    Response response;
+                    try {
+                        response = client.newCall(request).execute();
+                        String jsonString = response.body().string();
+                        Pattern r = Pattern.compile("<p>.*?</p>");
+                        Matcher m = r.matcher(jsonString);
+                        if(m.find())
+                        {
+                            int re=Integer.valueOf(m.group(0).replace("<p>","").replace("</p>",""));
+                            if (re==10)
+                            {
+                                Bundle reb=new Bundle();
+                                reb.putString("Return","4");
+                                Message msg=new Message();
+                                msg.setData(reb);
+                                mHandler.sendMessage(msg);
+                            }
+                            else{
+                                Bundle reb=new Bundle();
+                                reb.putString("Return","5");
+                                Message msg=new Message();
+                                msg.setData(reb);
+                                mHandler.sendMessage(msg);
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        Log.d("ff","upload IOException ",e);
+                    }
+                    return;
+                }
+            });
+            t.start();
         }
 
 
