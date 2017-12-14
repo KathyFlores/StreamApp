@@ -3,49 +3,20 @@ package stream.com.streamapp.db;
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
-import java.util.Date;
-
 /**
- * Created by WuYiQuan on 2017/12/6.
+ * Created by WuYiQuan on 2017/12/14.
  */
 
-public class Bills extends DataSupport{
-
+public class Assets extends DataSupport {
     @Column(unique = true, defaultValue = "unknown")
     private int id;
     private int user_id;
     private double amount;
     private String date;
-    private String place;
     private String inOrOut;//收入或支出
     private String type;
-    private String note;
     private int state;
     private String timeStamp;
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public String getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public String getInOrOut() {
-        return inOrOut;
-    }
-
-    public void setInOrOut(String inOrOut) {
-        this.inOrOut = inOrOut;
-    }
 
     public int getId() {
         return id;
@@ -79,12 +50,12 @@ public class Bills extends DataSupport{
         this.date = date;
     }
 
-    public String getPlace() {
-        return place;
+    public String getInOrOut() {
+        return inOrOut;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setInOrOut(String inOrOut) {
+        this.inOrOut = inOrOut;
     }
 
     public String getType() {
@@ -95,11 +66,19 @@ public class Bills extends DataSupport{
         this.type = type;
     }
 
-    public String getNote() {
-        return note;
+    public int getState() {
+        return state;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

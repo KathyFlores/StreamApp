@@ -20,6 +20,7 @@ import java.util.Date;
 
 import stream.com.streamapp.R;
 import stream.com.streamapp.db.Bills;
+import stream.com.streamapp.home.UpdateData;
 import stream.com.streamapp.login;
 
 /**
@@ -86,9 +87,17 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
                 bill.setPlace("somewhere");
                 bill.setInOrOut("in");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                bill.setDate(sdf.format(new Date()));
+                String time = sdf.format(new Date());
+                bill.setDate(time);
                 bill.setUser_id(login.getUser_id());
+                bill.setTimeStamp(time);
+                bill.setState(1);
                 bill.save();
+                try {
+                    UpdateData.UploadBill();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(getActivity(),"账单添加成功",Toast.LENGTH_SHORT).show();
 
             }

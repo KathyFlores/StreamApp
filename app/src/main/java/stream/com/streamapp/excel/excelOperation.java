@@ -5,10 +5,13 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -16,7 +19,9 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
+import stream.com.streamapp.db.Bills;
 import stream.com.streamapp.home.BasicActivity;
+import stream.com.streamapp.login;
 
 /**
  * Created by Alan on 2017/12/10.
@@ -27,9 +32,12 @@ public class excelOperation {
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE" };
+
     private static ArrayList<ArrayList<String>> excelData=new ArrayList<>();
     public static  void setData()
     {
+        List<Bills> bills;
+
         //TODO: set data here
         /*      excelData是一个二维的ArrayList 第一维为bill
                 "收入或支出",//in or out   String:"收入"
@@ -40,13 +48,16 @@ public class excelOperation {
                 "备注"      //Note        String:"无"
          */
         excelData.clear();
-        for(int i=0;i<10;i++)
+        bills = DataSupport.where("user_id = ? ", String.valueOf(login.getUser_id())).order("date asc").find(Bills.class);
+        for(int i=0;i<bills.size();i++)
         {
             ArrayList<String> bill= new ArrayList<>();
-            for(int j=0;j<6;j++)
-            {
-                bill.add(""+i+""+j);
-            }
+            bill.add(bills.get(i).getInOrOut());
+            bill.add(bills.get(i).getType());
+            bill.add(bills.get(i).getDate());
+            bill.add(bills.get(i).getPlace());
+            bill.add(""+bills.get(i).getAmount());
+            bill.add(bills.get(i).getNote());
             excelData.add(bill);
         }
     }

@@ -16,11 +16,16 @@ import android.widget.Toast;
 
 import com.yalantis.phoenix.PullToRefreshView;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import stream.com.streamapp.R;
+import stream.com.streamapp.db.Assets;
+import stream.com.streamapp.db.Bills;
+import stream.com.streamapp.login;
 
 /**
  * Created by KathyF on 2017/11/26.
@@ -44,19 +49,21 @@ public class PropertyFragment extends Fragment {
     }
     private void initData(){
         dataList =new ArrayList<String>();
+        //// TODO: 2017/12/14 添加其它资产
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.alipay,R.drawable.nongye,R.drawable.jianshe));
         categoryList = new ArrayList<Integer>(Arrays.asList(R.string.alipay,R.string.nongye,R.string.jianshe));
+        String[] typeList = {"alipay", "nongye", "jianshe", "other"};
         for(int i=0;i<3;i++)
         {
-            dataList.add("¥"+(i+1)*1000);
-
+            double sum = 0;
+            sum += DataSupport.where("user_id = ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()),"in" ,typeList[i]).sum(Assets.class, "amount", double.class);
+            sum -= DataSupport.where("user_id = ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()),"out" ,typeList[i]).sum(Assets.class, "amount", double.class);
+            dataList.add("¥"+sum);
         }
 
     }
 
     private void initView(){
-
-
         recyclerView=view.findViewById(R.id.property_recycler);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);

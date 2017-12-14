@@ -22,7 +22,9 @@ import android.widget.Toast;
 import org.litepal.crud.DataSupport;
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -114,7 +116,7 @@ public class BillDetail extends AppCompatActivity {
             }
         });
 
-        mBill = DataSupport.where("id = ? ", String.valueOf(BillId)).find(Bills.class);
+        mBill = DataSupport.where("id = ? and state <> 3 ", String.valueOf(BillId)).find(Bills.class);
 
         mAmount = mBill.get(0).getAmount();
         mInOrOut = (mBill.get(0).getInOrOut().equals("in"))?"收入":"支出" ;
@@ -303,8 +305,16 @@ public class BillDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changed=true;
-                DataSupport.deleteAll(Bills.class,"id = ?", String.valueOf(BillId));
+                //DataSupport.deleteAll(Bills.class,"id = ?", String.valueOf(BillId));
+                ContentValues values = new ContentValues();
+                values.put("state", 3);
+                DataSupport.update(Bills.class, values, BillId);
                 Toast.makeText(BillDetail.this,"已删除",Toast.LENGTH_SHORT).show();
+                try {
+                    UpdateData.UploadBill();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent();
                 intent.putExtra("result", changed);
                 setResult(RESULT_CODE, intent);
@@ -327,7 +337,16 @@ public class BillDetail extends AppCompatActivity {
         newBill.setNote(newNote);
         newBill.setPlace(newPlace);
         newBill.setAmount(newAmount);
+        newBill.setState(2);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(new Date());
+        newBill.setTimeStamp(time);
         newBill.update(BillId);
+        try {
+            UpdateData.UploadBill();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //DataSupport.update(Bills.class, values, BillId);
         changed=true;
         //TODO: 在数据库中修改
