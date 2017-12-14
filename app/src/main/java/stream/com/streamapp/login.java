@@ -4,6 +4,7 @@ package stream.com.streamapp;
  * Created by Alan on 2017/11/5.
  */
 
+import stream.com.streamapp.home.UpdateData;
 import stream.com.streamapp.profile.photo;
 
 import cn.smssdk.EventHandler;
@@ -57,6 +58,7 @@ import com.mob.tools.MobUIShell;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import stream.com.streamapp.home.BasicActivity;
 import stream.com.streamapp.sql.query;
@@ -205,6 +207,12 @@ public class login extends AppCompatActivity {
                 int uid=bd.getInt("ID");
                 //TODO:user_id
                 setUser_id(uid);
+                try {
+                    UpdateData.downloadBill();
+                    UpdateData.downloadAssets();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }//更新数据库
                 Log.e("fff","userid:"+getUser_id());
 
                 File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
