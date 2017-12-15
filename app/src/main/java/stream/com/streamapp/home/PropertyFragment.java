@@ -50,10 +50,10 @@ public class PropertyFragment extends Fragment {
     private void initData(){
         dataList =new ArrayList<String>();
         //// TODO: 2017/12/14 添加其它资产
-        iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.alipay,R.drawable.nongye,R.drawable.jianshe));
-        categoryList = new ArrayList<Integer>(Arrays.asList(R.string.alipay,R.string.nongye,R.string.jianshe));
+        iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.alipay,R.drawable.nongye,R.drawable.jianshe,R.drawable.wallet));
+        categoryList = new ArrayList<Integer>(Arrays.asList(R.string.alipay,R.string.nongye,R.string.jianshe,R.string.wallet));
         String[] typeList = {"alipay", "nongye", "jianshe", "other"};
-        for(int i=0;i<3;i++)
+        for(int i=0;i<4;i++)
         {
             double sum = 0;
             sum += DataSupport.where("user_id = ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()),"in" ,typeList[i]).sum(Assets.class, "amount", double.class);
@@ -70,9 +70,11 @@ public class PropertyFragment extends Fragment {
         recyclerView.setAdapter(mAdapter = new myAdapter());
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
-            public void onItemClick(View view, int postion) {
-                Toast.makeText(getActivity(),"hi",Toast.LENGTH_SHORT).show();
-                //TODO:显示资产详情
+            public void onItemClick(View view, int position) {
+                String[] typeList = {"支付宝", "农业银行", "建设银行", "钱包"};
+                Toast.makeText(getActivity(),"您的"+typeList[position]+"账户共有"+dataList.get(position)+"元",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"",Toast.LENGTH_SHORT).show();
+
             }
         });
         mPullToRefreshView=(PullToRefreshView)view.findViewById(R.id.pull_to_refresh);
