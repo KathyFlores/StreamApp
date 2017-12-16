@@ -49,7 +49,7 @@ public class PropertyFragment extends Fragment {
     }
     private void initData(){
         dataList =new ArrayList<String>();
-        //// TODO: 2017/12/14 添加其它资产
+
         iconList = new ArrayList<Integer>(Arrays.asList(R.drawable.alipay,R.drawable.nongye,R.drawable.jianshe,R.drawable.wallet));
         categoryList = new ArrayList<Integer>(Arrays.asList(R.string.alipay,R.string.nongye,R.string.jianshe,R.string.wallet));
         String[] typeList = {"alipay", "nongye", "jianshe", "other"};

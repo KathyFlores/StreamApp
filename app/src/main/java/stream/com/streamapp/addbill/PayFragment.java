@@ -208,7 +208,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                         method = "jianshe";
                         break;
                     case R.id.walletBTN:
-                        method = "wallet";
+                        method = "other";
                         break;
                 }
                 Log.e("choose",method);
@@ -233,7 +233,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                 bill.setUser_id(login.getUser_id());
                 bill.setState(1);
                 bill.setTimeStamp(time);
-                bill.setMethods("other");
+                bill.setMethods(method);
                 bill.save();
                 try {
                     UpdateData.UploadBill();

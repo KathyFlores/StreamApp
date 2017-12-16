@@ -41,6 +41,7 @@ public class BillDetail extends AppCompatActivity {
     private ImageView backBTN=null;
     private TextView category = null;
     private TextView InOrOut = null;
+    private TextView method = null;
     private EditText amount = null;
     private EditText note = null;
     private EditText time = null;
@@ -49,10 +50,10 @@ public class BillDetail extends AppCompatActivity {
     private Drawable icon;
     private Drawable arrow;
     private double mAmount;
-    private String mInOrOut,mNote,mTime,mPlace,mCategory;
+    private String mInOrOut,mNote,mTime,mPlace,mCategory,mMethod;
     private List<Bills> mBill;
     KeyListener amountListener,noteListener,timeListener,placeListener;
-    PopupMenu popupMenu;
+    PopupMenu popupMenu,popupMenu1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +82,7 @@ public class BillDetail extends AppCompatActivity {
         backBTN = (ImageView)findViewById(R.id.back_button);
         category = (TextView)findViewById(R.id.category);
         mContext=getApplicationContext();
+        method=(TextView)findViewById(R.id.method);
         InOrOut = (TextView) findViewById(R.id.InOrOut);
         amount = (EditText)findViewById(R.id.amount);
         amountListener=amount.getKeyListener();
@@ -115,7 +117,29 @@ public class BillDetail extends AppCompatActivity {
                 return true;
             }
         });
+        popupMenu1 = new PopupMenu(this,method);
+        popupMenu1.getMenuInflater().inflate(R.menu.methodmenu,popupMenu1.getMenu());
+        popupMenu1.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.alipay:
+                        method.setText(R.string.alipay);
+                        break;
+                    case R.id.jianshe:
+                        method.setText(R.string.jianshe);
+                        break;
+                    case R.id.nongye:
+                        method.setText(R.string.nongye);
+                        break;
+                    case R.id.wallet:
+                        method.setText(R.string.wallet);
+                        break;
+                }
 
+                return true;
+            }
+        });
         mBill = DataSupport.where("id = ? and state <> 3 ", String.valueOf(BillId)).find(Bills.class);
 
         mAmount = mBill.get(0).getAmount();
@@ -125,12 +149,30 @@ public class BillDetail extends AppCompatActivity {
         mTime = mBill.get(0).getDate();
         mCategory = mBill.get(0).getType();
 
+                switch(mBill.get(0).getMethods()){
+                    case "alipay":
+                        mMethod =getString(R.string.alipay);
+                        break;
+                    case "jianshe":
+                        mMethod =getString(R.string.jianshe);
+                        break;
+                    case "nongye":
+                        mMethod =getString(R.string.nongye);
+                        break;
+                    case "other":
+                        mMethod =getString(R.string.wallet);
+                        break;
+                    default:
+                        mMethod="";
+                        break;
+                }
         //绑定数据不用管，都做好了
         InOrOut.setText(mInOrOut);
         amount.setText(""+mAmount);
         note.setText(mNote);
         place.setText(mPlace);
         time.setText(mTime);
+        method.setText(mMethod);
         switch(mCategory)
         {
             case "meal":
@@ -268,6 +310,13 @@ public class BillDetail extends AppCompatActivity {
                     popupMenu.show();
             }
         });
+        method.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isEdit)
+                    popupMenu1.show();
+            }
+        });
         editBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,6 +332,7 @@ public class BillDetail extends AppCompatActivity {
                     note.setKeyListener(null);
                     note.setEnabled(false);
                     InOrOut.setCompoundDrawables(null, null, null, null);
+                    method.setCompoundDrawables(null, null, null, null);
                     save();
                 }
                 else {//
@@ -298,6 +348,7 @@ public class BillDetail extends AppCompatActivity {
                     note.setEnabled(true);
                     arrow.setBounds(0, 0, arrow.getMinimumWidth(), arrow.getMinimumHeight());
                     InOrOut.setCompoundDrawables(null, null, arrow, null);
+                    method.setCompoundDrawables(null, null, arrow, null);
                 }
             }
         });
@@ -323,9 +374,11 @@ public class BillDetail extends AppCompatActivity {
         });
     }
     private void save(){
-        String newInOrOut, newTime, newPlace, newNote;
+        String newInOrOut, newTime, newPlace, newNote, newMethod;
         double newAmount;
         newInOrOut = InOrOut.getText().toString();
+        newMethod = method.getText().toString();
+
         newTime = time.getText().toString();
         newNote = note.getText().toString();
         newPlace = place.getText().toString();
@@ -338,8 +391,22 @@ public class BillDetail extends AppCompatActivity {
         newBill.setPlace(newPlace);
         newBill.setAmount(newAmount);
         newBill.setState(2);
-        //TODO:去除注释，加上信息
-        //newBill.setMethods();
+
+        switch (newMethod){
+            case "支付宝":
+                newBill.setMethods("alipay");
+                break;
+            case "建设银行":
+                newBill.setMethods("jianshe");
+                break;
+            case "农业银行":
+                newBill.setMethods("nongye");
+                break;
+            case "钱包":
+                newBill.setMethods("other");
+                break;
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = sdf.format(new Date());
         newBill.setTimeStamp(time);
@@ -351,7 +418,7 @@ public class BillDetail extends AppCompatActivity {
         }
         //DataSupport.update(Bills.class, values, BillId);
         changed=true;
-        //TODO: 在数据库中修改
+
 
         Toast.makeText(this,"已保存",Toast.LENGTH_SHORT).show();
     }

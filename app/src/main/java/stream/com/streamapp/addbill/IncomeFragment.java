@@ -34,7 +34,7 @@ import stream.com.streamapp.login;
 
 public class IncomeFragment extends Fragment implements View.OnClickListener{
     private TextView salary,redpacket,parttime,other;
-    private String method;
+    private String method = "other";
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.inconme_type_layout, null);
@@ -96,7 +96,7 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
                         method = "jianshe";
                         break;
                     case R.id.walletBTN:
-                        method = "wallet";
+                        method = "other";
                         break;
                 }
                 Log.e("choose",method);
@@ -122,7 +122,7 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
                 bill.setUser_id(login.getUser_id());
                 bill.setTimeStamp(time);
                 bill.setState(1);
-                bill.setMethods("other");
+                bill.setMethods(method);
                 bill.save();
                 try {
                     UpdateData.UploadBill();

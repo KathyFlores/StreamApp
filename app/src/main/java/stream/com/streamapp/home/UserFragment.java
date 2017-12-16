@@ -48,7 +48,7 @@ public class UserFragment extends Fragment {
         avatarSrc.setBounds(0,0,avatarSrc.getMinimumWidth(),avatarSrc.getMinimumHeight());
         avatar = view.findViewById(R.id.avatar);
         avatar.setImageResource(R.drawable.avatar);//默认头像
-        //TODO: 设置头像，调用方法如下: 参数由edituserinfo.java得到
+
         if(photo.getPhotoState())
         {
             Log.e("aaaa",Uri.fromFile(new File(login.getBasicDir()+"/"+login.getUser_id()+".jpg")).toString());

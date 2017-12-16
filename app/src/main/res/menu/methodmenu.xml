@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/alipay"
+        android:title="@string/alipay"/>
+    <item
+        android:id="@+id/jianshe"
+        android:title="@string/jianshe"/>
+    <item
+        android:id="@+id/nongye"
+        android:title="@string/nongye"/>
+    <item
+        android:id="@+id/wallet"
+        android:title="@string/wallet"/>
+</menu>
