@@ -43,8 +43,8 @@
         <TextView
             android:id="@+id/edit"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="25dp"
             android:background="@color/white"
             android:drawableEnd="@drawable/more"
             android:drawableRight="@drawable/more"
@@ -52,7 +52,7 @@
             android:paddingLeft="10dp"
             android:text="@string/editprofile"
             android:textColor="@color/fontColorDark"
-            android:theme="@style/body_text" />
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
@@ -64,15 +64,15 @@
         <TextView
             android:id="@+id/backup"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:background="@color/white"
             android:drawableEnd="@drawable/more"
             android:drawableRight="@drawable/more"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/export"
-            android:textColor="@color/fontColorDark"
-            android:theme="@style/body_text" />
+            android:textSize="18sp"
+            android:textColor="@color/fontColorDark" />
 
         <View
             android:layout_width="match_parent"
@@ -84,15 +84,16 @@
         <TextView
             android:id="@+id/help"
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:background="@color/white"
             android:drawableEnd="@drawable/more"
             android:drawableRight="@drawable/more"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/help"
+            android:textSize="18sp"
             android:textColor="@color/fontColorDark"
-            android:theme="@style/body_text" />
+            />
 
         <View
             android:layout_width="match_parent"
@@ -104,7 +105,7 @@
         <TextView
             android:id="@+id/about"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:background="@color/white"
             android:drawableEnd="@drawable/more"
             android:drawableRight="@drawable/more"
@@ -112,15 +113,16 @@
             android:paddingLeft="10dp"
             android:text="@string/about"
             android:textColor="@color/fontColorDark"
-            android:theme="@style/body_text" />
+            android:textSize="18sp"  />
         <Button
             android:id="@+id/logout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/logoutBTNtext"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textColor="@color/fontColorLight"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/loggout_button"/>
+            android:layout_marginTop="25dp"
+            android:background="#ad1020"/>
     </LinearLayout>
 </LinearLayout>

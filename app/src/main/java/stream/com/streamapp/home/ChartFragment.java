@@ -300,8 +300,10 @@ public class ChartFragment extends Fragment {
                     day2 = sf.format(calendar.getTime());
                     sum = DataSupport.where("user_id = ? and date > ? and date < ? and inOrOut = ? and type = ? and state <> 3", String.valueOf(login.getUser_id()), day2, day1, InOrOut, labelsOut[i]).sum(Bills.class, "amount", double.class);
                 }
-                mPieData.add((float) sum);
-                mlabels.add(labelsOut[i]);
+                if(sum!=0) {
+                    mPieData.add((float) sum);
+                    mlabels.add(labelsOut[i]);
+                }
             }
         }
     }
