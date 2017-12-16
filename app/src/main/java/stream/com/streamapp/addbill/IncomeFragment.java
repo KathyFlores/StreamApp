@@ -4,11 +4,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +34,7 @@ import stream.com.streamapp.login;
 
 public class IncomeFragment extends Fragment implements View.OnClickListener{
     private TextView salary,redpacket,parttime,other;
+    private String method;
     View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.inconme_type_layout, null);
@@ -73,6 +79,30 @@ public class IncomeFragment extends Fragment implements View.OnClickListener{
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.bill_info,null);
         final EditText amountET = dialogView.findViewById(R.id.amount);
         final EditText noteET = dialogView.findViewById(R.id.note);
+        final RadioGroup methodRG = dialogView.findViewById(R.id.chooseMethod);
+        final RadioButton walletBTN = dialogView.findViewById(R.id.walletBTN);
+
+        methodRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch(checkedId){
+                    case R.id.alipayBTN:
+                        method = "alipay";
+                        break;
+                    case R.id.nongyeBTN:
+                        method = "nongye";
+                        break;
+                    case R.id.jiansheBTN:
+                        method = "jianshe";
+                        break;
+                    case R.id.walletBTN:
+                        method = "wallet";
+                        break;
+                }
+                Log.e("choose",method);
+            }
+        });
+
         builder.setView(dialogView);
         builder.setNegativeButton("取消",null);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

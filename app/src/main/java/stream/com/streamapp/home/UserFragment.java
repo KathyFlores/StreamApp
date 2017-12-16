@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class UserFragment extends Fragment {
         //TODO: 设置头像，调用方法如下: 参数由edituserinfo.java得到
         if(photo.getPhotoState())
         {
+            Log.e("aaaa",Uri.fromFile(new File(login.getBasicDir()+"/"+login.getUser_id()+".jpg")).toString());
             avatar.setImageURI(Uri.fromFile(new File(login.getBasicDir()+"/"+login.getUser_id()+".jpg")));
         }
 

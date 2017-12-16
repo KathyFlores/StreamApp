@@ -84,7 +84,7 @@ public class photo {
                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                                 hasPhoto=true;
                                 savePath=file.getAbsolutePath();
-                                Log.e("fff",file.getAbsolutePath());
+                                Log.e("aaa",file.getAbsolutePath());
                                 fos.close();
                             }
                         } catch (IOException e) {

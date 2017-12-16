@@ -24,6 +24,7 @@
     <string name="phoneError">手机号错误</string>
     <string name="phoneRepeat">手机号已存在</string>
     <string name="internetError">网络错误</string>
+    <string name="choosePayMethod">选择账户</string>
     <string name="bill">账单</string>
     <string name="property">资产</string>
     <string name="chart">图表</string>

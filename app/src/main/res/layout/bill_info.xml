@@ -7,6 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="amount"
+        android:textSize="18sp"
+        android:layout_gravity="center_vertical"
         android:textColorHint="@color/hintDark"
         android:inputType="numberDecimal"/>
     <EditText
@@ -14,6 +16,69 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="note"
+        android:layout_gravity="center_vertical"
+        android:textSize="18sp"
         android:textColorHint="@color/hintDark"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choosePayMethod"
+        android:textSize="20sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        />
+
+    <RadioGroup
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chooseMethod">
+        <RadioButton
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:id="@+id/alipayBTN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alipay"
+            android:textSize="18sp"
+            android:textColor="@color/fontColorLight"
+
+            />
+
+        <RadioButton
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:id="@+id/jiansheBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/jianshe"
+            android:textSize="18sp"
+            android:textColor="@color/fontColorLight"
+            />
+        <RadioButton
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:id="@+id/nongyeBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nongye"
+            android:textSize="18sp"
+            android:textColor="@color/fontColorLight"
+            />
+
+        <RadioButton
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:id="@+id/walletBTN"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet"
+            android:textSize="18sp"
+            android:textColor="@color/fontColorLight"/>
+
+    </RadioGroup>
 
 </LinearLayout>
