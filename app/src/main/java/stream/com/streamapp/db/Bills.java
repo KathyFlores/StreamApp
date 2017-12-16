@@ -20,8 +20,17 @@ public class Bills extends DataSupport{
     private String inOrOut;//收入或支出
     private String type;
     private String note;
+    private String methods;
     private int state;
     private String timeStamp;
+
+    public String getMethods() {
+        return methods;
+    }
+
+    public void setMethods(String methods) {
+        this.methods = methods;
+    }
 
     public int getState() {
         return state;
