@@ -6,6 +6,7 @@ package stream.com.streamapp;
 
 import stream.com.streamapp.home.UpdateData;
 import stream.com.streamapp.profile.photo;
+import stream.com.streamapp.exception.internetError;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -22,6 +23,7 @@ import stream.com.streamapp.constant.regex;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -41,6 +43,7 @@ import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +86,7 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
 {
     String userName,passwd;
     private final WeakReference<Activity> mActivity;
-    boolean result = true;
+    int result = 1;
     private int user_id;
 
 
@@ -121,28 +124,32 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
                     {
                         res=m.group(0).replaceAll("(id|<br>)","");
                         user_id=Integer.parseInt(res);
-                        result=true;
+                        result=1;
                     }
                     else{
-                        result=false;
+                        result=0;
                     }
                 }
                 else{
-                    result = false;
+                    result = 0;
                 }
             }
             else{
-                result = false;
+                result = 0;
             }
         } catch (InterruptedException e1) {
             e1.printStackTrace();
+        }
+        catch(internetError e)
+        {
+            result=2;
         }
         return result;
     }
     @Override
     protected void onPostExecute(Object result)
     {
-        if((boolean)result)
+        if((int)result==1)
         {
             Bundle re=new Bundle();
             re.putString("Return","0");
@@ -151,9 +158,17 @@ class LoginAsyncTask extends AsyncTask<Object,Object,Object>
             msg.setData(re);
             ((login)mActivity.get()).mHandler.sendMessage(msg);
         }
-        else{
+        else if ((int)result==0){
             Bundle re=new Bundle();
             re.putString("Return","2");
+            Message msg=new Message();
+            msg.setData(re);
+            ((login)mActivity.get()).mHandler.sendMessage(msg);
+        }
+        else if((int)result==2)
+        {
+            Bundle re=new Bundle();
+            re.putString("Return","3");
             Message msg=new Message();
             msg.setData(re);
             ((login)mActivity.get()).mHandler.sendMessage(msg);
@@ -167,6 +182,7 @@ public class login extends AppCompatActivity {
     String mFilePath="/temp.jpeg";
     private static String basicDir="";
     private static int user_id = 0;
+    private static String userName="";
     RelativeLayout loginBTN = null;
     EditText usernameET = null;
     EditText passwordET = null;
@@ -199,11 +215,7 @@ public class login extends AppCompatActivity {
             if(content.equals("0"))
             {
 
-                loginPromptET.setVisibility(View.GONE);
-                progressView.setVisibility(View.GONE);
-                progressView.stopAnimation();
-                loginTXT.setText(R.string.loginSuccess);
-                loginTXT.setVisibility(View.VISIBLE);
+
                 int uid=bd.getInt("ID");
                 //TODO:user_id
                 setUser_id(uid);
@@ -212,12 +224,27 @@ public class login extends AppCompatActivity {
                     UpdateData.downloadAssets();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }//更新数据库
+                } catch (internetError e)
+                {
+                    loginPromptET.setText(R.string.internetError);
+                    loginPromptET.setVisibility(View.VISIBLE);
+                    progressView.setVisibility(View.GONE);
+                    progressView.stopAnimation();
+                    loginTXT.setVisibility(View.VISIBLE);
+                    return;
+                }
+                //更新数据库
+
                 Log.e("fff","userid:"+getUser_id());
 
                 File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                 photo.setPath(storageDir.getAbsolutePath());
                 photo.download(getUser_id());
+                loginPromptET.setVisibility(View.GONE);
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                loginTXT.setText(R.string.loginSuccess);
+                loginTXT.setVisibility(View.VISIBLE);
 
                 Intent intent = new Intent(login.this,BasicActivity.class) ;    //切换Login Activity至User Activity
                 startActivity(intent);
@@ -234,6 +261,14 @@ public class login extends AppCompatActivity {
             else if(content.equals("2"))//password error
             {
                 loginPromptET.setText(R.string.passwordError);
+                loginPromptET.setVisibility(View.VISIBLE);
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                loginTXT.setVisibility(View.VISIBLE);
+            }
+            else if(content.equals("3"))
+            {
+                loginPromptET.setText(R.string.internetError);
                 loginPromptET.setVisibility(View.VISIBLE);
                 progressView.setVisibility(View.GONE);
                 progressView.stopAnimation();
@@ -256,6 +291,8 @@ public class login extends AppCompatActivity {
     public static void setUser_id(int user_id) {
         login.user_id = user_id;
     }
+    public static String getUserName(){return login.userName;}
+    public static void setUserName(String userName){login.userName=userName;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,12 +338,28 @@ public class login extends AppCompatActivity {
                 String[] permission = new String[permissions.size()];
                 this.requestPermissions(permissions.toArray(permission), requestCode);
             }
-            if(hasNotification!=PackageManager.PERMISSION_GRANTED)
+            if(!isEnabled())
             {
                 Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
                 startActivity(intent);
             }
         }
+    }
+    private boolean isEnabled() {
+        String pkgName = getPackageName();
+        final String flat = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
+        if (!TextUtils.isEmpty(flat)) {
+            final String[] names = flat.split(":");
+            for (int i = 0; i < names.length; i++) {
+                final ComponentName cn = ComponentName.unflattenFromString(names[i]);
+                if (cn != null) {
+                    if (TextUtils.equals(pkgName, cn.getPackageName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     private void initView(){
         loginBTN = (RelativeLayout) findViewById(R.id.loginButton);
@@ -332,6 +385,7 @@ public class login extends AppCompatActivity {
                 loginPromptET.setVisibility(View.GONE);
                 String username = usernameET.getText().toString().trim();
                 String password = passwordET.getText().toString().trim();
+                setUserName(username);
                 if (username.equals("")) {
                     loginPromptET.setText(R.string.usernameError);
                     loginPromptET.setVisibility(View.VISIBLE);
@@ -349,24 +403,36 @@ public class login extends AppCompatActivity {
             public void onClick(View v) {
                 loginPromptET.setVisibility(View.GONE);
                 String username = usernameET.getText().toString().trim();
+                setUserName(username);
+
                 if(username.equals("")){
                     loginPromptET.setText(R.string.usernameError);
                     loginPromptET.setVisibility(View.VISIBLE);
                     //return;
                 }
                 else{
-                    int id=getid(username);
-                    if(id==-1)
-                    {
+                    int id= 0;
+                    try {
+                        id = getid(username);
+                        if(id==-1)
+                        {
+                            Bundle re=new Bundle();
+                            re.putString("Return","1");
+                            Message msg=new Message();
+                            msg.setData(re);
+                            mHandler.sendMessage(msg);
+                        }
+                        else{
+                            openCamera(id);
+                        }
+                    } catch (stream.com.streamapp.exception.internetError internetError) {
                         Bundle re=new Bundle();
-                        re.putString("Return","1");
+                        re.putString("Return","3");
                         Message msg=new Message();
                         msg.setData(re);
                         mHandler.sendMessage(msg);
                     }
-                    else{
-                        openCamera(id);
-                    }
+
                 }
             }
         });
@@ -414,8 +480,29 @@ public class login extends AppCompatActivity {
                                             query tQuery = new query();
                                             try {
                                                 tQuery.select("user",updateSql);
+                                                String sqlQuery="select passwd from user where phone = \""+cphone+"\";";
+                                                String html=tQuery.select("user",sqlQuery);
+                                                Pattern r = Pattern.compile(regex.passwdPattern);
+                                                Matcher m = r.matcher(html);
+                                                if(m.find())
+                                                {
+                                                    String res=m.group(0).replaceAll("(passwd|<br>)","");
+                                                    if(!res.equals(newPassword))
+                                                    {
+                                                        Toast.makeText(login.this,R.string.internetError,Toast.LENGTH_LONG).show();
+                                                        newbuilder.setCancelable(false);
+                                                    }
+                                                    else{
+                                                        Toast.makeText(login.this,R.string.changeSuccess,Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+
+
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
+                                            }catch( internetError e)
+                                            {
+                                                loginPromptET.setText(R.string.internetError);
                                             }
                                         }
                                     }
@@ -447,8 +534,7 @@ public class login extends AppCompatActivity {
 
         return image;
     }
-    private int getid(String userName)
-    {
+    private int getid(String userName) throws internetError {
         query tQuery = new query();
         String sqlQuery="select id from user where name = \"" + userName + "\";";
         String rePd= null;

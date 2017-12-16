@@ -55,6 +55,7 @@ public class UserFragment extends Fragment {
 
         logoutBTN=view.findViewById(R.id.logout);
         username=view.findViewById(R.id.username);//TODO: 设置为用户的用户名
+        username.setText(login.getUserName());
         edit=view.findViewById(R.id.edit);
         backup=view.findViewById(R.id.backup);
         about=view.findViewById(R.id.about);

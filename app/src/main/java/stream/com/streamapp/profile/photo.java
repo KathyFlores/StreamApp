@@ -26,7 +26,8 @@ import android.content.Context;
 public class photo {
     private static String path="";
     private static String savePath="";
-    private static Boolean hasPhoto = new Boolean(false);
+    final private static Integer photoProtect= Integer.valueOf(1);
+    private static Boolean hasPhoto = Boolean.valueOf(false);
     private static final OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).build();
 
     /*
@@ -35,7 +36,7 @@ public class photo {
      */
     public static boolean getPhotoState()
     {
-        synchronized (hasPhoto)
+        synchronized (photoProtect)
         {
             return hasPhoto;
         }
@@ -57,7 +58,7 @@ public class photo {
 
     public static void download(int uid)
     {
-        synchronized (hasPhoto)
+        synchronized (photoProtect)
         {
             hasPhoto=false;
             Thread t = new Thread(new Runnable() {
@@ -97,7 +98,11 @@ public class photo {
                         msg.setData(re);
                         //mHandler.sendMessage(msg);
                         Log.d("ff", "upload IOException ", e);
+                    }catch(NullPointerException e)
+                    {
+                        hasPhoto=false;
                     }
+
                 }
             });
             t.start();

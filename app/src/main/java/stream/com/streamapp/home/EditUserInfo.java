@@ -52,6 +52,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import stream.com.streamapp.R;
 import stream.com.streamapp.login;
+import stream.com.streamapp.profile.photo;
 
 import static stream.com.streamapp.login.setUser_id;
 
@@ -163,6 +164,7 @@ public class EditUserInfo extends AppCompatActivity {
                                     tResponse = call.execute();
                                     Bundle re=new Bundle();
                                     re.putString("Return","2");
+                                    login.setUserName(newUsername);
                                     Message msg=new Message();
                                     msg.setData(re);
                                     mHandler.sendMessage(msg);
@@ -279,6 +281,8 @@ public class EditUserInfo extends AppCompatActivity {
                                     Message msg=new Message();
                                     msg.setData(re);
                                     mHandler.sendMessage(msg);
+                                    photo.download(login.getUser_id());
+
                                 } else {
                                     Bundle re=new Bundle();
                                     re.putString("Return","1");

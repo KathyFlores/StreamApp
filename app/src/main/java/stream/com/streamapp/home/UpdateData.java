@@ -4,6 +4,7 @@ package stream.com.streamapp.home;
  * Created by WuYiQuan on 2017/12/13.
  */
 
+import stream.com.streamapp.exception.internetError;
 
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -139,7 +140,7 @@ public class UpdateData {
         return;
     }
 
-    public static void downloadBill() throws InterruptedException {
+    public static void downloadBill() throws InterruptedException,internetError {
         result = "";
         int count = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).count(Bills.class);
         Log.d("userid", "" + login.getUser_id());
@@ -155,8 +156,10 @@ public class UpdateData {
         Log.d("gengxinquery", query);
         myThread tThread = new myThread(mUrl, query);
         tThread.start();
-        while (result.equals("")) {
-
+        tThread.join();
+        if(result.equals(""))
+        {
+            throw new internetError("网络连接错误!");
         }
         Log.d("result:", result);
         Pattern r = Pattern.compile(regex.resultPattern);
@@ -207,7 +210,7 @@ public class UpdateData {
         return;
     }
 
-    public static void downloadAssets() throws InterruptedException {
+    public static void downloadAssets() throws InterruptedException,internetError {
         result = "";
         int count = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).count(Assets.class);
         String latestTimeStamp;
@@ -220,8 +223,11 @@ public class UpdateData {
         }
         myThread tThread = new myThread(mUrl, query);
         tThread.start();
-        while (result.equals("")) {
+        tThread.join();
 
+        if(result.equals(""))
+        {
+            throw new internetError("网络连接错误");
         }
         Log.d("result:", result);
         Pattern r = Pattern.compile(regex.resultPattern);

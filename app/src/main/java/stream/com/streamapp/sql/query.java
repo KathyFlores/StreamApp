@@ -7,6 +7,8 @@ import android.os.Message;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -14,6 +16,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import stream.com.streamapp.constant.regex;
+import stream.com.streamapp.exception.internetError;
 
 
 public class query {
@@ -87,15 +92,15 @@ public class query {
     }
 
 
-    public String select(String tableName, String query) throws InterruptedException {
+    public String select(String tableName, String query) throws InterruptedException ,internetError{
         mAnswer = "";
         myThread tThread=new myThread(mUrl,query);
         tThread.start();
-        while(mAnswer.equals(""))
+        tThread.join();
+        if (mAnswer.equals(""))
         {
-            Log.e("rrr","111");
+            throw new internetError("请检查网络连接");
         }
-        Log.e("ppp",mAnswer);
         return mAnswer;
 
     }

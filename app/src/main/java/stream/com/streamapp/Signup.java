@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,19 +18,24 @@ import android.widget.Toast;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import stream.com.streamapp.constant.regex;
+import stream.com.streamapp.home.BasicActivity;
+import stream.com.streamapp.home.UpdateData;
+import stream.com.streamapp.profile.photo;
 import stream.com.streamapp.sql.query;
+
+import stream.com.streamapp.exception.internetError;
 
 class SignupAsyncTask extends AsyncTask<Object,Object,Object>
 {
-    private static ProgressDialog sDialog;
     String userName,passwd,phoneNum;
     private final WeakReference<Activity> mActivity;
-    boolean result = true;
+    int result = 1;
     private int errorType=-1;
 
     SignupAsyncTask(Signup activity, String userName,String passwd,String phoneNum)
@@ -41,15 +49,6 @@ class SignupAsyncTask extends AsyncTask<Object,Object,Object>
     @Override
     protected void onPreExecute()
     {
-//        if(null == sDialog)
-//        {
-//            sDialog = new ProgressDialog(mActivity.get());
-//        }
-//        sDialog.setTitle("Please wait...");
-//        sDialog.setMessage("Logging...");
-//        sDialog.setCancelable(false);
-//        sDialog.show();
-
     }
     @Override
     protected Object doInBackground(Object... objects) {
@@ -57,6 +56,7 @@ class SignupAsyncTask extends AsyncTask<Object,Object,Object>
         String sqlQuery1="insert into user values(null,\""+userName+"\",\""+passwd+"\",\""+phoneNum+"\");";
         Log.e("fff","sqlins:"+sqlQuery1);
         String sqlQuery2="select passwd from user where name = \"" + userName + "\";";
+        String sqlQuery3="select passwd from user where phone = \"" + phoneNum + "\";";
         try {
             String rePd=tQuery.select("user",sqlQuery2);
             Pattern r = Pattern.compile(regex.passwdPattern);
@@ -69,12 +69,24 @@ class SignupAsyncTask extends AsyncTask<Object,Object,Object>
                 Log.e("shina",m.group(0));
                 if(!res.equals(""))
                 {
-                    result = false;
+                    result = 0;
                     errorType=0;
                     return result;
                 }
-                else{
-                    ;
+            }
+            String rephone=tQuery.select("user",sqlQuery3);
+            r = Pattern.compile(regex.passwdPattern);
+            m = r.matcher(rephone);
+            if(m.find())
+            {
+                String replaceBefore=m.group(0);
+                String res=m.group(0).replaceAll("(passwd|<br>)","");
+                Log.e("fff","qqq:"+replaceBefore+","+res);
+                Log.e("shina",m.group(0));
+                if(!res.equals(""))
+                {
+                    result = 3;
+                    return result;
                 }
             }
             Log.e("ppp","999");
@@ -89,19 +101,22 @@ class SignupAsyncTask extends AsyncTask<Object,Object,Object>
                 Log.e("shina",m.group(0));
                 if(res.equals(passwd))
                 {
-                    result = true;
+                    result = 1;
                 }
                 else{
-                    result = false;
+                    result = 0;
                     errorType=1;
                 }
             }
             else{
-                result = false;
+                result = 0;
                 errorType=1;
             }
         } catch (InterruptedException e1) {
             e1.printStackTrace();
+        } catch (internetError e)
+        {
+            result=2;
         }
         Log.e("fff","****"+result);
         return result;
@@ -110,23 +125,39 @@ class SignupAsyncTask extends AsyncTask<Object,Object,Object>
     protected void onPostExecute(Object result)
     {
         Log.e("yyy","finish");
-        if((boolean)result)
+        if((int)result==1)
         {
-            ((Signup)mActivity.get()).jump();
+            Bundle re=new Bundle();
+            re.putString("Return","0");
+            Message msg=new Message();
+            msg.setData(re);
+            ((Signup)mActivity.get()).mHandler.sendMessage(msg);
         }
-        else{
-            ((Signup)mActivity.get()).SignupError(0);
+        else if((int)result==0)//error
+        {
+            Bundle re=new Bundle();
+            re.putString("Return","1");
+            Message msg=new Message();
+            msg.setData(re);
+            ((Signup)mActivity.get()).mHandler.sendMessage(msg);
         }
-//        String strMsg;
-//        if(result.equals(true))
-//        {
-//            strMsg = "success";
-//        }
-//        else
-//            strMsg = "failed";
-//        ((login)mActivity.get()).ShowTip(strMsg);
-//        //取消进度条
-//        sDialog.cancel();
+        else if((int)result==2)//internet error
+        {
+            Bundle re=new Bundle();
+            re.putString("Return","2");
+            Message msg=new Message();
+            msg.setData(re);
+            ((Signup)mActivity.get()).mHandler.sendMessage(msg);
+        }
+        else if((int)result==3)//phone repeat
+        {
+            Bundle re=new Bundle();
+            re.putString("Return","4");
+            Message msg=new Message();
+            msg.setData(re);
+            ((Signup)mActivity.get()).mHandler.sendMessage(msg);
+        }
+
     }
 }
 
@@ -137,6 +168,57 @@ public class Signup extends AppCompatActivity {
     EditText phoneET = null;
     CircularProgressView progressView = null;
     TextView signup = null;
+
+    public Handler mHandler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            Bundle bd=msg.getData();
+            String content=bd.getString("Return");
+            if(content.equals("0"))//success
+            {
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                signup.setText(R.string.signupSuccess);
+                signup.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(Signup.this,login.class);
+                startActivity(intent);
+                finish();
+            }
+            else if(content.equals("1"))//username taken
+            {
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                signup.setVisibility(View.VISIBLE);
+                Toast.makeText(Signup.this,R.string.usernameTaken,Toast.LENGTH_LONG).show();
+            }
+            else if(content.equals("2"))//password error
+            {
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                signup.setVisibility(View.VISIBLE);
+                Toast.makeText(Signup.this,R.string.internetError,Toast.LENGTH_LONG).show();
+            }
+            else if(content.equals("3"))//
+            {
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                signup.setVisibility(View.VISIBLE);
+                Toast.makeText(Signup.this,R.string.internetError,Toast.LENGTH_LONG).show();
+            }
+            else if(content.equals("4"))//
+            {
+                progressView.setVisibility(View.GONE);
+                progressView.stopAnimation();
+                signup.setVisibility(View.VISIBLE);
+                Toast.makeText(Signup.this,R.string.phoneRepeat,Toast.LENGTH_LONG).show();
+            }
+
+        }
+    };
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
@@ -189,31 +271,6 @@ public class Signup extends AppCompatActivity {
         b = m.matches();
         return b;
     }
-    protected void jump()
-    {
-        progressView.setVisibility(View.GONE);
-        progressView.stopAnimation();
-        signup.setText(R.string.signupSuccess);
-        signup.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(Signup.this,login.class);
-        startActivity(intent);
-        finish();
-    }
-    protected void SignupError(int errorType)
-    {
-        progressView.setVisibility(View.GONE);
-        progressView.stopAnimation();
-        signup.setVisibility(View.VISIBLE);
-        switch(errorType)
-        {
-            case 0://username taken
-                Toast.makeText(Signup.this,R.string.usernameTaken,Toast.LENGTH_LONG).show();
-                break;
-
-            case 1:
-                Toast.makeText(Signup.this,R.string.usernameTaken,Toast.LENGTH_LONG).show();
-        }
-    }
     private void setListener(){
         signupBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,31 +303,6 @@ public class Signup extends AppCompatActivity {
 
                     SignupAsyncTask myTask = new SignupAsyncTask(Signup.this, username, password,phone);
                     myTask.execute();
-
-
-                    /*success=true;
-                    if(success)
-                    {
-                        progressView.setVisibility(View.GONE);
-                        progressView.stopAnimation();
-                        signup.setText(R.string.signupSuccess);
-                        signup.setVisibility(View.VISIBLE);
-                        Intent intent = new Intent(Signup.this,login.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else
-                    {
-                        progressView.setVisibility(View.GONE);
-                        progressView.stopAnimation();
-                        signup.setVisibility(View.VISIBLE);
-                        switch(errorType)
-                        {
-                            case 0://username taken
-                                Toast.makeText(Signup.this,R.string.usernameTaken,Toast.LENGTH_LONG).show();
-
-                        }
-                    }*/
                 }
             }
         });
