@@ -2,10 +2,9 @@
 <litepal>
     <dbname value="StreamDatabase"></dbname>
 
-    <version value="2"></version>
+    <version value="3"></version>
 
     <list>
         <mapping class = "stream.com.streamapp.db.Bills"></mapping>
-        <mapping class = "stream.com.streamapp.db.Assets"></mapping>
     </list>
 </litepal>

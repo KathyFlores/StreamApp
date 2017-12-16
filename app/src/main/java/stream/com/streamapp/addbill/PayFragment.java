@@ -206,6 +206,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                 bill.setUser_id(login.getUser_id());
                 bill.setState(1);
                 bill.setTimeStamp(time);
+                bill.setMethods("other");
                 bill.save();
                 try {
                     UpdateData.UploadBill();

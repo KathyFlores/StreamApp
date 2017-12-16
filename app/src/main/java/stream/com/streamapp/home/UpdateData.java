@@ -19,6 +19,8 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -140,7 +142,7 @@ public class UpdateData {
         return;
     }
 
-    public static void downloadBill() throws InterruptedException,internetError {
+    public static void downloadBill() throws InterruptedException, internetError {
         result = "";
         int count = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).count(Bills.class);
         Log.d("userid", "" + login.getUser_id());
@@ -157,8 +159,7 @@ public class UpdateData {
         myThread tThread = new myThread(mUrl, query);
         tThread.start();
         tThread.join();
-        if(result.equals(""))
-        {
+        if (result.equals("")) {
             throw new internetError("网络连接错误!");
         }
         Log.d("result:", result);
@@ -210,7 +211,7 @@ public class UpdateData {
         return;
     }
 
-    public static void downloadAssets() throws InterruptedException,internetError {
+    public static void downloadAssets() throws InterruptedException, internetError {
         result = "";
         int count = DataSupport.where("user_id = ?", String.valueOf(login.getUser_id())).count(Assets.class);
         String latestTimeStamp;
@@ -225,8 +226,7 @@ public class UpdateData {
         tThread.start();
         tThread.join();
 
-        if(result.equals(""))
-        {
+        if (result.equals("")) {
             throw new internetError("网络连接错误");
         }
         Log.d("result:", result);
@@ -254,5 +254,25 @@ public class UpdateData {
 
             return;
         }
+    }
+
+    public static void addBills(double amount, String inOrOut, String methods) throws InterruptedException {
+        Bills bill = new Bills();
+
+        bill.setType("");
+        bill.setAmount(Double.valueOf(amount));
+        bill.setNote("");
+        bill.setPlace("somewhere");
+        bill.setInOrOut(inOrOut);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(new Date());
+        bill.setDate(time);
+        bill.setUser_id(login.getUser_id());
+        bill.setTimeStamp(time);
+        bill.setState(1);
+        bill.setMethods(methods);
+        bill.save();
+        UploadBill();
+        return;
     }
 }

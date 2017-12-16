@@ -338,6 +338,8 @@ public class BillDetail extends AppCompatActivity {
         newBill.setPlace(newPlace);
         newBill.setAmount(newAmount);
         newBill.setState(2);
+        //TODO:去除注释，加上信息
+        //newBill.setMethods();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = sdf.format(new Date());
         newBill.setTimeStamp(time);

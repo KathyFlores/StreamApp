@@ -56,8 +56,8 @@ public class PropertyFragment extends Fragment {
         for(int i=0;i<4;i++)
         {
             double sum = 0;
-            sum += DataSupport.where("user_id = ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()),"in" ,typeList[i]).sum(Assets.class, "amount", double.class);
-            sum -= DataSupport.where("user_id = ? and inOrOut = ? and type = ?", String.valueOf(login.getUser_id()),"out" ,typeList[i]).sum(Assets.class, "amount", double.class);
+            sum += DataSupport.where("user_id = ? and inOrOut = ? and methods = ?", String.valueOf(login.getUser_id()),"in" ,typeList[i]).sum(Bills.class, "amount", double.class);
+            sum -= DataSupport.where("user_id = ? and inOrOut = ? and methods = ?", String.valueOf(login.getUser_id()),"out" ,typeList[i]).sum(Bills.class, "amount", double.class);
             dataList.add("¥"+sum);
         }
 

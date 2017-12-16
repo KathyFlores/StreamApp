@@ -221,7 +221,7 @@ public class login extends AppCompatActivity {
                 setUser_id(uid);
                 try {
                     UpdateData.downloadBill();
-                    UpdateData.downloadAssets();
+//                    UpdateData.downloadAssets();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (internetError e)
