@@ -178,7 +178,7 @@ public class login extends AppCompatActivity {
     ImageView faceBTN = null;
     private String appKey="22cd1a36f1a40";
     private String privateKey="cfcd48435cfa42c9b518f511d1c471f0";
-    private final OkHttpClient client = new OkHttpClient.Builder().connectTimeout(20, TimeUnit.SECONDS).build();
+    private final OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build();
 
 
     /*

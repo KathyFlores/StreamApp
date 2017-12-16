@@ -59,34 +59,19 @@ public class query {
             try{
 
                 OkHttpClient mClient=new OkHttpClient();
-                /*
-                ** Request body
-                 */
                 RequestBody body = new FormBody.Builder()
                         .add("content", query)
                         .build();
-                Log.e("fff","query:"+query);
-//                Log.e("fff",body.toString());
-                /*
-                ** headers, url, body should be here
-                 */
                 Request tRequest = new Request.Builder()
                         .url(url)
                         .post(body)
                         .build();
                 Call call = mClient.newCall(tRequest);
                 Response tResponse =  call.execute();
-//                Log.e("eee","***"+tResponse.toString());
                 String ans= tResponse.body().string();
-//                Log.e("eee",ans);
-
-                //Message msg = new Message();
                 Bundle data = new Bundle();
                 data.putString("ans",ans);
-//                Log.e("fff",ans);
-                //mHandler.sendMessage(msg);
                 mAnswer=ans;
-                Log.e("fff",ans);
             }
             catch(IOException e)
             {
