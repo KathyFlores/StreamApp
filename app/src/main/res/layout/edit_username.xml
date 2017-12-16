@@ -8,5 +8,5 @@
         android:layout_height="wrap_content"
         android:hint="请输入新的用户名"
         android:textColorHint="@color/hintDark"
-        android:inputType="numberDecimal"/>
+        android:inputType="text"/>
 </LinearLayout>
