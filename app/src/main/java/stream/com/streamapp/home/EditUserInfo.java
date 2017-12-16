@@ -262,7 +262,7 @@ public class EditUserInfo extends AppCompatActivity {
                             RequestBody requestBody = new MultipartBody.Builder()
                                     .setType(MultipartBody.FORM)
                                     .addFormDataPart("file", "1", fileBody)
-                                    .addFormDataPart("id", "1")//Integer.toString(getUser_id()))
+                                    .addFormDataPart("id", ""+login.getUser_id())//Integer.toString(getUser_id()))
                                     .build();
 
                             Request request = new Request.Builder()
