@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import stream.com.streamapp.handlefunction.notificationHandler;
+import stream.com.streamapp.home.UpdateData;
 
 /**
  * Created by Alan on 2017/12/7.
@@ -41,6 +42,11 @@ public class notificationListener extends NotificationListenerService {
         {
             amount=m.group(0).substring(4);
             //TODO
+            try {
+                UpdateData.addBills(Double.parseDouble(amount),"out","Alipay");
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+            }
 
         }
         else{

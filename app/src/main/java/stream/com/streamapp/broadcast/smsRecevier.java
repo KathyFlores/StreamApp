@@ -19,6 +19,8 @@ import stream.com.streamapp.handlefunction.smsHandler;
 
 import static android.provider.Telephony.Sms.Intents.SMS_RECEIVED_ACTION;
 
+import stream.com.streamapp.home.UpdateData;
+
 /**
  * Created by Alan on 2017/12/6.
  */
@@ -72,6 +74,12 @@ public class smsRecevier extends BroadcastReceiver{
                     //amount=m.group(0).substring(3);
                     Log.e("sms","acount:"+account+",amount:"+amount+",sender:"+sender);
                     // TO DO
+
+                    try {
+                        UpdateData.addBills(Double.parseDouble(amount),(isIn?"in":"out"),"Jianhang");
+                    } catch (InterruptedException e) {
+                        //e.printStackTrace();
+                    }
 
 
                 }
