@@ -18,7 +18,7 @@ public class ModifyAssets {
         assets.setState(1);
         assets.setTimeStamp(date);
         assets.save();
-        UpdateData.UploadAssets();
+        //UpdateData.UploadAssets();
         return;
     }
 }

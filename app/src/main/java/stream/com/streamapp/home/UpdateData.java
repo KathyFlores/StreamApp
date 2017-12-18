@@ -106,9 +106,9 @@ public class UpdateData {
         //添加同步
         bills = DataSupport.where("user_id = ? and state = 1 ", String.valueOf(login.getUser_id())).find(Bills.class);
         for (int i = 0; i < bills.size(); i++) {
-            query = "insert into Bills (id, user_id, amount, date, place, inOrOut, type, note, timeStamp ) values( " + bills.get(i).getId() + "," +
+            query = "insert into Bills (id, user_id, amount, date, place, inOrOut, type, note, timeStamp, methods ) values( " + bills.get(i).getId() + "," +
                     bills.get(i).getUser_id() + "," + bills.get(i).getAmount() + ", \"" + bills.get(i).getDate() + "\" ,\"" + bills.get(i).getPlace() + "\", \"" +
-                    bills.get(i).getInOrOut() + "\",\"" + bills.get(i).getType() + "\", \"" + bills.get(i).getNote() + "\", \"" + bills.get(i).getTimeStamp() + "\" );";
+                    bills.get(i).getInOrOut() + "\",\"" + bills.get(i).getType() + "\", \"" + bills.get(i).getNote() + "\", \"" + bills.get(i).getTimeStamp() + "\", \""+bills.get(i).getMethods()+ "\" );";
             Log.d("query", query);
             ContentValues values = new ContentValues();
             values.put("state", 9);
@@ -121,7 +121,7 @@ public class UpdateData {
         for (int i = 0; i < bills.size(); i++) {
             query = "UPDATE Bills set amount = " + bills.get(i).getAmount() + " ,date = '" + bills.get(i).getDate() + "' ,place = '" +
                     bills.get(i).getPlace() + "' ,inOrOut = '" + bills.get(i).getInOrOut() + "' ,type = '" + bills.get(i).getType() + "' ,note = '"
-                    + bills.get(i).getNote() + "' ,timeStamp = '" + bills.get(i).getTimeStamp() + "' WHERE id = " + bills.get(i).getId() + ";";
+                    + bills.get(i).getNote() + "' ,timeStamp = '" + bills.get(i).getTimeStamp() + "' ,methods = '" + bills.get(i).getMethods() + "' WHERE id = " + bills.get(i).getId() + ";";
             Log.d("query1", query);
             ContentValues values = new ContentValues();
             values.put("state", 9);
@@ -150,12 +150,11 @@ public class UpdateData {
         String query = "";
         Log.d("count", "" + count);
         if (count == 0)
-            query = "select id, user_id, amount, date, place, inOrOut, note, type, timeStamp from Bills where user_id = " + login.getUser_id() + ";";
+            query = "select id, user_id, amount, date, place, inOrOut, note, type, timeStamp, methods from Bills where user_id = " + login.getUser_id() + ";";
         else {
             latestTimeStamp = DataSupport.max(Bills.class, "timeStamp", String.class);
-            query = "select id, user_id, amount, date, place, inOrOut, note, type, timeStamp from Bills where user_id = " + login.getUser_id() + " and timeStamp > '" + latestTimeStamp + "';";
+            query = "select id, user_id, amount, date, place, inOrOut, note, type, timeStamp, methods from Bills where user_id = " + login.getUser_id() + " and timeStamp > '" + latestTimeStamp + "';";
         }
-        Log.d("gengxinquery", query);
         myThread tThread = new myThread(mUrl, query);
         tThread.start();
         tThread.join();
@@ -186,6 +185,7 @@ public class UpdateData {
                 bills.setType(bill[7]);
                 bills.setTimeStamp(bill[8]);
                 bills.setState(9);
+                bills.setMethods(bill[9]);
                 bills.save();
             }
 
