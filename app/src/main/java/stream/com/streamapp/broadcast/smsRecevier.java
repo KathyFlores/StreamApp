@@ -85,6 +85,40 @@ public class smsRecevier extends BroadcastReceiver{
                 }
             }
         }
+        else if (sender.equals("95599"))//农业
+        {
+            Pattern r=Pattern.compile("(?<=完成[现|转])[支|存]人民币[-|\\.|[0-9]]*");
+            Matcher m=r.matcher(content);
+            if(m.find())
+            {
+                String res=m.group(0);
+                if(res.matches("^支.*"))
+                {
+                    isIn=false;
+                }
+                else if(res.matches("^存.*"))
+                {
+                    isIn=true;
+                }
+                else{
+                    return;
+                }
+                r=Pattern.compile("(?<=人民币)[-|\\.|[0-9]]*");
+                m=r.matcher(res);
+                if(m.find())
+                {
+                    amount=m.group(0);
+                    if(amount!=null)
+                    {
+                        try {
+                            UpdateData.addBills(Double.parseDouble(amount),(isIn?"in":"out"),"Nongye");
+                        } catch (InterruptedException e) {
+                            //e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
 
 
     }

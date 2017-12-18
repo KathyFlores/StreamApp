@@ -34,7 +34,7 @@ public class notificationListener extends NotificationListenerService {
         mHandler=mHandleShare.getHandler();
 
         String amount="";
-        boolean isIn=false;//这里只能做支出
+        boolean isIn=false;
 
         Pattern r = Pattern.compile("你有一笔[0-9|\\.]*");
         Matcher m = r.matcher(content);
@@ -64,28 +64,18 @@ public class notificationListener extends NotificationListenerService {
         }
         //com.eg.android.AlipayGphone
 
-//        if (!"com.tencent.mm".equals(sbn.getPackageName())) {
-//            return;
-//        }
         Notification notification = sbn.getNotification();
         if (notification == null) {
             return;
         }
         PendingIntent pendingIntent = null;
-        // 当 API > 18 时，使用 extras 获取通知的详细信息
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Bundle extras = notification.extras;
             if (extras != null) {
-                // 获取通知标题
                 String title = extras.getString(Notification.EXTRA_TITLE, "");
-                // 获取通知内容
                 String content = extras.getString(Notification.EXTRA_TEXT, "");
-                Log.e("SevenNLS","1 title:"+title+" ,content:"+content);
 
                 sendHandlerMessage(title,content);
-//                if (!TextUtils.isEmpty(content) && content.contains("[微信红包]")) {
-//                    pendingIntent = notification.contentIntent;
-//                }
 
 
             }
@@ -102,15 +92,6 @@ public class notificationListener extends NotificationListenerService {
 //                }
 //            }
         }
-        // 发送 pendingIntent 以此打开微信
-//        try {
-//            if (pendingIntent != null) {
-//                pendingIntent.send();
-//            }
-//        } catch (PendingIntent.CanceledException e) {
-//            e.printStackTrace();
-//        }
-
 
     }
 
