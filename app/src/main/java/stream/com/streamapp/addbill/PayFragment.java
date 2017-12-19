@@ -36,7 +36,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             social,amusement,makeup,call,sport,redpacket,travel,
             medicine,office,digit,gift,wine,repair,other;
     View view;
-    String method;
+    String method = "other";
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.pay_type_layout, null);
         initView();
@@ -233,6 +233,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                 bill.setUser_id(login.getUser_id());
                 bill.setState(1);
                 bill.setTimeStamp(time);
+                Log.d("method", method);
                 bill.setMethods(method);
                 bill.save();
                 try {

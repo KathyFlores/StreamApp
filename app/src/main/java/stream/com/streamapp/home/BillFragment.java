@@ -413,6 +413,11 @@ public class BillFragment extends Fragment {
         @Override
         protected Object doInBackground(Object[] objects){
             initData();
+            try {
+                UpdateData.UploadBill();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return null;
         }
         @Override
