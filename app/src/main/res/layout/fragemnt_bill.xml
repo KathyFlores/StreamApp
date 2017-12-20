@@ -202,6 +202,7 @@
             android:id="@+id/bill_recycler"
             android:dividerHeight="1dp"
             android:divider="@color/hint"
+            android:background="@color/fontColorLight"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         </com.yalantis.phoenix.PullToRefreshView>

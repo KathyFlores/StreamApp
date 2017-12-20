@@ -68,6 +68,7 @@ public class PropertyFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter = new myAdapter());
+        recyclerView.addItemDecoration(new MyItemDivider());
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

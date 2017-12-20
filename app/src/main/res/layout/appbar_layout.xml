@@ -3,9 +3,11 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/topbar"
+
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_alignParentTop="true"
+                    android:fitsSystemWindows="true"
                     android:background="@color/colorPrimary" >
 
 

@@ -102,6 +102,7 @@ public class BillFragment extends Fragment {
         recyclerView=view.findViewById(R.id.bill_recycler);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new MyItemDivider());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter = new myAdapter());
         timePickerDialog = new TimePickerDialog.Builder()

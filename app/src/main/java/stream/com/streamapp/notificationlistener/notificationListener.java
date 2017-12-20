@@ -32,7 +32,6 @@ public class notificationListener extends NotificationListenerService {
     {
         mHandleShare= new notificationHandler();
         mHandler=mHandleShare.getHandler();
-
         String amount="";
         boolean isIn=false;
 
@@ -40,10 +39,11 @@ public class notificationListener extends NotificationListenerService {
         Matcher m = r.matcher(content);
         if(m.find())
         {
+
             amount=m.group(0).substring(4);
             //TODO
             try {
-                UpdateData.addBills(Double.parseDouble(amount),"out","Alipay");
+                UpdateData.addBills(Double.parseDouble(amount),"out","alipay");
             } catch (InterruptedException e) {
                 //e.printStackTrace();
             }
@@ -80,6 +80,7 @@ public class notificationListener extends NotificationListenerService {
 
             }
         } else {
+
             // 当 API = 18 时，利用反射获取内容字段
 
 //            List<String> textList = getText(notification);

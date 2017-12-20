@@ -310,7 +310,7 @@ public class UpdateData {
     public static void addBills(double amount, String inOrOut, String methods) throws InterruptedException {
         Bills bill = new Bills();
 
-        bill.setType("");
+        bill.setType("other");
         bill.setAmount(Double.valueOf(amount));
         bill.setNote("");
         bill.setPlace("somewhere");

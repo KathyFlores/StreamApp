@@ -6,6 +6,7 @@
     <string name="logoutBTNtext">退　出</string>
     <string name="welcome">Welcome</string>
     <string name="usernameHint">请输入用户名</string>
+    <string name="passwordHint_">请输入密码</string>
     <string name="passwordHint">请输入密码或点击右侧刷脸登陆</string>
     <string name="newpasswordHint">请输入新密码</string>
     <string name="phoneHint">请输入手机号</string>

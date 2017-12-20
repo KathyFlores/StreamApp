@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@drawable/background"
+              android:fitsSystemWindows="true"
               android:orientation="vertical" >
     <!--<include layout="@layout/activity_top" />-->
     <TextView
@@ -82,7 +83,7 @@
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/psw"

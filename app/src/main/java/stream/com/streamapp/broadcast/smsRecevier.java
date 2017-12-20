@@ -76,7 +76,7 @@ public class smsRecevier extends BroadcastReceiver{
                     // TO DO
 
                     try {
-                        UpdateData.addBills(Double.parseDouble(amount),(isIn?"in":"out"),"Jianhang");
+                        UpdateData.addBills(Double.parseDouble(amount),(isIn?"in":"out"),"jianshe");
                     } catch (InterruptedException e) {
                         //e.printStackTrace();
                     }
@@ -111,7 +111,7 @@ public class smsRecevier extends BroadcastReceiver{
                     if(amount!=null)
                     {
                         try {
-                            UpdateData.addBills(Double.parseDouble(amount),(isIn?"in":"out"),"Nongye");
+                            UpdateData.addBills(Double.parseDouble(amount),(isIn?"in":"out"),"nongye");
                         } catch (InterruptedException e) {
                             //e.printStackTrace();
                         }

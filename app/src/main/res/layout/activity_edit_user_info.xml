@@ -7,21 +7,26 @@
     <include layout="@layout/appbar_layout"/>
     <LinearLayout
         android:id="@+id/user_layout"
+        android:layout_marginTop="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/topbar"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/changeName"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+
             android:background="@color/white"
             android:drawableEnd="@drawable/more"
             android:drawableRight="@drawable/more"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/changeUserName"
             android:textColor="@color/fontColorDark"
             android:textSize="18sp" />
@@ -42,6 +47,9 @@
             android:drawableRight="@drawable/more"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/changePhoto"
             android:textColor="@color/fontColorDark"
             android:textSize="18sp" />
@@ -60,6 +68,9 @@
             android:drawableRight="@drawable/more"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/changeFace"
             android:textColor="@color/fontColorDark"
             android:textSize="18sp" />

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
     <TextView
@@ -124,7 +125,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="@string/passwordHint"
+                android:hint="@string/passwordHint_"
                 android:inputType="textPassword"
                 android:maxLength="16"
                 android:textColor="@color/fontColor"
