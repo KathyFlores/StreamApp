@@ -43,9 +43,10 @@ public class notificationListener extends NotificationListenerService {
             amount=m.group(0).substring(4);
             //TODO
             try {
+                Log.e("SevenNLS","send:"+amount);
                 UpdateData.addBills(Double.parseDouble(amount),"out","alipay");
             } catch (InterruptedException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
 
         }
@@ -70,11 +71,12 @@ public class notificationListener extends NotificationListenerService {
         }
         PendingIntent pendingIntent = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.e("SevenNLS","in 1");
             Bundle extras = notification.extras;
             if (extras != null) {
                 String title = extras.getString(Notification.EXTRA_TITLE, "");
                 String content = extras.getString(Notification.EXTRA_TEXT, "");
-
+                Log.e("SevenNLS","content:"+content);
                 sendHandlerMessage(title,content);
 
 

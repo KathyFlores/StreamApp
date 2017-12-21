@@ -338,11 +338,12 @@ public class login extends AppCompatActivity {
                 String[] permission = new String[permissions.size()];
                 this.requestPermissions(permissions.toArray(permission), requestCode);
             }
-            if(!isEnabled())
-            {
-                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
-                startActivity(intent);
-            }
+
+        }
+        if(!isEnabled())
+        {
+            Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+            startActivity(intent);
         }
     }
     private boolean isEnabled() {
