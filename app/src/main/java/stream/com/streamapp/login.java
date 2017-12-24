@@ -607,7 +607,7 @@ public class login extends AppCompatActivity {
             if(m.find())
             {
                 double emb=Double.valueOf(m.group(0).replace("<p>","").replace("</p>",""));
-                if (emb<0.88)
+                if (emb<0.66)
                 {
                     Bundle re=new Bundle();
                     re.putString("Return","0");
